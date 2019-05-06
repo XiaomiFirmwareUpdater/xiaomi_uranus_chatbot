@@ -1,7 +1,7 @@
 # Uranus Telegam Bot
 #### By [yshalsager](https://t.me/yshalsager) & [XiaomiGeeks](https://t.me/XiaomiGeeks)
 
-Uranus is an all-in-one bot that provide useful services for Xiaomi users on Telegram.
+Uranus is an all-in-one bot that provides useful services for Xiaomi users on Telegram.
 
 You can start using it or adding it to your group [here](https://t.me/XiaomiGeeksBot).
 
@@ -14,12 +14,12 @@ The whole bot functions in this repo, which are licensed under GPL3, are based o
 - [miui-updates-tracker](https://github.com/XiaomiFirmwareUpdater/miui-updates-tracker)
 - [xiaomifirmwareupdater.github.io](https://github.com/XiaomiFirmwareUpdater/xiaomifirmwareupdater.github.io)
 
-However, [the telegram bot](https://t.me/XiaomiGeeksBot) may contian some other features that are not available in this code, like Admin module.
+However, [the telegram bot](https://t.me/XiaomiGeeksBot) may contain some other features that are not available in this code, like the Admins module.
 
 ### Running this bot on your own:
 
 - Make sure you have python3.6+ installed.
-- Install required libs.
+- Install the required libs.
 ```
 pip3 install -r requirements.txt
 ```
