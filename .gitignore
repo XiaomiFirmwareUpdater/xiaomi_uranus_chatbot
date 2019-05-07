@@ -1,0 +1,6 @@
+*log*
+*tmp*
+*__pycache__*
+config.json
+admin/
+private/
