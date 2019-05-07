@@ -29,7 +29,12 @@ LOGGER = logging.getLogger(__name__)
 
 def start(update, context):
     """start command"""
-    context.bot.send_message(chat_id=update.message.chat_id, text="Welcome master, how can I help?")
+    message = "Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
+              "I can get you latest Official ROMs, and Firmware updates links," \
+              " and many more things!\nCheck how to use me by clicking /help"
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown')
 
 
 def recovery(update, context):
