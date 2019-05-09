@@ -276,3 +276,32 @@ def check_models(device):
             message += "{}: {}\n".format(model, model_name)
     status = True
     return message, status
+
+
+def whatis(device):
+    """
+    checks device name based on its codename
+    :argument device - Xiaomi device codename
+    :returns message - telegram message string
+    :returns status - Boolean for device status whether found or not
+    """
+    message = ''
+    current = get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+        "miui-updates-tracker/master/devices/names.json").text.replace(']\n}', '],')
+    eol = get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+        "miui-updates-tracker/master/EOL/names.json").text.replace('{', '')
+    data = json.loads(current + eol)
+    data = list(data.items())
+    info = [i for i in data if device == i[0].split('_')[0]]
+    if not info:
+        message = "Can't find info about {}!".format(device)
+        status = False
+        return message, status
+    for codename, details in info:
+        codename = codename
+        name = details[0]
+        message += "`{}` is *{}*\n".format(codename, name)
+    status = True
+    return message, status

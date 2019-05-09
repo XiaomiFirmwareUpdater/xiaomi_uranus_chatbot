@@ -30,8 +30,9 @@ LOGGER = logging.getLogger(__name__)
 def start(update, context):
     """start command"""
     message = "Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
-              "I can get you latest Official ROMs, and Firmware updates links," \
-              " and many more things!\nCheck how to use me by clicking /help"
+              "I can get you latest Official ROMs, Firmware updates links," \
+              " and many more things!\nCheck how to use me by clicking /help" \
+              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!"
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown')
@@ -197,15 +198,41 @@ def models(update, context):
     LOGGER.info("@%s requested models info: %s",
                 update.effective_user.username, update.message.text)
 
+
+def whatis(update, context):
+    """reply with latest available OSS kernel links"""
+    if len(context.args) < 1:
+        message = '*Usage: * `/whatis codename`'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower().split('_')[0]
+    message, status = xfu.whatis(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.warning("@%s requested wrong whatis info: %s",
+                       update.effective_user.username, update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+    LOGGER.info("@%s requested whatis info: %s",
+                update.effective_user.username, update.message.text)
+
+
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands:\n" \
-              "/recovery `codename` - get latest recovery ROMs info\n" \
-              "/fastboot `codename` - get latest fastboot ROMs info\n" \
-              "/latest `codename` - get latest MIUI versions info\n" \
-              "/firmware `codename` - get latest available firmware for device\n" \
-              "/oss `codename` - get all official available OSS kernels for device\n" \
-              "/list `codename` - get all official available recovery MIUI ROMs for device"
+              "/recovery `codename` - gets latest recovery ROMs info.\n" \
+              "/fastboot `codename` - gets latest fastboot ROMs info.\n" \
+              "/latest `codename` - gets latest MIUI versions info.\n" \
+              "/firmware `codename` - gets latest available firmware for device.\n" \
+              "/oss `codename` - gets all official available OSS kernels for device.\n" \
+              "/list `codename` - gets all official available recovery MIUI ROMs for device.\n" \
+              "/models `codename` - gets info about all available models of a device.\n" \
+              "/whatis `codename` - tells you which device is this."
     update.message.reply_text(message, parse_mode='Markdown',
                               reply_to_message_id=update.message.message_id)
 
@@ -260,6 +287,9 @@ def main():
 
     models_handler = CommandHandler('models', models)
     dispatcher.add_handler(models_handler)
+
+    whatis_handler = CommandHandler('whatis', whatis)
+    dispatcher.add_handler(whatis_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
