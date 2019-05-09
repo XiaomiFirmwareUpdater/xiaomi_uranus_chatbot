@@ -258,21 +258,21 @@ def check_models(device):
         message = "Wrong codename!"
         status = False
         return message, status
-    data = get(
-        "https://raw.githubusercontent.com/KHwang9883/MobileModels/" +
-        "master/brands/xiaomi_en.md").text
-    devices = re.findall(r"\*\[(?:[\s\S]*?)\n\*", data, re.MULTILINE)
-    info = [i for i in devices if device == i.split('*')[1].split('`')[1]]
+    data = json.loads(get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+        "xiaomi_devices/models/models.json").text)
+    info = [i for i in data if device == i['codename']]
     if not info:
         message = "Can't find info about {}!".format(device)
         status = False
         return message, status
     for item in info:
-        details = item.split('*')
-        codename = details[1].split('`')[1].strip()
-        internal = details[1].split('[')[1].split(']')[0].strip()
-        name = details[1].split(']')[1].split('(')[0].strip()
-        models = details[3].replace('\n\n', '\n').split('#')[0]
-        message += "*{} ({} - {}) Models:*{}".format(name, codename, internal, models)
+        codename = item['codename']
+        internal = item['internal_name']
+        name = item['name']
+        message += "*{} ({} - {}) Models:*\n".format(name, codename, internal)
+        models = item['models']
+        for model, model_name in models.items():
+            message += "{}: {}\n".format(model, model_name)
     status = True
     return message, status
