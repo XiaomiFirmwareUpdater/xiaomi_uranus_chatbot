@@ -2,6 +2,7 @@
 """Xiaomi Helper Bot general commands"""
 
 import json
+import re
 from requests import get
 
 codenames = json.loads(get(
@@ -13,6 +14,8 @@ def check_codename(codename):
     """check if codename is correct"""
     if not [i for i in codenames['data'] if codename == i.split('_')[0]]:
         return False
+    else:
+        return True
 
 
 def load_fastboot_data(device):
@@ -240,4 +243,36 @@ def history(device):
         file = '_'.join(i['filename'].split('_')[2:])
         link = 'http://bigota.d.miui.com/{}/{}'.format(version, file)
         message += "[{}]({}) ".format(version, link)
+    return message, status
+
+
+def check_models(device):
+    """
+    get different models of device info
+    :argument device - Xiaomi device codename
+    :returns message - telegram message string
+    :returns status - Boolean for device status whether found or not
+    """
+    message = ''
+    if not check_codename(device):
+        message = "Wrong codename!"
+        status = False
+        return message, status
+    data = get(
+        "https://raw.githubusercontent.com/KHwang9883/MobileModels/" +
+        "master/brands/xiaomi_en.md").text
+    devices = re.findall(r"\*\[(?:[\s\S]*?)\n\*", data, re.MULTILINE)
+    info = [i for i in devices if device == i.split('*')[1].split('`')[1]]
+    if not info:
+        message = "Can't find info about {}!".format(device)
+        status = False
+        return message, status
+    for item in info:
+        details = item.split('*')
+        codename = details[1].split('`')[1].strip()
+        internal = details[1].split('[')[1].split(']')[0].strip()
+        name = details[1].split(']')[1].split('(')[0].strip()
+        models = details[3].replace('\n\n', '\n').split('#')[0]
+        message += "*{} ({} - {}) Models:*{}".format(name, codename, internal, models)
+    status = True
     return message, status

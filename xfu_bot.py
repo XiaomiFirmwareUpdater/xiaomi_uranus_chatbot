@@ -175,6 +175,28 @@ def history(update, context):
                 update.effective_user.username, update.message.text)
 
 
+def models(update, context):
+    """reply with latest available OSS kernel links"""
+    if len(context.args) < 1:
+        message = '*Usage: * `/models codename`'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower().split('_')[0]
+    message, status = xfu.check_models(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.warning("@%s requested wrong models info: %s",
+                       update.effective_user.username, update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+    LOGGER.info("@%s requested models info: %s",
+                update.effective_user.username, update.message.text)
+
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands:\n" \
@@ -235,6 +257,9 @@ def main():
 
     history_handler = CommandHandler('list', history)
     dispatcher.add_handler(history_handler)
+
+    models_handler = CommandHandler('models', models)
+    dispatcher.add_handler(models_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
