@@ -9,11 +9,17 @@ import modules.functions as xfu
 # from telegram.ext import MessageHandler, Filters
 
 IS_ADMIN = True
+IS_MORE = True
 try:
     import admin.admin as admin
 except ImportError:
     print("Can't find admin module, skipping it")
     IS_ADMIN = False
+try:
+    import private.private as private
+except ImportError:
+    print("Can't find private commands module, skipping it")
+    IS_MORE = False
 
 # read bog config
 with open('config.json', 'r') as f:
@@ -293,6 +299,9 @@ def main():
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
+    if IS_MORE:  # load private commands if module is found
+        private.main(dispatcher)
+
     # unknown_handler = MessageHandler(Filters.command, unknown)
     # dispatcher.add_handler(unknown_handler)
 

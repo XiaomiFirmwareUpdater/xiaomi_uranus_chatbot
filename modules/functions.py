@@ -2,17 +2,16 @@
 """Xiaomi Helper Bot general commands"""
 
 import json
-import re
 from requests import get
 
-codenames = json.loads(get(
+CODENAMES = json.loads(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/xiaomi_devices/" +
         "master/devices.json").content)
 
 
 def check_codename(codename):
     """check if codename is correct"""
-    if not [i for i in codenames['data'] if codename == i.split('_')[0]]:
+    if not [i for i in CODENAMES['data'] if codename == i.split('_')[0]]:
         return False
     else:
         return True
