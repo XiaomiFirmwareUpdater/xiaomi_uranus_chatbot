@@ -57,14 +57,12 @@ def recovery(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong recovery ROM: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong recovery ROM request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested recovery ROM: %s",
-                update.effective_user.username, update.message.text)
 
 
 def fastboot(update, context):
@@ -80,14 +78,12 @@ def fastboot(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong fastboot ROM: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong fastboot ROM request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested fastboot ROM: %s",
-                update.effective_user.username, update.message.text)
 
 
 def firmware(update, context):
@@ -103,14 +99,12 @@ def firmware(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong firmware: %s",
+        LOGGER.info("wrong firmware request: %s",
                        update.effective_user.username, update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested firmware: %s",
-                update.effective_user.username, update.message.text)
 
 
 def latest(update, context):
@@ -126,14 +120,12 @@ def latest(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong latest info: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong latest info request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested latest info: %s",
-                update.effective_user.username, update.message.text)
 
 
 def oss(update, context):
@@ -149,14 +141,12 @@ def oss(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong oss info: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong oss info request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested oss info: %s",
-                update.effective_user.username, update.message.text)
 
 
 def history(update, context):
@@ -172,14 +162,12 @@ def history(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong oss info: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong list history request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested oss info: %s",
-                update.effective_user.username, update.message.text)
 
 
 def models(update, context):
@@ -195,14 +183,12 @@ def models(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong models info: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong list models request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested models info: %s",
-                update.effective_user.username, update.message.text)
 
 
 def whatis(update, context):
@@ -218,14 +204,12 @@ def whatis(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.warning("@%s requested wrong whatis info: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong whatis request: %s",
+                       update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
-    LOGGER.info("@%s requested whatis info: %s",
-                update.effective_user.username, update.message.text)
 
 
 def usage(update, context):
