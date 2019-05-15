@@ -4,14 +4,20 @@
 import json
 from requests import get
 
-CODENAMES = json.loads(get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/xiaomi_devices/" +
-        "master/devices.json").content)
+CURRENT = get(
+    "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+    "miui-updates-tracker/master/devices/names.json").text.replace(']\n}', '],')
+EOL = get(
+    "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+    "miui-updates-tracker/master/EOL/names.json").text.replace('{', '')
+DEVICES_DATA = json.loads(CURRENT + EOL)
+DEVICES_DATA = list(DEVICES_DATA.items())
+CODENAMES = [i[0] for i in DEVICES_DATA]
 
 
 def check_codename(codename):
     """check if codename is correct"""
-    if not [i for i in CODENAMES['data'] if codename == i.split('_')[0]]:
+    if not [i for i in CODENAMES if codename == i.split('_')[0]]:
         return False
     else:
         return True
@@ -285,15 +291,11 @@ def whatis(device):
     :returns status - Boolean for device status whether found or not
     """
     message = ''
-    current = get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "miui-updates-tracker/master/devices/names.json").text.replace(']\n}', '],')
-    eol = get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "miui-updates-tracker/master/EOL/names.json").text.replace('{', '')
-    data = json.loads(current + eol)
-    data = list(data.items())
-    info = [i for i in data if device == i[0].split('_')[0]]
+    if not check_codename(device):
+        message = "Wrong codename!"
+        status = False
+        return message, status
+    info = [i for i in DEVICES_DATA if device == i[0].split('_')[0]]
     if not info:
         message = "Can't find info about {}!".format(device)
         status = False
