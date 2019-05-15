@@ -46,7 +46,7 @@ def start(update, context):
 
 def recovery(update, context):
     """reply with latest available recovery ROMs"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/recovery device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -57,8 +57,7 @@ def recovery(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong recovery ROM request: %s",
-                       update.message.text)
+        LOGGER.info("wrong recovery ROM request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -67,7 +66,7 @@ def recovery(update, context):
 
 def fastboot(update, context):
     """reply with latest available fastboot ROMs"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/fastboot device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -78,8 +77,7 @@ def fastboot(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong fastboot ROM request: %s",
-                       update.message.text)
+        LOGGER.info("wrong fastboot ROM request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -88,7 +86,7 @@ def fastboot(update, context):
 
 def firmware(update, context):
     """generate firmware link on website"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/firmware device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -99,8 +97,7 @@ def firmware(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong firmware request: %s",
-                       update.effective_user.username, update.message.text)
+        LOGGER.info("wrong firmware request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -109,7 +106,7 @@ def firmware(update, context):
 
 def latest(update, context):
     """reply with latest available ROMs version"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/latest device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -120,8 +117,7 @@ def latest(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong latest info request: %s",
-                       update.message.text)
+        LOGGER.info("wrong latest info request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -130,7 +126,7 @@ def latest(update, context):
 
 def oss(update, context):
     """reply with latest available OSS kernel links"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/oss device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -141,8 +137,7 @@ def oss(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong oss info request: %s",
-                       update.message.text)
+        LOGGER.info("wrong oss info request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -151,7 +146,7 @@ def oss(update, context):
 
 def history(update, context):
     """reply with latest available OSS kernel links"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/list device`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -162,8 +157,7 @@ def history(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong list history request: %s",
-                       update.message.text)
+        LOGGER.info("wrong list history request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -172,7 +166,7 @@ def history(update, context):
 
 def models(update, context):
     """reply with latest available OSS kernel links"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/models codename`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -183,8 +177,7 @@ def models(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong list models request: %s",
-                       update.message.text)
+        LOGGER.info("wrong list models request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -193,7 +186,7 @@ def models(update, context):
 
 def whatis(update, context):
     """reply with latest available OSS kernel links"""
-    if len(context.args) < 1:
+    if not context.args:
         message = '*Usage: * `/whatis codename`'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -204,15 +197,14 @@ def whatis(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong whatis request: %s",
-                       update.message.text)
+        LOGGER.info("wrong whatis request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
-def usage(update, context):
+def usage(update):
     """Help - How to use the bot"""
     message = "Available commands:\n" \
               "/recovery `codename` - gets latest recovery ROMs info.\n" \
