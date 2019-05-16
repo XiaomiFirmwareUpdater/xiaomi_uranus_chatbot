@@ -204,7 +204,7 @@ def whatis(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
-def usage(update):
+def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands:\n" \
               "/recovery `codename` - gets latest recovery ROMs info.\n" \
