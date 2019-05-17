@@ -236,18 +236,36 @@ def history(device):
     weekly = [i for i in all_data if i['branch'] == 'weekly']
     stable.reverse()
     weekly.reverse()
+    global_stable = [i for i in stable if i['type'] == 'Global']
+    china_stable = [i for i in stable if i['type'] == 'China']
+    global_weekly = [i for i in weekly if i['type'] == 'Global']
+    china_weekly = [i for i in weekly if i['type'] == 'China']
+
+    def gen_link(data):
+        version = data['versions']['miui']
+        file = '_'.join(data['filename'].split('_')[2:])
+        link = 'http://bigota.d.miui.com/{}/{}'.format(version, file)
+        reply = "[{}]({}) ".format(version, link)
+        return reply
+
     message = '*Available Stable ROMs:*\n'
-    for i in stable:
-        version = i['versions']['miui']
-        file = '_'.join(i['filename'].split('_')[2:])
-        link = 'http://bigota.d.miui.com/{}/{}'.format(version, file)
-        message += "[{}]({}) ".format(version, link)
+    if global_stable:
+        message += '_Global:_\n'
+        for i in global_stable:
+            message += gen_link(i)
+    if china_stable:
+        message += '\n_China:_\n'
+        for i in china_stable:
+            message += gen_link(i)
     message += '\n*Available Weekly ROMs:*\n'
-    for i in weekly:
-        version = i['versions']['miui']
-        file = '_'.join(i['filename'].split('_')[2:])
-        link = 'http://bigota.d.miui.com/{}/{}'.format(version, file)
-        message += "[{}]({}) ".format(version, link)
+    if global_weekly:
+        message += '_Global:_\n'
+        for i in global_weekly:
+            message += gen_link(i)
+    if china_weekly:
+        message += '\n_China:_\n'
+        for i in china_weekly:
+            message += gen_link(i)
     return message, status
 
 
