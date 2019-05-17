@@ -5,6 +5,7 @@ import json
 import logging
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
+from telegram.ext.dispatcher import run_async
 import modules.functions as xfu
 # from telegram.ext import MessageHandler, Filters
 
@@ -33,17 +34,19 @@ logging.basicConfig(filename='current.log',
 LOGGER = logging.getLogger(__name__)
 
 
+@run_async
 def start(update, context):
     """start command"""
-    message = "Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
+    message = "Hello {}! \nI'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
               " and many more things!\nCheck how to use me by clicking /help" \
-              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!"
+              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!".format(update.message.from_user.first_name)
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown')
 
 
+@run_async
 def recovery(update, context):
     """reply with latest available recovery ROMs"""
     if not context.args:
@@ -64,6 +67,7 @@ def recovery(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def fastboot(update, context):
     """reply with latest available fastboot ROMs"""
     if not context.args:
@@ -84,6 +88,7 @@ def fastboot(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def firmware(update, context):
     """generate firmware link on website"""
     if not context.args:
@@ -104,6 +109,7 @@ def firmware(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def latest(update, context):
     """reply with latest available ROMs version"""
     if not context.args:
@@ -124,6 +130,7 @@ def latest(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def oss(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
@@ -144,6 +151,7 @@ def oss(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def history(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
@@ -164,6 +172,7 @@ def history(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def models(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
@@ -184,6 +193,7 @@ def models(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def whatis(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
@@ -204,6 +214,7 @@ def whatis(update, context):
                              parse_mode='Markdown', disable_web_page_preview='yes')
 
 
+@run_async
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands:\n" \
@@ -237,7 +248,7 @@ def main():
     :return: null
     """
     # Updater continuously fetches new updates from telegram and passes them on to the Dispatcher
-    updater = Updater(token=TOKEN, use_context=True)
+    updater = Updater(token=TOKEN, workers = 1, use_context=True)
     dispatcher = updater.dispatcher
     # This class dispatches all kinds of updates to its registered handlers.
 
