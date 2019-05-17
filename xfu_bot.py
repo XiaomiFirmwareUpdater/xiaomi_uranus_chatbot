@@ -248,7 +248,7 @@ def main():
     :return: null
     """
     # Updater continuously fetches new updates from telegram and passes them on to the Dispatcher
-    updater = Updater(token=TOKEN, workers = 5, use_context=True)
+    updater = Updater(token=TOKEN, workers = 1, use_context=True)
     dispatcher = updater.dispatcher
     # This class dispatches all kinds of updates to its registered handlers.
 
