@@ -40,7 +40,8 @@ def start(update, context):
     message = "Hello {}! \nI'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
               " and many more things!\nCheck how to use me by clicking /help" \
-              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!".format(update.message.from_user.first_name)
+              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!"\
+        .format(update.message.from_user.first_name)
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown')
@@ -217,15 +218,8 @@ def whatis(update, context):
 @run_async
 def usage(update, context):
     """Help - How to use the bot"""
-    message = "Available commands:\n" \
-              "/recovery `codename` - gets latest recovery ROMs info.\n" \
-              "/fastboot `codename` - gets latest fastboot ROMs info.\n" \
-              "/latest `codename` - gets latest MIUI versions info.\n" \
-              "/firmware `codename` - gets latest available firmware for device.\n" \
-              "/oss `codename` - gets all official available OSS kernels for device.\n" \
-              "/list `codename` - gets all official available recovery MIUI ROMs for device.\n" \
-              "/models `codename` - gets info about all available models of a device.\n" \
-              "/whatis `codename` - tells you which device is this."
+    message = "Available commands with examples:\n" \
+              "[Check here](https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage)"
     update.message.reply_text(message, parse_mode='Markdown',
                               reply_to_message_id=update.message.message_id)
 
@@ -248,7 +242,7 @@ def main():
     :return: null
     """
     # Updater continuously fetches new updates from telegram and passes them on to the Dispatcher
-    updater = Updater(token=TOKEN, workers = 1, use_context=True)
+    updater = Updater(token=TOKEN, workers=1, use_context=True)
     dispatcher = updater.dispatcher
     # This class dispatches all kinds of updates to its registered handlers.
 
