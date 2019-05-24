@@ -51,7 +51,8 @@ def start(update, context):
 def recovery(update, context):
     """reply with latest available recovery ROMs"""
     if not context.args:
-        message = '*Usage: * `/recovery device`'
+        message = '*Usage: * `/recovery device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -72,7 +73,8 @@ def recovery(update, context):
 def fastboot(update, context):
     """reply with latest available fastboot ROMs"""
     if not context.args:
-        message = '*Usage: * `/fastboot device`'
+        message = '*Usage: * `/fastboot device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -93,7 +95,8 @@ def fastboot(update, context):
 def firmware(update, context):
     """generate firmware link on website"""
     if not context.args:
-        message = '*Usage: * `/firmware device`'
+        message = '*Usage: * `/firmware device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -114,7 +117,8 @@ def firmware(update, context):
 def latest(update, context):
     """reply with latest available ROMs version"""
     if not context.args:
-        message = '*Usage: * `/latest device`'
+        message = '*Usage: * `/latest device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -135,7 +139,8 @@ def latest(update, context):
 def oss(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
-        message = '*Usage: * `/oss device`'
+        message = '*Usage: * `/oss device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -156,7 +161,8 @@ def oss(update, context):
 def history(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
-        message = '*Usage: * `/list device`'
+        message = '*Usage: * `/list device`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -177,7 +183,8 @@ def history(update, context):
 def models(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
-        message = '*Usage: * `/models codename`'
+        message = '*Usage: * `/models codename`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -198,7 +205,8 @@ def models(update, context):
 def whatis(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
-        message = '*Usage: * `/whatis codename`'
+        message = '*Usage: * `/whatis codename`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
@@ -219,7 +227,8 @@ def whatis(update, context):
 def specs(update, context):
     """reply with device's specs"""
     if not context.args:
-        message = '*Usage: * `/specs codename`'
+        message = '*Usage: * `/specs codename`\n' \
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
