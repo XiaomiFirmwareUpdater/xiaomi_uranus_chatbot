@@ -19,8 +19,6 @@ def check_codename(codename):
     """check if codename is correct"""
     if not [i for i in CODENAMES if codename == i.split('_')[0]]:
         return False
-    else:
-        return True
 
 
 def load_fastboot_data(device):
@@ -277,7 +275,7 @@ def check_models(device):
     :returns status - Boolean for device status whether found or not
     """
     message = ''
-    if not check_codename(device):
+    if check_codename(device) is False:
         message = "Wrong codename!"
         status = False
         return message, status
@@ -309,7 +307,7 @@ def whatis(device):
     :returns status - Boolean for device status whether found or not
     """
     message = ''
-    if not check_codename(device):
+    if check_codename(device) is False:
         message = "Wrong codename!"
         status = False
         return message, status
@@ -322,5 +320,78 @@ def whatis(device):
         codename = codename
         name = details[0]
         message += "`{}` is *{}*\n".format(codename, name)
+    status = True
+    return message, status
+
+
+def specs(device):
+    """
+    Get device specs based on its codename
+    :argument device - Xiaomi device codename
+    :returns message - telegram message string
+    :returns status - Boolean for device status whether found or not
+    """
+    message = ''
+    if check_codename(device) is False:
+        message = "Wrong codename!"
+        status = False
+        return message, status
+    data = get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/xiaomi_devices" +
+        "/gsmarena/devices.json").json()
+    info = [i for i in data if device == i['codename']][0]
+    if not info:
+        message = "Can't find info about {}!".format(device)
+        status = False
+        return message, status
+    name = info['name']
+    url = info['url']
+    details = info['specs']
+    device_status = details['Launch'][0]['Status']
+    network = details['Network'][0]['Technology']
+    weight = details['Body'][0]['Weight']
+    display = details['Display'][0]['Type'] + '\n' + details['Display'][0]['Size'] + '\n' +\
+              details['Display'][0]['Resolution']
+    chipset = details['Platform'][0]['Chipset'] + '\n' + details['Platform'][0]['CPU'] + '\n' +\
+              details['Platform'][0]['GPU']
+    memory = details['Memory'][0]['Internal']
+    main_cam = details['Main Camera'][0]
+    try:
+        main_cam = main_cam['Triple']
+    except KeyError:
+        try:
+            main_cam = main_cam['Dual']
+        except KeyError:
+            try:
+                main_cam = main_cam['Single']
+            except KeyError:
+                pass
+    front_cam = details['Selfie camera'][0]
+    try:
+        front_cam = front_cam['Triple']
+    except KeyError:
+        try:
+            front_cam = front_cam['Dual']
+        except KeyError:
+            try:
+                front_cam = front_cam['Single']
+            except KeyError:
+                pass
+    jack = details['Sound'][0]['3.5mm jack ']
+    usb = details['Comms'][0]['USB']
+    sensors = details['Features'][0]['Sensors']
+    battery = details['Battery'][0]['info']
+    message += "[{}]({}) - *{}*\n*Status*: {}\n*Network:* {}\n*Weight*: {}\n" \
+               "*Display*:\n{}\n*Chipset*:\n{}\n*Memory*: {}\n" \
+               "*Rear Camera*: {}\n*Front Camera*: {}\n*3.5mm jack*: {}\n" \
+               "*USB*: {}\n*Sensors*: {}\n*Battery*: {}" \
+        .format(name, url, device, device_status, network, weight, display, chipset,
+                memory, main_cam, front_cam, jack, usb, sensors, battery)
+    try:
+        charging = details['Battery'][0]['Charging']
+        message += "\n*Charging*: {}" \
+            .format(charging)
+    except KeyError:
+        pass
     status = True
     return message, status

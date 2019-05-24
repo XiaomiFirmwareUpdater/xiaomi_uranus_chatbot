@@ -216,6 +216,27 @@ def whatis(update, context):
 
 
 @run_async
+def specs(update, context):
+    """reply with device's specs"""
+    if not context.args:
+        message = '*Usage: * `/specs codename`'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower().split('_')[0]
+    message, status = xfu.specs(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong specs request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands with examples:\n" \
@@ -277,6 +298,9 @@ def main():
 
     whatis_handler = CommandHandler('whatis', whatis)
     dispatcher.add_handler(whatis_handler)
+
+    specs_handler = CommandHandler('specs', specs)
+    dispatcher.add_handler(specs_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
