@@ -336,7 +336,10 @@ def specs(device):
     data = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/xiaomi_devices" +
         "/gsmarena/devices.json").json()
-    info = [i for i in data if device == i['codename']][0]
+    try:
+        info = [i for i in data if device == i['codename']][0]
+    except IndexError:
+        info = {}
     if not info:
         message = "Can't find info about {}!".format(device)
         status = False
