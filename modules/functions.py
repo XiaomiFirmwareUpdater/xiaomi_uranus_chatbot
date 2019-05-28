@@ -4,15 +4,9 @@
 import json
 from requests import get
 
-CURRENT = get(
+CODENAMES = get(
     "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-    "miui-updates-tracker/master/devices/names.json").text.replace(']\n}', '],')
-EOL = get(
-    "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-    "miui-updates-tracker/master/EOL/names.json").text.replace('{', '')
-DEVICES_DATA = json.loads(CURRENT + EOL)
-DEVICES_DATA = list(DEVICES_DATA.items())
-CODENAMES = [i[0] for i in DEVICES_DATA]
+    "xiaomi_devices/codenames/codenames.json").json()
 
 
 def check_codename(codename):
@@ -311,14 +305,17 @@ def whatis(device):
         message = "Wrong codename!"
         status = False
         return message, status
-    info = [i for i in DEVICES_DATA if device == i[0].split('_')[0]]
+    url = 'https://raw.githubusercontent.com/XiaomiFirmwareUpdater/' +\
+          'xiaomi_devices/models/models.json'
+    devices = get(url).json()
+    info = [i for i in devices if device == i['codename']]
     if not info:
         message = "Can't find info about {}!".format(device)
         status = False
         return message, status
-    for codename, details in info:
-        codename = codename
-        name = details[0]
+    for i in info:
+        codename = i['codename']
+        name = i['name']
         message += "`{}` is *{}*\n".format(codename, name)
     status = True
     return message, status
