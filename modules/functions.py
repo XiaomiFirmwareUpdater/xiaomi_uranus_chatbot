@@ -11,8 +11,13 @@ CODENAMES = get(
 
 def check_codename(codename):
     """check if codename is correct"""
-    if not [i for i in CODENAMES if codename == i.split('_')[0]]:
-        return False
+    codename = codename.lower()
+    if '_' in codename:
+        if not [i for i in CODENAMES if codename == i.split('_')[0].lower()]:
+            return False
+    else:
+        if not [i for i in CODENAMES if codename == i.lower()]:
+            return False
 
 
 def load_fastboot_data(device):
@@ -306,16 +311,16 @@ def whatis(device):
         status = False
         return message, status
     url = 'https://raw.githubusercontent.com/XiaomiFirmwareUpdater/' +\
-          'xiaomi_devices/models/models.json'
+          'xiaomi_devices/names/names.json'
     devices = get(url).json()
-    info = [i for i in devices if device == i['codename']]
+    info = {i: devices[i] for i in devices if device.lower() == i.lower()}
     if not info:
         message = "Can't find info about {}!".format(device)
         status = False
         return message, status
-    for i in info:
-        codename = i['codename']
-        name = i['name']
+    for key, value in info.items():
+        codename = key
+        name = value
         message += "`{}` is *{}*\n".format(codename, name)
     status = True
     return message, status
