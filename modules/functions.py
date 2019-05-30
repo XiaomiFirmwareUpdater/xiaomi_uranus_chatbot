@@ -12,12 +12,12 @@ CODENAMES = get(
 def check_codename(codename):
     """check if codename is correct"""
     codename = codename.lower()
-    if '_' in codename:
-        if not [i for i in CODENAMES if codename == i.split('_')[0].lower()]:
-            return False
-    else:
-        if not [i for i in CODENAMES if codename == i.lower()]:
-            return False
+    found = False
+    if [i for i in CODENAMES if codename == i.lower()]:
+        found = True
+    elif [i for i in CODENAMES if codename == i.split('_')[0].lower()]:
+        found = True
+    return found
 
 
 def load_fastboot_data(device):

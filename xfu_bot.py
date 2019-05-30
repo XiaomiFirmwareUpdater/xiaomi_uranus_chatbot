@@ -211,7 +211,7 @@ def whatis(update, context):
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
         return
-    device = context.args[0].lower().split('_')[0]
+    device = context.args[0].lower()
     message, status = xfu.whatis(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
