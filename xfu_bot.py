@@ -242,7 +242,7 @@ def specs(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='no')
 
 
 @run_async
