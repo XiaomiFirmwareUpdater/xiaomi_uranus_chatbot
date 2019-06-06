@@ -203,7 +203,7 @@ def models(update, context):
 
 @run_async
 def whatis(update, context):
-    """reply with latest available OSS kernel links"""
+    """reply with device name"""
     if not context.args:
         message = '*Usage: * `/whatis codename`\n' \
                   'Check how to use the bot with examples /help'
@@ -243,6 +243,28 @@ def specs(update, context):
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='no')
+
+
+@run_async
+def vendor(update, context):
+    """reply with latest fw+vendor links"""
+    if not context.args:
+        message = '*Usage: * `/vendor codename`\n' \
+                  'Check how to use the bot with examples /help'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower()
+    message, status = xfu.fetch_vendor(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong whatis request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
 
 
 @run_async
@@ -310,6 +332,9 @@ def main():
 
     specs_handler = CommandHandler('specs', specs)
     dispatcher.add_handler(specs_handler)
+
+    vendor_handler = CommandHandler('vendor', vendor)
+    dispatcher.add_handler(vendor_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)

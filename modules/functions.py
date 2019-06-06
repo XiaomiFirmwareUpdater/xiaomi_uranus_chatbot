@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 """Xiaomi Helper Bot general commands"""
 
-import json
+from bs4 import BeautifulSoup
 from requests import get
 
 CODENAMES = get(
@@ -20,24 +20,56 @@ def check_codename(codename):
     return found
 
 
+def set_branch(version):
+    """
+    checks MIUI branch based on MIUI version
+    :param version: MIUI version, stable/weekly
+    :return: branch
+    """
+    if 'V' in version:
+        branch = 'Stable'
+    else:
+        branch = 'Weekly'
+    return branch
+
+
+def set_region(file):
+    """
+    sets MIUI ROM region from ROM file
+    :param file: MIUI file, fastboot/recovery
+    :return: region
+    """
+    if 'eea_global' in file or 'EU' in file:
+        region = 'EEA Global'
+    elif 'in_global' in file or 'IN' in file:
+        region = 'India'
+    elif 'ru_global' in file or 'RU' in file:
+        region = 'Russia'
+    elif 'global' in file or 'MI' in file:
+        region = 'Global'
+    else:
+        region = 'China'
+    return region
+
+
 def load_fastboot_data(device):
     """
     load latest fasboot ROMs data form MIUI tracker json files
     :argument device - Xiaomi device codename
     :returns data - a list with merged stable, weekly, current, and EOL data
     """
-    stable_roms = json.loads(get(
+    stable_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "stable_fastboot/stable_fastboot.json").content)
-    weekly_roms = json.loads(get(
+        "stable_fastboot/stable_fastboot.json").json()
+    weekly_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "weekly_fastboot/weekly_fastboot.json").content)
-    eol_stable_roms = json.loads(get(
+        "weekly_fastboot/weekly_fastboot.json").json()
+    eol_stable_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "stable_fastboot/stable_fastboot.json").content)
-    eol_weekly_roms = json.loads(get(
+        "stable_fastboot/stable_fastboot.json").json()
+    eol_weekly_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "weekly_fastboot/weekly_fastboot.json").content)
+        "weekly_fastboot/weekly_fastboot.json").json()
     latest_stable = [i for i in stable_roms
                      if device == i['codename'].split('_')[0] and i['version']]
     latest_weekly = [i for i in weekly_roms
@@ -57,27 +89,27 @@ def fetch_recovery(device):
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    stable_roms = json.loads(get(
+    stable_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "stable_recovery/stable_recovery.json").content)
-    weekly_roms = json.loads(get(
+        "stable_recovery/stable_recovery.json").json()
+    weekly_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "weekly_recovery/weekly_recovery.json").content)
-    eol_stable_roms = json.loads(get(
+        "weekly_recovery/weekly_recovery.json").json()
+    eol_stable_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "stable_recovery/stable_recovery.json").content)
-    eol_weekly_roms = json.loads(get(
+        "stable_recovery/stable_recovery.json").json()
+    eol_weekly_roms = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "weekly_recovery/weekly_recovery.json").content)
-    latest_stable = [i for i in stable_roms
-                     if device == i['codename'].split('_')[0] and i['version']]
-    latest_weekly = [i for i in weekly_roms
-                     if device == i['codename'].split('_')[0] and i['version']]
-    eol_stable = [i for i in eol_stable_roms
-                  if device == i['codename'].split('_')[0] and i['version']]
-    eol_weekly = [i for i in eol_weekly_roms
-                  if device == i['codename'].split('_')[0] and i['version']]
-    data = latest_stable + latest_weekly + eol_stable + eol_weekly
+        "weekly_recovery/weekly_recovery.json").json()
+    stable_roms = [i for i in stable_roms
+                   if device == i['codename'].split('_')[0] and i['version']]
+    weekly_roms = [i for i in weekly_roms
+                   if device == i['codename'].split('_')[0] and i['version']]
+    eol_stable_roms = [i for i in eol_stable_roms
+                       if device == i['codename'].split('_')[0] and i['version']]
+    eol_weekly_roms = [i for i in eol_weekly_roms
+                       if device == i['codename'].split('_')[0] and i['version']]
+    data = stable_roms + weekly_roms + eol_stable_roms + eol_weekly_roms
     message = ''
     status = None
     if not data:
@@ -89,16 +121,12 @@ def fetch_recovery(device):
         version = i['version']
         android = i['android']
         download = i['download']
-        if 'V' in version:
-            rom_type = 'Stable'
-        else:
-            rom_type = 'Weekly'
-        message += "Latest {} {} ROM:\n" \
-                   "*Version:* `{}` \n" \
-                   "*Android:* {} \n" \
-                   "*Download*: [Here]({}) \n\n" \
-            .format(name, rom_type, version, android, download)
-    return message, status
+        rom_type = set_branch(version)
+        message += f"Latest {name} {rom_type} ROM:\n" \
+                   f"*Version:* `{version}` \n" \
+                   f"*Android:* {android} \n" \
+                   f"*Download*: [Here]({download}) \n\n"
+        return message, status
 
 
 def fetch_fastboot(device):
@@ -120,14 +148,11 @@ def fetch_fastboot(device):
         version = i['version']
         android = i['android']
         download = i['download']
-        if 'V' in version:
-            rom_type = 'Stable'
-        else:
-            rom_type = 'Weekly'
-        message += "Latest {} {} ROM:\n" \
-                   "*Version:* `{}` \n" \
-                   "*Android:* {} \n".format(name, rom_type, version, android)
-        message += "*Download*: [Here]({}) \n\n".format(download)
+        rom_type = set_branch(version)
+        message += f"Latest {name} {rom_type} ROM:\n" \
+                   f"*Version:* `{version}` \n" \
+                   f"*Android:* {android} \n"
+        message += f"*Download*: [Here]({download}) \n\n"
     return message, status
 
 
@@ -138,9 +163,9 @@ def gen_fw_link(device):
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    devices = json.loads(get(
+    devices = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/devices.json").content)
+        "xiaomifirmwareupdater.github.io/master/data/devices.json").json()
     status = None
     if not [i for i in devices if device == i['codename'].split('_')[0]]:
         message = "Wrong codename!"
@@ -170,22 +195,10 @@ def check_latest(device):
         return message, status
     for i in data:
         version = i['version']
-        if 'V' in version:
-            branch = 'Stable'
-        else:
-            branch = 'Weekly'
+        rom_type = set_branch(version)
         file = i['filename']
-        if 'eea_global' in file:
-            region = 'EEA Global'
-        elif 'in_global' in file:
-            region = 'India'
-        elif 'ru_global' in file:
-            region = 'Russia'
-        elif 'global' in file:
-            region = 'Global'
-        else:
-            region = 'China'
-        message += "Latest {} {}: `{}`\n".format(region, branch, version)
+        region = set_region(file)
+        message += f"Latest {region} {rom_type}: `{version}`\n"
     return message, status
 
 
@@ -207,7 +220,7 @@ def oss(device):
         status = False
         return message, status
     for item in data:
-        message += "{}\n".format(item.strip())
+        message += f"{item.strip()}\n"
     return message, status
 
 
@@ -218,17 +231,17 @@ def history(device):
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    devices = json.loads(get(
+    devices = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/devices.json").content)
+        "xiaomifirmwareupdater.github.io/master/data/devices.json").json()
     status = None
     if not [i for i in devices if device == i['codename'].split('_')[0]]:
         message = "Wrong codename!"
         return message, status
-    all_data = json.loads(get(
+    all_data = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
         "xiaomifirmwareupdater.github.io/master/data/devices/full/" +
-        "{}.json".format(device)).content)
+        f"{device}.json").json()
     stable = [i for i in all_data if i['branch'] == 'stable']
     weekly = [i for i in all_data if i['branch'] == 'weekly']
     stable.reverse()
@@ -241,8 +254,8 @@ def history(device):
     def gen_link(data):
         version = data['versions']['miui']
         file = '_'.join(data['filename'].split('_')[2:])
-        link = 'http://bigota.d.miui.com/{}/{}'.format(version, file)
-        reply = "[{}]({}) ".format(version, link)
+        link = f'http://bigota.d.miui.com/{version}/{file}'
+        reply = f"[{version}]({link}) "
         return reply
 
     message = '*Available Stable ROMs:*\n'
@@ -278,22 +291,22 @@ def check_models(device):
         message = "Wrong codename!"
         status = False
         return message, status
-    data = json.loads(get(
+    data = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomi_devices/models/models.json").text)
+        "xiaomi_devices/models/models.json").json()
     info = [i for i in data if device == i['codename']]
     if not info:
-        message = "Can't find info about {}!".format(device)
+        message = f"Can't find info about {device}!"
         status = False
         return message, status
     for item in info:
         codename = item['codename']
         internal = item['internal_name']
         name = item['name']
-        message += "*{} ({} - {}) Models:*\n".format(name, codename, internal)
+        message += f"*{name} ({codename} - {internal}) Models:*\n"
         models = item['models']
         for model, model_name in models.items():
-            message += "{}: {}\n".format(model, model_name)
+            message += f"{model}: {model_name}\n"
     status = True
     return message, status
 
@@ -315,13 +328,13 @@ def whatis(device):
     devices = get(url).json()
     info = {i: devices[i] for i in devices if device.lower() == i.lower()}
     if not info:
-        message = "Can't find info about {}!".format(device)
+        message = f"Can't find info about {device}!"
         status = False
         return message, status
     for key, value in info.items():
         codename = key
         name = value
-        message += "`{}` is *{}*\n".format(codename, name)
+        message += f"`{codename}` is *{name}*\n"
     status = True
     return message, status
 
@@ -346,7 +359,7 @@ def specs(device):
     except IndexError:
         info = {}
     if not info:
-        message = "Can't find info about {}!".format(device)
+        message = f"Can't find info about {device}!"
         status = False
         return message, status
     name = info['name']
@@ -386,17 +399,63 @@ def specs(device):
     usb = details['Comms'][0]['USB']
     sensors = details['Features'][0]['Sensors']
     battery = details['Battery'][0]['info']
-    message += "[{}]({}) - *{}*\n*Status*: {}\n*Network:* {}\n*Weight*: {}\n" \
-               "*Display*:\n{}\n*Chipset*:\n{}\n*Memory*: {}\n" \
-               "*Rear Camera*: {}\n*Front Camera*: {}\n*3.5mm jack*: {}\n" \
-               "*USB*: {}\n*Sensors*: {}\n*Battery*: {}" \
-        .format(name, url, device, device_status, network, weight, display, chipset,
-                memory, main_cam, front_cam, jack, usb, sensors, battery)
+    message += f"[{name}]({url}) - *{device}*\n*Status*: {device_status}\n*Network:* {network}\n" \
+               f"*Weight*: {weight}\n*Display*:\n{display}\n*Chipset*:\n{chipset}\n" \
+               f"*Memory*: {memory}\n*Rear Camera*: {main_cam}\n*Front Camera*: {front_cam}\n" \
+               f"*3.5mm jack*: {jack}\n*USB*: {usb}\n*Sensors*: {sensors}\n*Battery*: {battery}"
     try:
         charging = details['Battery'][0]['Charging']
-        message += "\n*Charging*: {}" \
-            .format(charging)
+        message += f"\n*Charging*: {charging}"
     except KeyError:
         pass
     status = True
+    return message, status
+
+
+def fetch_vendor(device):
+    """
+    generate latest firmware links for a device
+    :argument device - Xiaomi device codename
+    :returns message - telegram message string
+    :returns status - Boolean for device status whether found or not
+    """
+    if check_codename(device) is False:
+        message = "Wrong codename!"
+        status = False
+        return message, status
+    status = None
+    message = ''
+
+    def fetch(data, branch):
+        reply = ''
+        for i in data:
+            for codename, version in i.items():
+                version = version.split('_')[1]
+                url = 'https://github.com/TryHardDood/mi-vendor-updater/releases/' \
+                    f'tag/{codename}-{branch}'
+                response = get(url)
+                page = BeautifulSoup(response.content, 'html.parser')
+                links = [i for i in page.findAll('a') if version in str(i)]
+                if not links:
+                    continue
+                link = BeautifulSoup(str(links), 'html.parser')
+                file = link.a['href'].split('/')[-1]
+                rom_type = set_branch(version)
+                region = set_region(file)
+                reply += f"{region} {rom_type}: [{version}](https://github.com{link.a['href']})\n"
+        return reply
+    stable = get('https://raw.githubusercontent.com/TryHardDood/' +
+                 'mi-vendor-updater/master/stable.json').json()
+    stable = [i for i in stable if device in str(i)]
+    if not stable:
+        message = f"Can't find info about {device}!"
+        status = False
+        return message, status
+    message += fetch(stable, 'stable')
+    weekly = get('https://raw.githubusercontent.com/TryHardDood/' +
+                 'mi-vendor-updater/master/weekly.json').json()
+    weekly = [i for i in weekly if device in str(i)]
+    if weekly:
+        message += fetch(weekly, 'weekly')
+    message += '@MIUIVendorUpdater'
     return message, status
