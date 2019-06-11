@@ -224,6 +224,58 @@ def oss(device):
     return message, status
 
 
+def gen_rom_link(data):
+    """
+    generate MIUI rom link using filename
+    :argument data - json
+    :returns reply - telegram message string
+    """
+    version = data['versions']['miui']
+    file = '_'.join(data['filename'].split('_')[2:])
+    link = f'http://bigota.d.miui.com/{version}/{file}'
+    reply = f"[{version}]({link}) "
+    return reply
+
+
+def fetch_fw_data(device):
+    """
+    fetch MIUI data from site for device
+    :argument device - Xiaomi device codename
+    :returns reply - telegram message string
+    """
+    all_data = get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+        "xiaomifirmwareupdater.github.io/master/data/devices/full/" +
+        f"{device}.json").json()
+    stable = [i for i in all_data if i['branch'] == 'stable']
+    weekly = [i for i in all_data if i['branch'] == 'weekly']
+    stable.reverse()
+    weekly.reverse()
+    global_stable = [i for i in stable if i['type'] == 'Global']
+    china_stable = [i for i in stable if i['type'] == 'China']
+    global_weekly = [i for i in weekly if i['type'] == 'Global']
+    china_weekly = [i for i in weekly if i['type'] == 'China']
+    reply = '*Available Stable ROMs:*\n'
+    if global_stable:
+        reply += '_Global:_\n'
+        for i in global_stable:
+            reply += gen_rom_link(i)
+    if china_stable:
+        reply += '\n_China:_\n'
+        for i in china_stable:
+            reply += gen_rom_link(i)
+    reply += '\n*Available Weekly ROMs:*\n'
+    if global_weekly:
+        reply += '_Global:_\n'
+        for i in global_weekly:
+            reply += gen_rom_link(i)
+    if china_weekly:
+        reply += '\n_China:_\n'
+        for i in china_weekly:
+            reply += gen_rom_link(i)
+    return reply
+
+
 def history(device):
     """
     get all released MIUI rom for device
@@ -238,44 +290,9 @@ def history(device):
     if not [i for i in devices if device == i['codename'].split('_')[0]]:
         message = "Wrong codename!"
         return message, status
-    all_data = get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/devices/full/" +
-        f"{device}.json").json()
-    stable = [i for i in all_data if i['branch'] == 'stable']
-    weekly = [i for i in all_data if i['branch'] == 'weekly']
-    stable.reverse()
-    weekly.reverse()
-    global_stable = [i for i in stable if i['type'] == 'Global']
-    china_stable = [i for i in stable if i['type'] == 'China']
-    global_weekly = [i for i in weekly if i['type'] == 'Global']
-    china_weekly = [i for i in weekly if i['type'] == 'China']
-
-    def gen_link(data):
-        version = data['versions']['miui']
-        file = '_'.join(data['filename'].split('_')[2:])
-        link = f'http://bigota.d.miui.com/{version}/{file}'
-        reply = f"[{version}]({link}) "
-        return reply
-
     message = '*Available Stable ROMs:*\n'
-    if global_stable:
-        message += '_Global:_\n'
-        for i in global_stable:
-            message += gen_link(i)
-    if china_stable:
-        message += '\n_China:_\n'
-        for i in china_stable:
-            message += gen_link(i)
-    message += '\n*Available Weekly ROMs:*\n'
-    if global_weekly:
-        message += '_Global:_\n'
-        for i in global_weekly:
-            message += gen_link(i)
-    if china_weekly:
-        message += '\n_China:_\n'
-        for i in china_weekly:
-            message += gen_link(i)
+    data = fetch_fw_data(device)
+    message += data
     return message, status
 
 
