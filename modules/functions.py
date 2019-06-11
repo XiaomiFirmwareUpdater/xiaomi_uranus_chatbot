@@ -126,7 +126,7 @@ def fetch_recovery(device):
                    f"*Version:* `{version}` \n" \
                    f"*Android:* {android} \n" \
                    f"*Download*: [Here]({download}) \n\n"
-        return message, status
+    return message, status
 
 
 def fetch_fastboot(device):
