@@ -126,6 +126,7 @@ def fetch_recovery(device):
                    f"*Version:* `{version}` \n" \
                    f"*Android:* {android} \n" \
                    f"*Download*: [Here]({download}) \n\n"
+    message += '@MIUIUpdatesTracker'
     return message, status
 
 
@@ -153,6 +154,7 @@ def fetch_fastboot(device):
                    f"*Version:* `{version}` \n" \
                    f"*Android:* {android} \n"
         message += f"*Download*: [Here]({download}) \n\n"
+    message += '@MIUIUpdatesTracker'
     return message, status
 
 
@@ -175,7 +177,8 @@ def gen_fw_link(device):
     stable = site + 'stable/#'
     weekly = site + 'weekly/#'
     message = "*Stable Firmware*: [Here]({})\n" \
-              "*Weekly Firmware*: [Here]({})\n".format(stable + device, weekly + device)
+              "*Weekly Firmware*: [Here]({})\n" \
+              "@XiaomiFirmwareUpdater".format(stable + device, weekly + device)
     return message, status
 
 
