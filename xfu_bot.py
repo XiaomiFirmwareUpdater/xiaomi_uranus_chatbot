@@ -260,7 +260,7 @@ def vendor(update, context):
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
-        LOGGER.info("wrong whatis request: %s", update.message.text)
+        LOGGER.info("wrong vendor request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
