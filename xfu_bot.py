@@ -6,21 +6,10 @@ import logging
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
-import modules.functions as xfu
+from modules import gsmarena, mi_vendor_updater as mi_vendor,\
+    xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info,\
+    miui_updates_tracker as miui
 # from telegram.ext import MessageHandler, Filters
-
-IS_ADMIN = True
-IS_MORE = True
-try:
-    import admin.admin as admin
-except ImportError:
-    print("Can't find admin module, skipping it")
-    IS_ADMIN = False
-try:
-    import private.private as private
-except ImportError:
-    print("Can't find private commands module, skipping it")
-    IS_MORE = False
 
 # read bog config
 with open('config.json', 'r') as f:
@@ -32,6 +21,19 @@ logging.basicConfig(filename='current.log',
                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
+
+IS_ADMIN = True
+IS_MORE = True
+try:
+    from admin import admin
+except ImportError:
+    print("Can't find admin module, skipping it")
+    IS_ADMIN = False
+try:
+    from private import private
+except ImportError:
+    print("Can't find private commands module, skipping it")
+    IS_MORE = False
 
 
 @run_async
@@ -58,7 +60,7 @@ def recovery(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.fetch_recovery(device)
+    message, status = miui.fetch_recovery(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -80,7 +82,7 @@ def fastboot(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.fetch_fastboot(device)
+    message, status = miui.fetch_fastboot(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -102,7 +104,7 @@ def firmware(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.gen_fw_link(device)
+    message, status = mi_firmware.gen_fw_link(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -124,7 +126,7 @@ def latest(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.check_latest(device)
+    message, status = miui.check_latest(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -146,7 +148,7 @@ def oss(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.oss(device)
+    message, status = mi_oss.oss(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -168,7 +170,7 @@ def history(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower().split('_')[0]
-    message, status = xfu.history(device)
+    message, status = mi_firmware.history(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -190,7 +192,7 @@ def models(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower().split('_')[0]
-    message, status = xfu.check_models(device)
+    message, status = info.check_models(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -212,7 +214,7 @@ def whatis(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.whatis(device)
+    message, status = info.whatis(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -234,7 +236,7 @@ def specs(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower().split('_')[0]
-    message, status = xfu.specs(device)
+    message, status = gsmarena.specs(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -256,7 +258,7 @@ def vendor(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xfu.fetch_vendor(device)
+    message, status = mi_vendor.fetch_vendor(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
