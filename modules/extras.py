@@ -26,10 +26,37 @@ def check_codename(func):
             status = True
         elif [i for i in codenames if codename == i.split('_')[0].lower()]:
             status = True
-        if status is True:
+        if status:
             message, status = func(*args, **kwargs)
         else:
             message = "Wrong codename!"
+        return message, status
+    return wrapper
+
+
+@MWT(timeout=60*60)
+def load_names():
+    """
+    load names data from XFU repo
+    :return:
+    """
+    names = get(
+        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
+        "xiaomi_devices/names/names.json").json()
+    names = list(names.values())
+    return names
+
+
+def check_name(func):
+    """check if codename is correct"""
+    def wrapper(*args, **kwargs):
+        name = args[0].lower()
+        status = False
+        names = load_names()
+        if [i for i in names if name in i.lower()]:
+            message, status = func(*args, **kwargs)
+        else:
+            message = "Wrong name!"
         return message, status
     return wrapper
 

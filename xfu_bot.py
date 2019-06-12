@@ -226,6 +226,28 @@ def whatis(update, context):
 
 
 @run_async
+def codename(update, context):
+    """reply with device codename"""
+    if not context.args:
+        message = '*Usage: * `/codename device`\n' \
+                  'Check how to use the bot with examples /help'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = ' '.join(context.args).lower()
+    message, status = info.get_codename(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong codename request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
 def specs(update, context):
     """reply with device's specs"""
     if not context.args:
@@ -331,6 +353,9 @@ def main():
 
     whatis_handler = CommandHandler('whatis', whatis)
     dispatcher.add_handler(whatis_handler)
+
+    codename_handler = CommandHandler('codename', codename)
+    dispatcher.add_handler(codename_handler)
 
     specs_handler = CommandHandler('specs', specs)
     dispatcher.add_handler(specs_handler)

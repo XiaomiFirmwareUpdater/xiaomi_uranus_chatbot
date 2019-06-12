@@ -2,7 +2,7 @@
 """Xiaomi devices info"""
 
 from requests import get
-from .extras import check_codename
+from .extras import check_codename, check_name
 from .mwt import MWT
 
 
@@ -78,5 +78,34 @@ def whatis(device):
         codename = key
         name = value
         message += f"`{codename}` is *{name}*\n"
+    status = True
+    return message, status
+
+
+@MWT(timeout=60*60*6)
+@check_name
+def get_codename(name):
+    """
+    checks device codename based on its name
+    :argument name - Xiaomi device name
+    :returns message - telegram message string
+    :returns status - Boolean for device status whether found or not
+    """
+    message = ''
+    devices = fetch_codenames()
+    devices = {i: devices[i] for i in devices if '_' not in i}
+    info = {i: devices[i] for i in devices if str(devices[i].lower()).startswith(name.lower())}
+    if not info:
+        message = f"Can't find info about {name}!"
+        status = False
+        return message, status
+    if len(info) > 7:
+        message = f"{name} is too general! Please be more specific."
+        status = False
+        return message, status
+    for key, value in info.items():
+        codename = key
+        name = value
+        message += f"*{name}* is `{codename}`\n"
     status = True
     return message, status
