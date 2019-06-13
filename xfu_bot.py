@@ -104,7 +104,7 @@ def firmware(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = mi_firmware.gen_fw_link(device)
+    message, status = mi_firmware.gen_fw_link(device)[0]
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
