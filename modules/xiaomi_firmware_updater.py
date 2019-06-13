@@ -24,7 +24,8 @@ def check_codename(func):
         devices = fetch_devices()
         status = False
         if [i for i in devices if codename == i['codename'].split('_')[0]]:
-            message, status = func(*args, **kwargs)
+            message = func(*args, **kwargs)
+            status = True
         else:
             message = "Wrong codename!"
         return message, status
@@ -103,17 +104,6 @@ def fetch_fw_data(device):
     return reply
 
 
-@MWT(timeout=60*60*6)
-def load_firmware_devices():
-    """
-    load latest vendor data form json files
-    :returns data - a list with merged stable, weekly, current, and EOL data
-    """
-    data = get('https://raw.githubusercontent.com/XiaomiFirmwareUpdater/' +
-               'xiaomifirmwareupdater.github.io/master/data/devices.json').json()
-    return data
-
-
 @check_codename
 def history(device):
     """
@@ -122,12 +112,10 @@ def history(device):
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    devices = load_firmware_devices()
+    devices = fetch_devices()
     status = None
     if not [i for i in devices if device == i['codename'].split('_')[0]]:
         message = "Can't find info about codename!"
         return message, status
-    message = ''
-    data = fetch_fw_data(device)
-    message += data
+    message, status = fetch_fw_data(device)
     return message, status
