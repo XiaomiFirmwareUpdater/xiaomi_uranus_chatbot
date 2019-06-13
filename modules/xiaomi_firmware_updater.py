@@ -27,7 +27,7 @@ def check_codename(func):
             message = func(*args, **kwargs)
             status = True
         else:
-            message = "Wrong codename!"
+            message = f"Can't find anything about {codename}!"
         return message, status
     return wrapper
 
