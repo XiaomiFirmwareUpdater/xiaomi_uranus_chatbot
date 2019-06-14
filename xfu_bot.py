@@ -8,7 +8,7 @@ from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
 from modules import gsmarena, mi_vendor_updater as mi_vendor,\
     xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info,\
-    miui_updates_tracker as miui, xiaomi_eu
+    miui_updates_tracker as miui, xiaomi_eu, twrp
 # from telegram.ext import MessageHandler, Filters
 
 # read bog config
@@ -320,6 +320,28 @@ def eu(update, context):
 
 
 @run_async
+def get_twrp(update, context):
+    """reply with latest TWRP link"""
+    if not context.args:
+        message = '*Usage: * `/twrp codename`\n' \
+                  'Check how to use the bot with examples /help'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower()
+    message, status = twrp.twrp(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong twrp request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands with examples:\n" \
@@ -393,6 +415,9 @@ def main():
 
     eu_handler = CommandHandler('eu', eu)
     dispatcher.add_handler(eu_handler)
+
+    twrp_handler = CommandHandler('twrp', get_twrp)
+    dispatcher.add_handler(twrp_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
