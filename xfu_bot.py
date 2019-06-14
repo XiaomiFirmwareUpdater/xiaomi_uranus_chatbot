@@ -454,7 +454,7 @@ def main():
     twrp_handler = CommandHandler('twrp', get_twrp)
     dispatcher.add_handler(twrp_handler)
 
-    unlock_handler = CommandHandler('unlock', unlock)
+    unlock_handler = CommandHandler('unlockbl', unlock)
     dispatcher.add_handler(unlock_handler)
 
     tools_handler = CommandHandler('tools', tools)
@@ -475,7 +475,6 @@ def main():
     # dispatcher.add_handler(unknown_handler)
 
     updater.start_polling()  # start the bot
-
     updater.idle()
 
 

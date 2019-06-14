@@ -18,7 +18,7 @@ def unlock():
 
 def tools():
     """
-    device unlock info
+    various tools for Xiaomi devices
     :returns message - telegram message string
     """
     url = f'{WIKI}/Tools_for_Xiaomi_devices.html'
