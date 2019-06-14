@@ -36,7 +36,7 @@ def load_data():
 
 
 @check_codename
-def xiaomi_eu(device='whyred'):
+def xiaomi_eu(device):
     """
     extract latest Xiaomi.eu links for a device
     :argument device - Xiaomi device codename
@@ -55,7 +55,8 @@ def xiaomi_eu(device='whyred'):
     stable, weekly = load_data()
     stable_links = [i.find('link').text for i in stable[0].findall('item')]
     weekly_links = [i.find('link').text for i in weekly[0].findall('item')]
-    message = f'*{name}* - `{codename}` latest Xiaomi.eu ROMs:\n'
+    head = f'*{name}* - `{codename}` latest Xiaomi.eu ROMs:\n'
+    message = head
     try:
         stable_link = [i for i in stable_links if device in i][0]
         version = stable_link.split('/')[-2].split('_')[-2]
@@ -68,7 +69,7 @@ def xiaomi_eu(device='whyred'):
         message += f'[{version}]({weekly_link})\n'
     except IndexError:
         pass
-    if message == f'*{name}* - `{codename}` latest Xiaomi.eu ROMs:\n':
+    if message == head:
         message = f"Can't find info about {codename}!"
         status = False
         return message, status
