@@ -8,7 +8,7 @@ from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
 from modules import gsmarena, mi_vendor_updater as mi_vendor,\
     xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info,\
-    miui_updates_tracker as miui, xiaomi_eu, twrp
+    miui_updates_tracker as miui, xiaomi_eu, twrp, misc
 # from telegram.ext import MessageHandler, Filters
 
 # read bog config
@@ -342,6 +342,41 @@ def get_twrp(update, context):
 
 
 @run_async
+def unlock(update, context):
+    """reply with device unlock info"""
+    message = misc.unlock()
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
+def tools(update, context):
+    """reply with device unlock info"""
+    message = misc.tools()
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
+def guides(update, context):
+    """reply with device unlock info"""
+    message = misc.guides()
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
+def arb(update, context):
+    """reply with device unlock info"""
+    message = misc.arb()
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+@run_async
 def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands with examples:\n" \
@@ -418,6 +453,18 @@ def main():
 
     twrp_handler = CommandHandler('twrp', get_twrp)
     dispatcher.add_handler(twrp_handler)
+
+    unlock_handler = CommandHandler('unlock', unlock)
+    dispatcher.add_handler(unlock_handler)
+
+    tools_handler = CommandHandler('tools', tools)
+    dispatcher.add_handler(tools_handler)
+
+    guides_handler = CommandHandler('guides', guides)
+    dispatcher.add_handler(guides_handler)
+
+    arb_handler = CommandHandler('arb', arb)
+    dispatcher.add_handler(arb_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
