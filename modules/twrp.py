@@ -49,7 +49,7 @@ def twrp(device):
     link = data[device]['link']
     page = BeautifulSoup(get(link).content, 'html.parser').find('table').find('tr')
     download = page.find('a')
-    dl_link = f"https://dl.twrp.me/{download['href']}"
+    dl_link = f"https://dl.twrp.me{download['href']}"
     dl_file = download.text
     size = page.find("span", {"class": "filesize"}).text
     date = page.find("em").text.strip()
