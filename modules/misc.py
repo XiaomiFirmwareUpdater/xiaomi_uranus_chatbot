@@ -40,11 +40,12 @@ def arb():
     Anti-Rollback Protection unlock info
     :returns message - telegram message string
     """
-    message = f'[About Anti-Rollback Protection]' \
+    caption = f'[About Anti-Rollback Protection]' \
               f'({WIKI}/About_Anti-Rollback_Protection.html)\n' \
               f'[Xiaomi’s Anti-Rollback Protection Explained]' \
               f'({XDA}/xiaomi-anti-rollback-protection-brick-phone/)\n'
-    return message
+    photo = 'https://i.imgur.com/YsPIyyr.png'
+    return caption, photo
 
 
 def guides():

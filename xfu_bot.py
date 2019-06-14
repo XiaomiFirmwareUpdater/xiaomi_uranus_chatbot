@@ -371,10 +371,11 @@ def guides(update, context):
 @run_async
 def arb(update, context):
     """reply with device unlock info"""
-    message = misc.arb()
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    message, photo = misc.arb()
+    context.bot.send_photo(chat_id=update.message.chat_id, caption=message, photo=photo,
+                           reply_to_message_id=update.message.message_id,
+                           parse_mode='Markdown', disable_web_page_preview='yes')
+
 
 @run_async
 def usage(update, context):
