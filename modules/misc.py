@@ -1,8 +1,24 @@
 #!/usr/bin/env python3.7
 """Uranus Bot misc funcs"""
 
+from bs4 import BeautifulSoup
+from requests import get
+from .mwt import MWT
+
 WIKI = 'https://xiaomiwiki.github.io/wiki'
 XDA = 'https://www.xda-developers.com'
+
+
+@MWT(timeout=60*60*12)
+def arb_table():
+    """
+    auto get arb table from Xiaomi.eu website every 12h
+    :return: img link
+    """
+    response = get('https://xiaomi.eu/community/link-forums/roms-download.73/')
+    page = BeautifulSoup(response.content, 'html.parser')
+    img = page.findAll('img', {"class": "bbImage"})[1]['src']
+    return img
 
 
 def unlock():
@@ -44,7 +60,7 @@ def arb():
               f'({WIKI}/About_Anti-Rollback_Protection.html)\n' \
               f'[Xiaomi’s Anti-Rollback Protection Explained]' \
               f'({XDA}/xiaomi-anti-rollback-protection-brick-phone/)\n'
-    photo = 'https://i.imgur.com/YsPIyyr.png'
+    photo = arb_table()
     return caption, photo
 
 
