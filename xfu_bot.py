@@ -8,7 +8,7 @@ from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
 from modules import gsmarena, mi_vendor_updater as mi_vendor,\
     xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info,\
-    miui_updates_tracker as miui, xiaomi_eu, twrp, misc
+    miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
 # from telegram.ext import MessageHandler, Filters
 
 # read bog config
@@ -330,11 +330,55 @@ def get_twrp(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = twrp.twrp(device)
+    message, status = custom_recovery.twrp(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
         LOGGER.info("wrong twrp request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
+def get_pbrp(update, context):
+    """reply with latest PBRP link"""
+    if not context.args:
+        message = '*Usage: * `/pb codename`\n' \
+                  'Check how to use the bot with examples /help'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower()
+    message, status = custom_recovery.pbrp(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong pbrp request: %s", update.message.text)
+        return
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes')
+
+
+@run_async
+def get_ofrp(update, context):
+    """reply with latest OrangeFox link"""
+    if not context.args:
+        message = '*Usage: * `/of codename`\n' \
+                  'Check how to use the bot with examples /help'
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id,
+                                 parse_mode='Markdown')
+        return
+    device = context.args[0].lower()
+    message, status = custom_recovery.ofrp(device)
+    if status is False:
+        context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                                 reply_to_message_id=update.message.message_id)
+        LOGGER.info("wrong OF request: %s", update.message.text)
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
@@ -454,6 +498,12 @@ def main():
 
     twrp_handler = CommandHandler('twrp', get_twrp)
     dispatcher.add_handler(twrp_handler)
+
+    pbrp_handler = CommandHandler('pb', get_pbrp)
+    dispatcher.add_handler(pbrp_handler)
+
+    ofrp_handler = CommandHandler('of', get_ofrp)
+    dispatcher.add_handler(ofrp_handler)
 
     unlock_handler = CommandHandler('unlockbl', unlock)
     dispatcher.add_handler(unlock_handler)
