@@ -61,7 +61,7 @@ def twrp(device):
     return message, status
 
 
-@MWT(timeout=60*60*60)
+@MWT(timeout=60*60*6)
 def load_pbrp_data():
     """
     load latest xml files every six hours
@@ -96,7 +96,7 @@ def pbrp(device):
     return message, status
 
 
-@MWT(timeout=60*60*60)
+@MWT(timeout=60*60*2)
 def load_ofrp_data():
     """
     load latest json file every six hours
@@ -106,7 +106,7 @@ def load_ofrp_data():
     return data
 
 
-@MWT(timeout=60*60*6)
+@MWT(timeout=60*60*2)
 @check_codename
 def ofrp(device):
     """
