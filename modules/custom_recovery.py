@@ -99,12 +99,10 @@ def pbrp(device):
 @MWT(timeout=60*60*60)
 def load_ofrp_data():
     """
-    load latest xml files every six hours
+    load latest json file every six hours
     :returns data
     """
-    rss = get(
-        "https://sourceforge.net/projects/orangefox/rss?path=/").text
-    data = eT.fromstring(rss)
+    data = get("https://files.orangefox.website/Others/update.json").json()
     return data
 
 
@@ -118,14 +116,39 @@ def ofrp(device):
     :returns status - Boolean for device status whether found or not
     """
     data = load_ofrp_data()
-    links = [i.find('link').text for i in data[0].findall('item')]
-    try:
-        link = [i for i in links if device in i][0]
-    except IndexError:
+    stable = data['stable']
+    beta = data['beta']
+    stable_info = {key: value for key, value in stable.items() if device in key}
+    beta_info = {key: value for key, value in beta.items() if device in key}
+    message = ''
+    if not stable_info and not beta_info:
         message = f"Can't downloads for {device}!"
         status = False
         return message, status
-    file = link.split('/')[-2]
-    message = f'[{file}]({link})\n'
+    builds = {}
+    if stable_info:
+        builds.update({'stable': stable_info})
+    if beta_info:
+        builds.update({'beta': beta_info})
+    for build, data in builds.items():
+        name = data[device]['fullname']
+        file = data[device]['ver']
+        maintainer = data[device]['maintainer']
+        notes = data[device]['msg']
+        readme = data[device]['readme']
+        if build == 'stable':
+            branch = 'Stable'
+        else:
+            branch = 'Beta'
+        url = f'https://files.orangefox.website/OrangeFox-{branch}'
+        link = f'{url}/{device}/{file}'
+        if not message:
+            message += f'Latest {name} (`{device}`) OrangeFox Builds:\n' \
+                f'_Maintainer:_ {maintainer}\n'
+        message += f'*{branch}:* [{file}]({link})\n'
+        if notes:
+            message += f'_Notes:_ {notes}\n'
+        if readme:
+            message += f'README: [Here]({url}/{device}/{readme})\n'
     status = True
     return message, status
