@@ -87,7 +87,7 @@ def pbrp(device):
     try:
         link = [i for i in links if device in i][0]
     except IndexError:
-        message = f"Can't downloads for {device}!"
+        message = f"Can't find downloads for {device}!"
         status = False
         return message, status
     file = link.split('/')[-2]
