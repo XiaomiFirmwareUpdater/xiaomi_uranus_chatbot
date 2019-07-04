@@ -58,13 +58,13 @@ def xiaomi_eu(device):
     head = f'*{name}* - `{codename}` latest Xiaomi.eu ROMs:\n'
     message = head
     try:
-        stable_link = [i for i in stable_links if device in i][0]
+        stable_link = [i for i in stable_links if device == i.split('/')[-2].split('_')[2]][0]
         version = stable_link.split('/')[-2].split('_')[-2]
         message += f'[{version}]({stable_link})\n'
     except IndexError:
         pass
     try:
-        weekly_link = [i for i in weekly_links if device in i][0]
+        weekly_link = [i for i in weekly_links if device == i.split('/')[-2].split('_')[2]][0]
         version = weekly_link.split('/')[-2].split('_')[-2]
         message += f'[{version}]({weekly_link})\n'
     except IndexError:
