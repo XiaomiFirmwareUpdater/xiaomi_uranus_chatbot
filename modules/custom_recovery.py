@@ -122,7 +122,7 @@ def ofrp(device):
     beta_info = {key: value for key, value in beta.items() if device in key}
     message = ''
     if not stable_info and not beta_info:
-        message = f"Can't downloads for {device}!"
+        message = f"Can't find downloads for {device}!"
         status = False
         return message, status
     builds = {}
