@@ -93,7 +93,7 @@ def get_codename(name):
     """
     message = ''
     devices = fetch_codenames()
-    devices = {i: devices[i] for i in devices if '_' not in i}
+    devices = {i: devices[i] for i in devices if i.count('_') < 2}
     info = {i: devices[i] for i in devices if str(devices[i].lower()).startswith(name.lower())}
     if not info:
         message = f"Can't find info about {name}!"
