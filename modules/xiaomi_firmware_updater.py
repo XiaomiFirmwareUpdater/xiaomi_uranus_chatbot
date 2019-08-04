@@ -41,81 +41,25 @@ def gen_fw_link(device):
     :returns status - Boolean for device status whether found or not
     """
     status = None
-    site = 'https://xiaomifirmwareupdater.com/#'
-    stable = site + 'stable/#'
-    weekly = site + 'weekly/#'
-    message = "*Stable Firmware*: [Here]({})\n" \
-              "*Weekly Firmware*: [Here]({})\n" \
-              "@XiaomiFirmwareUpdater".format(stable + device, weekly + device)
+    site = 'https://xiaomifirmwareupdater.com'
+
+    message = f"[Latest Firmware]({site}/firmware/{device})\n" \
+        f"[Firmware Archive]({site}/archive/firmware/{device})\n" \
+        "@XiaomiFirmwareUpdater"
     return message, status
-
-
-def gen_rom_link(data):
-    """
-    generate MIUI rom link using filename
-    :argument data - json
-    :returns reply - telegram message string
-    """
-    version = data['versions']['miui']
-    file = '_'.join(data['filename'].split('_')[2:])
-    link = f'http://bigota.d.miui.com/{version}/{file}'
-    reply = f"[{version}]({link}) "
-    return reply
-
-
-@MWT(timeout=60*60)
-@check_codename
-def fetch_fw_data(device):
-    """
-    fetch MIUI data from site for device
-    :argument device - Xiaomi device codename
-    :returns reply - telegram message string
-    """
-    all_data = get(
-        "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/devices/full/" +
-        f"{device}.json").json()
-    stable = [i for i in all_data if i['branch'] == 'stable']
-    weekly = [i for i in all_data if i['branch'] == 'weekly']
-    stable.reverse()
-    weekly.reverse()
-    global_stable = [i for i in stable if i['type'] == 'Global']
-    china_stable = [i for i in stable if i['type'] == 'China']
-    global_weekly = [i for i in weekly if i['type'] == 'Global']
-    china_weekly = [i for i in weekly if i['type'] == 'China']
-    reply = '*Available Stable ROMs:*\n'
-    if global_stable:
-        reply += '_Global:_\n'
-        for i in global_stable:
-            reply += gen_rom_link(i)
-    if china_stable:
-        reply += '\n_China:_\n'
-        for i in china_stable:
-            reply += gen_rom_link(i)
-    reply += '\n*Available Weekly ROMs:*\n'
-    if global_weekly:
-        reply += '_Global:_\n'
-        for i in global_weekly:
-            reply += gen_rom_link(i)
-    if china_weekly:
-        reply += '\n_China:_\n'
-        for i in china_weekly:
-            reply += gen_rom_link(i)
-    return reply
 
 
 @check_codename
 def history(device):
     """
-    get all released MIUI rom for device
+    generate latest firmware links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    devices = fetch_devices()
     status = None
-    if not [i for i in devices if device == i['codename'].split('_')[0]]:
-        message = "Can't find info about codename!"
-        return message, status
-    message, status = fetch_fw_data(device)
+    site = 'https://xiaomifirmwareupdater.com'
+    message = f"[MIUI ROMs archive]({site}/archive/miui/{device})\n" \
+        "@MIUIUpdatesTracker"
     return message, status
+
