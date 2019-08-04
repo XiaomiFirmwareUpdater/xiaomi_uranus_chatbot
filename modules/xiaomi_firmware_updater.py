@@ -13,7 +13,7 @@ def fetch_devices():
     """
     devices = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/devices.json").json()
+        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.json").json()
     return devices
 
 
@@ -23,7 +23,7 @@ def check_codename(func):
         codename = args[0].lower()
         devices = fetch_devices()
         status = False
-        if [i for i in devices if codename == i['codename'].split('_')[0]]:
+        if [i for i in devices if codename.split('_')[0] == i]:
             message = func(*args, **kwargs)
             status = True
         else:
@@ -43,8 +43,8 @@ def gen_fw_link(device):
     status = None
     site = 'https://xiaomifirmwareupdater.com'
 
-    message = f"[Latest Firmware]({site}/firmware/{device})\n" \
-        f"[Firmware Archive]({site}/archive/firmware/{device})\n" \
+    message = f"[Latest Firmware]({site}/firmware/{device}/)\n" \
+        f"[Firmware Archive]({site}/archive/firmware/{device}/)\n" \
         "@XiaomiFirmwareUpdater"
     return message, status
 
@@ -59,7 +59,7 @@ def history(device):
     """
     status = None
     site = 'https://xiaomifirmwareupdater.com'
-    message = f"[MIUI ROMs archive]({site}/archive/miui/{device})\n" \
+    message = f"[MIUI ROMs archive]({site}/archive/miui/{device}/)\n" \
         "@MIUIUpdatesTracker"
     return message, status
 
