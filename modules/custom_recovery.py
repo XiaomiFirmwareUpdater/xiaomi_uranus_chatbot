@@ -102,7 +102,7 @@ def load_ofrp_data():
     load latest json file every six hours
     :returns data
     """
-    data = get("https://files.orangefox.website/Others/update.json").json()
+    data = get("https://files.orangefox.tech/Others/update.json").json()
     return data
 
 
@@ -140,7 +140,7 @@ def ofrp(device):
             branch = 'Stable'
         else:
             branch = 'Beta'
-        url = f'https://files.orangefox.website/OrangeFox-{branch}'
+        url = f'https://files.orangefox.tech/OrangeFox-{branch}'
         link = f'{url}/{device}/{file}'
         if not message:
             message += f'Latest {name} (`{device}`) OrangeFox Builds:\n' \
