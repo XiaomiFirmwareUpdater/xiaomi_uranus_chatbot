@@ -23,6 +23,6 @@ However, [the telegram bot](https://t.me/XiaomiGeeksBot) may contain some other 
 ```
 pip3 install -r requirements.txt
 ```
-- Copy the bot config file and rename it to config.json, place your bot API TOKEN at placeholder.
+- Copy the bot config file and rename it to config.yml, place your bot API TOKEN at placeholder.
 - Run the bot using `python3 xfu_bot.py`
 

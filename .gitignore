@@ -2,5 +2,6 @@
 *tmp*
 *__pycache__*
 config.json
+config.yml
 admin/
 private/
