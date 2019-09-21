@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 """MIUI Updates Tracker commands"""
 from requests import get
+import yaml
 from .mwt import MWT
 from .extras import check_codename, set_branch, set_region
 
@@ -8,22 +9,22 @@ from .extras import check_codename, set_branch, set_region
 @MWT(timeout=60*60)
 def load_fastboot_data(device):
     """
-    load latest fasboot ROMs data form MIUI tracker json files
+    load latest fasboot ROMs data form MIUI tracker yaml files
     :argument device - Xiaomi device codename
     :returns data - a list with merged stable, weekly, current, and EOL data
     """
-    stable_roms = get(
+    stable_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "stable_fastboot/stable_fastboot.json").json()
-    weekly_roms = get(
+        "stable_fastboot/stable_fastboot.yml").text, Loader=yaml.CLoader)
+    weekly_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "weekly_fastboot/weekly_fastboot.json").json()
-    eol_stable_roms = get(
+        "weekly_fastboot/weekly_fastboot.yml").text, Loader=yaml.CLoader)
+    eol_stable_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "stable_fastboot/stable_fastboot.json").json()
-    eol_weekly_roms = get(
+        "stable_fastboot/stable_fastboot.yml").text, Loader=yaml.CLoader)
+    eol_weekly_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "weekly_fastboot/weekly_fastboot.json").json()
+        "weekly_fastboot/weekly_fastboot.yml").text, Loader=yaml.CLoader)
     latest_stable = [i for i in stable_roms
                      if device == i['codename'].split('_')[0] and i['version']]
     latest_weekly = [i for i in weekly_roms
@@ -39,22 +40,22 @@ def load_fastboot_data(device):
 @MWT(timeout=60*60)
 def load_recovery_data(device):
     """
-    load latest recovery ROMs data form MIUI tracker json files
+    load latest recovery ROMs data form MIUI tracker yaml files
     :argument device - Xiaomi device codename
     :returns data - a list with merged stable, weekly, current, and EOL data
     """
-    stable_roms = get(
+    stable_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "stable_recovery/stable_recovery.json").json()
-    weekly_roms = get(
+        "stable_recovery/stable_recovery.yml").text, Loader=yaml.CLoader)
+    weekly_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/" +
-        "weekly_recovery/weekly_recovery.json").json()
-    eol_stable_roms = get(
+        "weekly_recovery/weekly_recovery.yml").text, Loader=yaml.CLoader)
+    eol_stable_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "stable_recovery/stable_recovery.json").json()
-    eol_weekly_roms = get(
+        "stable_recovery/stable_recovery.yml").text, Loader=yaml.CLoader)
+    eol_weekly_roms = yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/EOL/" +
-        "weekly_recovery/weekly_recovery.json").json()
+        "weekly_recovery/weekly_recovery.yml").text, Loader=yaml.CLoader)
     stable_roms = [i for i in stable_roms
                    if device == i['codename'].split('_')[0] and i['version']]
     weekly_roms = [i for i in weekly_roms
@@ -70,7 +71,7 @@ def load_recovery_data(device):
 @check_codename
 def fetch_recovery(device):
     """
-    fetch latest recovery ROMs for a device from MIUI updates tracker json files
+    fetch latest recovery ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
@@ -99,7 +100,7 @@ def fetch_recovery(device):
 @check_codename
 def fetch_fastboot(device):
     """
-    fetch latest fastboot ROMs for a device from MIUI updates tracker json files
+    fetch latest fastboot ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
@@ -128,7 +129,7 @@ def fetch_fastboot(device):
 @check_codename
 def check_latest(device):
     """
-    check latest version of ROMs for a device from MIUI updates tracker json files
+    check latest version of ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
