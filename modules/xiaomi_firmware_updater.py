@@ -14,7 +14,7 @@ def fetch_devices():
     """
     return yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.json").text, Loader=yaml.CLoader)
+        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.yml").text, Loader=yaml.CLoader)
 
 
 def check_codename(func):
