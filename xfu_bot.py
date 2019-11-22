@@ -286,7 +286,10 @@ def vendor(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = mi_vendor.fetch_vendor(device)
+    try:
+        message, status = mi_vendor.fetch_vendor(device)[0]
+    except ValueError:
+        message, status = mi_vendor.fetch_vendor(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
