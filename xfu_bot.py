@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 """Xiaomi Helper Bot"""
 
-import json
+import yaml
 import logging
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
@@ -12,8 +12,8 @@ from modules import gsmarena, mi_vendor_updater as mi_vendor,\
 # from telegram.ext import MessageHandler, Filters
 
 # read bog config
-with open('config.json', 'r') as f:
-    CONFIG = json.load(f)
+with open('config.yml', 'r') as f:
+    CONFIG = yaml.load(f, Loader=yaml.CLoader)
 TOKEN = CONFIG['tg_bot_token']
 
 # set logging

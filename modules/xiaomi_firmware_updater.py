@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 """Xiaomi Firmware Updater commands"""
 
+import yaml
 from requests import get
 from .mwt import MWT
 
@@ -11,10 +12,9 @@ def fetch_devices():
     fetches devices data every 6h
     :return: devices
     """
-    devices = get(
+    return yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.json").json()
-    return devices
+        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.yml").text, Loader=yaml.CLoader)
 
 
 def check_codename(func):
