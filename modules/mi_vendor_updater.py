@@ -3,6 +3,7 @@
 
 import yaml
 from requests import get
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from .mwt import MWT
 
@@ -24,12 +25,13 @@ def check_codename(func):
         codename = args[0].lower()
         devices = fetch_devices()
         status = False
+        reply_markup = None
         if [i for i in devices if codename.split('_')[0] == i]:
             message = func(*args, **kwargs)
             status = True
         else:
             message = f"Can't find vendor downloads for {codename}!"
-        return message, status
+        return message, status, reply_markup
 
     return wrapper
 
@@ -44,7 +46,9 @@ def fetch_vendor(device):
     """
     status = None
     site = 'https://xiaomifirmwareupdater.com'
-    message = f"[Latest Vendor]({site}/vendor/{device}/)\n" \
-              f"[Vendor Archive]({site}/archive/vendor/{device}/)\n" \
-              "@MIUIVendorUpdater"
-    return message, status
+    message = f"Available vendor downloads for `{device}`\n"
+    latest = InlineKeyboardButton(f"Latest Vendor", f"{site}/vendor/{device}/")
+    archive = InlineKeyboardButton(f"Vendor Archive", f"{site}/archive/vendor/{device}/")
+    channel = InlineKeyboardButton("MIUIVendorUpdater", url="https://t.me/MIUIVendorUpdater")
+    reply_markup = InlineKeyboardMarkup([[latest, archive], [channel]])
+    return message, status, reply_markup

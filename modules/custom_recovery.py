@@ -1,15 +1,17 @@
 #!/usr/bin/env python3.7
 """custom recovery downloads scraper"""
 
-from collections import OrderedDict
 import xml.etree.ElementTree as eT
 from bs4 import BeautifulSoup
+from collections import OrderedDict
 from requests import get
-from .mwt import MWT
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
 from .extras import check_codename
+from .mwt import MWT
 
 
-@MWT(timeout=60*60*6)
+@MWT(timeout=60 * 60 * 6)
 def load_twrp_data():
     """
     load devices info every six hours
@@ -33,7 +35,7 @@ def load_twrp_data():
     return sorted_data
 
 
-@MWT(timeout=60*60*6)
+@MWT(timeout=60 * 60 * 6)
 def twrp(device):
     """
     fetch latest twrp links for a device
@@ -42,11 +44,12 @@ def twrp(device):
     :returns status - Boolean for device status whether found or not
     """
     status = None
+    reply_markup = None
     data = load_twrp_data()
     if device not in list(data.keys()):
         message = f"Can't find downloads for {device}!"
         status = False
-        return message, status
+        return message, status, reply_markup
     name = data[device]['name']
     link = data[device]['link']
     page = BeautifulSoup(get(link).content, 'html.parser').find('table').find('tr')
@@ -56,12 +59,12 @@ def twrp(device):
     size = page.find("span", {"class": "filesize"}).text
     date = page.find("em").text.strip()
     message = f'*Latest TWRP for {name}:*\n' \
-        f'[{dl_file}]({dl_link}) - {size}\n' \
-        f'*Updated:* {date}\n'
-    return message, status
+              f'*Updated:* {date}\n'
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(f"{dl_file} - {size}", url=dl_link)]])
+    return message, status, reply_markup
 
 
-@MWT(timeout=60*60*6)
+@MWT(timeout=60 * 60 * 6)
 def load_pbrp_data():
     """
     load latest xml files every six hours
@@ -73,8 +76,7 @@ def load_pbrp_data():
     return data
 
 
-@MWT(timeout=60*60*6)
-@check_codename
+@MWT(timeout=60 * 60 * 6)
 def pbrp(device):
     """
     fetch latest pbrp links for a device
@@ -83,20 +85,22 @@ def pbrp(device):
     :returns status - Boolean for device status whether found or not
     """
     data = load_pbrp_data()
+    reply_markup = None
     links = [i.find('link').text for i in data[0].findall('item')]
     try:
         link = [i for i in links if device in i][0]
     except IndexError:
         message = f"Can't find downloads for {device}!"
         status = False
-        return message, status
+        return message, status, reply_markup
     file = link.split('/')[-2]
-    message = f'[{file}]({link})\n'
+    message = f'Latest [PitchBlack](https://pbrp.ml) Build for `{device}`:\n'
     status = True
-    return message, status
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(file, url=link)]])
+    return message, status, reply_markup
 
 
-@MWT(timeout=60*60*2)
+@MWT(timeout=60 * 60 * 2)
 def load_ofrp_data():
     """
     load latest json file every six hours
@@ -105,8 +109,7 @@ def load_ofrp_data():
     return get("https://files.orangefox.tech/Other/update_v2.json").json()
 
 
-@MWT(timeout=60*60*2)
-@check_codename
+@MWT(timeout=60 * 60 * 2)
 def ofrp(device):
     """
     fetch latest ofrp links for a device
@@ -115,25 +118,34 @@ def ofrp(device):
     :returns status - Boolean for device status whether found or not
     """
     data = load_ofrp_data()
+    reply_markup = None
     url = f'https://files.orangefox.tech/OrangeFox'
     try:
         info = data[device]
     except KeyError:
         message = f"Can't find downloads for {device}!"
         status = False
-        return message, status
-
+        return message, status, reply_markup
+    has_beta = False
     name = info['fullname']
     maintainer = info['maintainer']
     message = f'Latest {name} (`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n' \
-               f'_Maintainer:_ {maintainer}\n'
+              f'_Maintainer:_ {maintainer}\n'
     stable = info['stable_build']
-    message += f'*Stable:* [{stable}]({url}-Stable/{device}/{stable})\n'
-
+    stable_version = info['stable_ver']
+    stable_markup = InlineKeyboardButton(f"Stable {stable_version}", f"{url}-Stable/{device}/{stable}")
+    beta_markup = None
     try:
         beta = info['beta_build']
-        message += f'*Beta:* [{beta}]({url}-Beta/{device}/{beta})\n'
+        beta_version = info['beta_ver']
+        beta_markup = InlineKeyboardButton(f"Beta {beta_version}", f"{url}-Beta/{device}/{beta}")
+        has_beta = True
     except KeyError:
         pass
+    if has_beta:
+        keyboard = [[stable_markup, beta_markup]]
+    else:
+        keyboard = [[stable_markup]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     status = True
-    return message, status
+    return message, status, reply_markup

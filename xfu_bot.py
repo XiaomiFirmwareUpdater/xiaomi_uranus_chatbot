@@ -1,14 +1,16 @@
 #!/usr/bin/env python3.7
 """Xiaomi Helper Bot"""
 
-import yaml
 import logging
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
-from telegram.ext.dispatcher import run_async
-from modules import gsmarena, mi_vendor_updater as mi_vendor,\
-    xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info,\
+import yaml
+from modules import gsmarena, mi_vendor_updater as mi_vendor, \
+    xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info, \
     miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CommandHandler
+from telegram.ext import Updater
+from telegram.ext.dispatcher import run_async
+
 # from telegram.ext import MessageHandler, Filters
 
 # read bog config
@@ -35,6 +37,7 @@ except ImportError:
     print("Can't find private commands module, skipping it")
     IS_MORE = False
 
+HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
 
 @run_async
 def start(update, context):
@@ -42,11 +45,16 @@ def start(update, context):
     message = "Hello {}! \nI'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
               " and many more things!\nCheck how to use me by clicking /help" \
-              "\n Join @yshalsager_projects to get all updates and announcements about the bot!"\
+              "\n Join @yshalsager_projects to get all updates and announcements about the bot!" \
         .format(update.message.from_user.first_name)
+    keyboard = [
+        [InlineKeyboardButton("Join bot channel", url="https://t.me/yshalsager_projects"),
+         InlineKeyboardButton("Read bot usage", url=HELP_URL)]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown')
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -166,7 +174,7 @@ def oss(update, context):
 def history(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
-        message = '*Usage: * `/list device`\n' \
+        message = '*Usage: * `/archive device`\n' \
                   'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
@@ -287,9 +295,9 @@ def vendor(update, context):
         return
     device = context.args[0].lower()
     try:
-        message, status = mi_vendor.fetch_vendor(device)[0]
+        message, status, reply_markup = mi_vendor.fetch_vendor(device)[0]
     except ValueError:
-        message, status = mi_vendor.fetch_vendor(device)
+        message, status, reply_markup = mi_vendor.fetch_vendor(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -297,7 +305,8 @@ def vendor(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -333,7 +342,7 @@ def get_twrp(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = custom_recovery.twrp(device)
+    message, status, reply_markup = custom_recovery.twrp(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -341,7 +350,7 @@ def get_twrp(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', reply_markup=reply_markup)
 
 
 @run_async
@@ -355,7 +364,7 @@ def get_pbrp(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = custom_recovery.pbrp(device)
+    message, status, reply_markup = custom_recovery.pbrp(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -363,7 +372,8 @@ def get_pbrp(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -377,7 +387,7 @@ def get_ofrp(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = custom_recovery.ofrp(device)
+    message, status, reply_markup = custom_recovery.ofrp(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -385,34 +395,38 @@ def get_ofrp(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
 def unlock(update, context):
     """reply with device unlock info"""
-    message = misc.unlock()
+    message, reply_markup = misc.unlock()
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
 def tools(update, context):
     """reply with device unlock info"""
-    message = misc.tools()
+    message, reply_markup = misc.tools()
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
 def guides(update, context):
     """reply with device unlock info"""
-    message = misc.guides()
+    message, reply_markup = misc.guides()
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -427,10 +441,10 @@ def arb(update, context):
 @run_async
 def usage(update, context):
     """Help - How to use the bot"""
-    message = "Available commands with examples:\n" \
-              "[Check here](https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage)"
+    message = "Available commands with examples:\n"
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check here", url=HELP_URL)]])
     update.message.reply_text(message, parse_mode='Markdown',
-                              reply_to_message_id=update.message.message_id)
+                              reply_to_message_id=update.message.message_id, reply_markup=reply_markup)
 
 
 def error(update, context):
@@ -478,7 +492,7 @@ def main():
     oss_handler = CommandHandler('oss', oss)
     dispatcher.add_handler(oss_handler)
 
-    history_handler = CommandHandler('list', history)
+    history_handler = CommandHandler('archive', history)
     dispatcher.add_handler(history_handler)
 
     models_handler = CommandHandler('models', models)

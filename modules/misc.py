@@ -2,6 +2,7 @@
 """Uranus Bot misc funcs"""
 
 from bs4 import BeautifulSoup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from requests import get
 from .mwt import MWT
 
@@ -9,7 +10,7 @@ WIKI = 'https://xiaomiwiki.github.io/wiki'
 XDA = 'https://www.xda-developers.com'
 
 
-@MWT(timeout=60*60*12)
+@MWT(timeout=60 * 60 * 12)
 def arb_table():
     """
     auto get arb table from Xiaomi.eu website every 12h
@@ -26,10 +27,12 @@ def unlock():
     device unlock info
     :returns message - telegram message string
     """
-    message = f'[How to Unlock the bootloader]' \
-              f'({WIKI}/Unlock_the_bootloader.html)\n' \
-              f'[Mi Unlock Tool](http://en.miui.com/unlock/download_en.html)'
-    return message
+    message = "Unlocking bootloader guide and tool"
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("How to Unlock the bootloader", f'{WIKI}/Unlock_the_bootloader.html'),
+         InlineKeyboardButton("Mi Unlock Tool", f'http://en.miui.com/unlock/download_en.html')]
+    ])
+    return message, reply_markup
 
 
 def tools():
@@ -38,17 +41,18 @@ def tools():
     :returns message - telegram message string
     """
     url = f'{WIKI}/Tools_for_Xiaomi_devices.html'
-    message = f'*Official Tools*\n' \
-        f'[Mi Flash Tool]({url}#miflash-by-xiaomi)\n' \
-        f'[MiFlash Pro]({url}#miflash-pro-by-xiaomi)\n' \
-        f'[Mi Unlock Tool]({url}#miunlock-by-xiaomi)\n' \
-        '\n*Unofficial Tools*\n' \
-        f'[XiaomiTool]({url}#xiaomitool-v2-by-francesco-tescari)\n' \
-        f'[XiaomiADB]({url}#xiaomiadb-by-francesco-tescari)\n' \
-        f'[MiUnlockTool]({url}#miunlocktool-by-francesco-tescari)\n' \
-        f'[Xiaomi ADB/Fastboot Tools]({url}#xiaomi-adbfastboot-tools-by-saki_eu)\n' \
-        f'\n *More Tools*: [Here]({url})'
-    return message
+    message = "Tools for Xiaomi devices"
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Mi Flash Tool", f'{url}#miflash-by-xiaomi'),
+         InlineKeyboardButton("MiFlash Pro", f'{url}#miflash-pro-by-xiaomi'),
+         InlineKeyboardButton("Mi Unlock Tool", f'{url}#miunlock-by-xiaomi')],
+        [InlineKeyboardButton("XiaomiTool", f'{url}#xiaomitool-v2-by-francesco-tescari'),
+         InlineKeyboardButton("XiaomiADB", f'{url}#xiaomiadb-by-francesco-tescari'),
+         InlineKeyboardButton("Unofficial MiUnlock", f'{url}#miunlocktool-by-francesco-tescari')],
+        [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools", f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
+         InlineKeyboardButton("More Tools", f'{url}')]
+    ])
+    return message, reply_markup
 
 
 def arb():
@@ -69,10 +73,12 @@ def guides():
     various useful guides
     :returns message - telegram message string
     """
-    message = f'[Flashing official ROMs]' \
-        f'({WIKI}/Flash_official_ROMs.html)\n' \
-        f'[Flashing TWRP & custom ROMs]({WIKI}/Flash_TWRP_and_custom_ROMs.html)\n' \
-        f'*Disable ads in MIUI*: [Wiki]({WIKI}/Disable_ads_in_MIUI.html) - ' \
-        f'[XDA]({XDA}/xiaomi-miui-ads-hamper-user-experience/)\n' \
-        f'[Fix notifications on MIUI]({WIKI}/Fix_notifications_on_MIUI.html)\n'
-    return message
+    message = "Guides for Xiaomi devices"
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Flashing official ROMs", f'{WIKI}/Flash_official_ROMs.html')],
+        [InlineKeyboardButton("Flashing TWRP & custom ROMs", f'{WIKI}/Flash_TWRP_and_custom_ROMs.html')],
+        [InlineKeyboardButton("Fix notifications on MIUI", f'{WIKI}/Fix_notifications_on_MIUI.html')],
+        [InlineKeyboardButton("Disable MIUI Ads 1", f'{WIKI}/Disable_ads_in_MIUI.html'),
+         InlineKeyboardButton("Disable MIUI Ads 2", f'{XDA}/xiaomi-miui-ads-hamper-user-experience/')]
+    ])
+    return message, reply_markup
