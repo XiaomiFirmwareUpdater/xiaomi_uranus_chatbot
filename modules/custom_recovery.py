@@ -102,7 +102,7 @@ def load_ofrp_data():
     load latest json file every six hours
     :returns data
     """
-    return get("https://files.orangefox.tech/Others/update.json").json()
+    return get("https://files.orangefox.tech/Other/update_v2.json").json()
 
 
 @MWT(timeout=60*60*2)
@@ -115,39 +115,25 @@ def ofrp(device):
     :returns status - Boolean for device status whether found or not
     """
     data = load_ofrp_data()
-    stable = data['stable']
-    beta = data['beta']
-    stable_info = {key: value for key, value in stable.items() if device in key}
-    beta_info = {key: value for key, value in beta.items() if device in key}
-    message = ''
-    if not stable_info and not beta_info:
+    url = f'https://files.orangefox.tech/OrangeFox'
+    try:
+        info = data[device]
+    except KeyError:
         message = f"Can't find downloads for {device}!"
         status = False
         return message, status
-    builds = {}
-    if stable_info:
-        builds.update({'stable': stable_info})
-    if beta_info:
-        builds.update({'beta': beta_info})
-    for build, data in builds.items():
-        name = data[device]['fullname']
-        file = data[device]['ver']
-        maintainer = data[device]['maintainer']
-        notes = data[device]['msg']
-        readme = data[device]['readme']
-        if build == 'stable':
-            branch = 'Stable'
-        else:
-            branch = 'Beta'
-        url = f'https://files.orangefox.tech/OrangeFox-{branch}'
-        link = f'{url}/{device}/{file}'
-        if not message:
-            message += f'Latest {name} (`{device}`) OrangeFox Builds:\n' \
-                f'_Maintainer:_ {maintainer}\n'
-        message += f'*{branch}:* [{file}]({link})\n'
-        if notes:
-            message += f'_Notes:_ {notes}\n'
-        if readme:
-            message += f'README: [Here]({url}/{device}/{readme})\n'
+
+    name = info['fullname']
+    maintainer = info['maintainer']
+    message = f'Latest {name} (`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n' \
+               f'_Maintainer:_ {maintainer}\n'
+    stable = info['stable_build']
+    message += f'*Stable:* [{stable}]({url}-Stable/{device}/{stable})\n'
+
+    try:
+        beta = info['beta_build']
+        message += f'*Beta:* [{beta}]({url}-Beta/{device}/{beta})\n'
+    except KeyError:
+        pass
     status = True
     return message, status

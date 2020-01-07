@@ -42,7 +42,7 @@ def start(update, context):
     message = "Hello {}! \nI'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
               " and many more things!\nCheck how to use me by clicking /help" \
-              "\n Join @XiaomiGeeks to get all updates and announcements about the bot!"\
+              "\n Join @yshalsager_projects to get all updates and announcements about the bot!"\
         .format(update.message.from_user.first_name)
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
