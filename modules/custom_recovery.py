@@ -132,18 +132,16 @@ def ofrp(device):
     message = f'Latest {name} (`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n' \
               f'_Maintainer:_ {maintainer}\n'
     stable = info['stable_build']
-    stable_version = info['stable_ver']
-    stable_markup = InlineKeyboardButton(f"Stable {stable_version}", f"{url}-Stable/{device}/{stable}")
+    stable_markup = InlineKeyboardButton(f"{stable}", f"{url}-Stable/{device}/{stable}")
     beta_markup = None
     try:
         beta = info['beta_build']
-        beta_version = info['beta_ver']
-        beta_markup = InlineKeyboardButton(f"Beta {beta_version}", f"{url}-Beta/{device}/{beta}")
+        beta_markup = InlineKeyboardButton(f"{beta}", f"{url}-Beta/{device}/{beta}")
         has_beta = True
     except KeyError:
         pass
     if has_beta:
-        keyboard = [[stable_markup, beta_markup]]
+        keyboard = [[stable_markup], [beta_markup]]
     else:
         keyboard = [[stable_markup]]
     reply_markup = InlineKeyboardMarkup(keyboard)
