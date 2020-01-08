@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.7
 """Xiaomi EU links scraper"""
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import xml.etree.ElementTree as eT
 from requests import get
 from .extras import check_codename
@@ -44,6 +45,7 @@ def xiaomi_eu(device):
     :returns status - Boolean for device status whether found or not
     """
     status = None
+    reply_markup = None
     devices = fetch_devices()
     codename = device
     info = {i: devices[i] for i in devices if i == codename}
@@ -57,22 +59,24 @@ def xiaomi_eu(device):
     weekly_links = [i.find('link').text for i in weekly[0].findall('item')]
     head = f'*{name}* - `{codename}` latest Xiaomi.eu ROMs:\n'
     message = head
+    keyboard = []
     try:
         stable_link = [i for i in stable_links if device == i.split('/')[-2].split('_')[2]][0]
         version = stable_link.split('/')[-2].split('_')[-2]
-        message += f'[{version}]({stable_link})\n'
+        stable_markup = InlineKeyboardButton(f"{version}", f"{stable_link}")
+        keyboard.append([stable_markup])
     except IndexError:
         pass
     try:
         weekly_link = [i for i in weekly_links if device == i.split('/')[-2].split('_')[2]][0]
         version = weekly_link.split('/')[-2].split('_')[-2]
-        message += f'[{version}]({weekly_link})\n'
+        weekly_markup = InlineKeyboardButton(f"{version}", f"{weekly_link}")
+        keyboard.append([weekly_markup])
     except IndexError:
         pass
-    if message == head:
+    if not keyboard:
         message = f"Can't find info about {codename}!"
         status = False
-        return message, status
-    return message, status
-
-
+        return message, status, reply_markup
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    return message, status, reply_markup

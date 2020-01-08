@@ -68,7 +68,7 @@ def recovery(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = miui.fetch_recovery(device)
+    message, status, reply_markup = miui.fetch_recovery(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -76,7 +76,8 @@ def recovery(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -90,7 +91,7 @@ def fastboot(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = miui.fetch_fastboot(device)
+    message, status, reply_markup = miui.fetch_fastboot(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -98,7 +99,8 @@ def fastboot(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -113,9 +115,9 @@ def firmware(update, context):
         return
     device = context.args[0].lower()
     try:
-        message, status = mi_firmware.gen_fw_link(device)[0]
+        message, status, reply_markup = mi_firmware.gen_fw_link(device)[0]
     except ValueError:
-        message, status = mi_firmware.gen_fw_link(device)
+        message, status, reply_markup = mi_firmware.gen_fw_link(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -123,7 +125,8 @@ def firmware(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -137,7 +140,7 @@ def latest(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = miui.check_latest(device)
+    message, status, reply_markup = miui.check_latest(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -182,9 +185,9 @@ def history(update, context):
         return
     device = context.args[0].lower().split('_')[0]
     try:
-        message, status = mi_firmware.history(device)[0]
+        message, status, reply_markup = miui.history(device)[0]
     except ValueError:
-        message, status = mi_firmware.history(device)
+        message, status, reply_markup = miui.history(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -192,7 +195,8 @@ def history(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async
@@ -228,7 +232,7 @@ def whatis(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = info.whatis(device)
+    message, status, reply_markup = info.whatis(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -320,7 +324,7 @@ def eu(update, context):
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower()
-    message, status = xiaomi_eu.xiaomi_eu(device)
+    message, status, reply_markup = xiaomi_eu.xiaomi_eu(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
@@ -328,7 +332,8 @@ def eu(update, context):
         return
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
 
 
 @run_async

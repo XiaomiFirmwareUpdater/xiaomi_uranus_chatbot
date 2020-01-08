@@ -21,16 +21,20 @@ def check_codename(func):
     def wrapper(*args, **kwargs):
         codename = args[0].lower()
         status = False
+        reply_markup = None
         codenames = load_codenames()
         if [i for i in codenames if codename == i.lower()]:
             status = True
         elif [i for i in codenames if codename == i.split('_')[0].lower()]:
             status = True
         if status:
-            message, status = func(*args, **kwargs)
+            try:
+                message, status, reply_markup = func(*args, **kwargs)
+            except ValueError:
+                message, status = func(*args, **kwargs)
         else:
             message = "Wrong codename!"
-        return message, status
+        return message, status, reply_markup
     return wrapper
 
 
@@ -86,7 +90,9 @@ def set_region(file):
         region = 'India'
     elif 'ru_global' in file or 'RU' in file:
         region = 'Russia'
-    elif 'global' in file or 'MI' in file:
+    elif 'id_global' in file or 'ID' in file:
+        region = 'Indonesia'
+    elif 'global' in file or 'Global_' in file:
         region = 'Global'
     else:
         region = 'China'
