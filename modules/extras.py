@@ -78,21 +78,22 @@ def set_branch(version):
     return branch
 
 
-def set_region(file):
+def set_region(filename, version):
     """
     sets MIUI ROM region from ROM file
-    :param file: MIUI file, fastboot/recovery
+    :param filename: MIUI file, fastboot/recovery
+    :param version: MIUI version
     :return: region
     """
-    if 'eea_global' in file or 'EU' in file:
-        region = 'EEA Global'
-    elif 'in_global' in file or 'IN' in file:
-        region = 'India'
-    elif 'ru_global' in file or 'RU' in file:
-        region = 'Russia'
-    elif 'id_global' in file or 'ID' in file:
+    if 'eea_global' in filename or 'EU' in version:
+        region = 'EEA'
+    elif 'id_global' in filename or 'ID' in version:
         region = 'Indonesia'
-    elif 'global' in file or 'Global_' in file:
+    elif 'in_global' in filename or 'IN' in version:
+        region = 'India'
+    elif 'ru_global' in filename or 'RU' in version:
+        region = 'Russia'
+    elif 'global' in filename or 'MI' in version:
         region = 'Global'
     else:
         region = 'China'

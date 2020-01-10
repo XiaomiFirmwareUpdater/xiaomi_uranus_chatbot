@@ -101,7 +101,7 @@ def fetch_recovery(device):
         version = i['version']
         android = i['android']
         download = i['download']
-        region = set_region(download.split('/')[-1])
+        region = set_region(download.split('/')[-1], version)
         keyboard.append([InlineKeyboardButton(f"{region} {version} | {android}", f"{download}")])
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
@@ -117,7 +117,6 @@ def fetch_fastboot(device):
     :returns message - telegram message string
     :returns status - Boolean for device status whether found or not
     """
-    message = ''
     status = None
     keyboard = []
     data = load_fastboot_data(device)
@@ -131,7 +130,7 @@ def fetch_fastboot(device):
         version = i['version']
         android = i['android']
         download = i['download']
-        region = set_region(download.split('/')[-1])
+        region = set_region(download.split('/')[-1], version)
         keyboard.append([InlineKeyboardButton(f"{region} {version} | {android}", f"{download}")])
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
@@ -159,7 +158,7 @@ def check_latest(device):
         version = i['version']
         rom_type = set_branch(version)
         file = i['filename']
-        region = set_region(file)
+        region = set_region(file, version)
         message += f"{region} {rom_type}: `{version}`\n"
     return message, status
 
