@@ -204,13 +204,13 @@ def models(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
         message = '*Usage: * `/models codename`\n' \
-                  'Check how to use the bot with examples /help'
+                 'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')
         return
     device = context.args[0].lower().split('_')[0]
-    message, status = info.check_models(device)
+    message, status, reply_markup = info.check_models(device)
     if status is False:
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id)
