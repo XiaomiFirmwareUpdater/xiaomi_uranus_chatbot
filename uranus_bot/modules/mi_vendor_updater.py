@@ -4,11 +4,11 @@ from uuid import uuid4
 
 import yaml
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
-    ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup,\
+    InlineQueryResultArticle, InputTextMessageContent, ParseMode
 
-from .mwt import MWT
-from .extras import check_codename
+from uranus_bot.modules.mwt import MWT
+from uranus_bot.modules.extras import check_codename
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -19,7 +19,8 @@ def fetch_devices():
     """
     return yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/vendor_codenames.yml").text, Loader=yaml.CLoader)
+        "xiaomifirmwareupdater.github.io/master/data/vendor_codenames.yml")
+                     .text, Loader=yaml.CLoader)
 
 
 @check_codename(fetch_devices(), markup=True)
@@ -42,5 +43,4 @@ def fetch_vendor(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup

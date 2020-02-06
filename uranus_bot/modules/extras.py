@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.7
 """Uranus Bot helper funcs"""
 from requests import get
-from .mwt import MWT
+from uranus_bot.modules.mwt import MWT
 
 
 @MWT(timeout=60 * 60)
@@ -35,12 +35,11 @@ def check_codename(devices=load_codenames(), markup=False):
                     message = ""
                     reply_markup = None
                 return message, reply_markup
+            if matched_devices:
+                message = function(*args, **kwargs)
             else:
-                if matched_devices:
-                    message = function(*args, **kwargs)
-                else:
-                    message = ""
-                return message
+                message = ""
+            return message
 
         return wrapper
 

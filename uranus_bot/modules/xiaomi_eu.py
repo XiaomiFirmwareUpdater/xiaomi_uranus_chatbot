@@ -1,13 +1,16 @@
 #!/usr/bin/env python3.7
 """Xiaomi EU links scraper"""
+# pylint: disable=too-many-locals
+
+import xml.etree.ElementTree as eT
 from uuid import uuid4
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
-    ParseMode
-import xml.etree.ElementTree as eT
 from requests import get
-from .extras import check_codename
-from .mwt import MWT
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, \
+    InlineQueryResultArticle, InputTextMessageContent, ParseMode
+
+from uranus_bot.modules.extras import check_codename
+from uranus_bot.modules.mwt import MWT
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -81,5 +84,4 @@ def xiaomi_eu(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup

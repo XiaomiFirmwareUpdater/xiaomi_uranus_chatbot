@@ -6,7 +6,7 @@ import re
 from os.path import dirname
 
 import yaml
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler, InlineQueryHandler
 from telegram.ext import Updater
 from telegram.ext.dispatcher import run_async
@@ -50,12 +50,14 @@ HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
 
 
 def send_markdown_message(update, context, message, disable_web_preview='yes'):
+    """ Send telegram message in markdown"""
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview=disable_web_preview)
 
 
 def send_reply_markup_message(update, context, message, reply_markup):
+    """ Send telegram message with markup keyboard"""
     context.bot.send_message(chat_id=update.message.chat_id, text=message,
                              reply_to_message_id=update.message.message_id,
                              parse_mode='Markdown', disable_web_page_preview='yes',
@@ -282,7 +284,7 @@ def vendor(update, context):
 
 
 @run_async
-def eu(update, context):
+def miui_eu(update, context):
     """reply with latest Xiaomi.eu links"""
     if not context.args:
         message = '*Usage: * `/eu codename`\n' \
@@ -431,13 +433,16 @@ def main():
     dispatcher = updater.dispatcher
     # This class dispatches all kinds of updates to its registered handlers.
 
-    commands = [CommandHandler('start', start), CommandHandler("help", usage), CommandHandler('recovery', recovery),
-                CommandHandler('fastboot', fastboot), CommandHandler('firmware', firmware),
-                CommandHandler('latest', latest), CommandHandler('oss', oss), CommandHandler('archive', history),
-                CommandHandler('models', models), CommandHandler('whatis', whatis), CommandHandler('specs', specs),
-                CommandHandler('codename', codename), CommandHandler('vendor', vendor), CommandHandler('eu', eu),
-                CommandHandler('twrp', get_twrp), CommandHandler('pb', get_pbrp), CommandHandler('of', get_ofrp),
-                CommandHandler('unlockbl', unlock), CommandHandler('tools', tools), CommandHandler('arb', arb),
+    commands = [CommandHandler('start', start), CommandHandler("help", usage),
+                CommandHandler('recovery', recovery), CommandHandler('fastboot', fastboot),
+                CommandHandler('firmware', firmware), CommandHandler('latest', latest),
+                CommandHandler('oss', oss), CommandHandler('archive', history),
+                CommandHandler('models', models), CommandHandler('whatis', whatis),
+                CommandHandler('specs', specs), CommandHandler('codename', codename),
+                CommandHandler('vendor', vendor), CommandHandler('eu', miui_eu),
+                CommandHandler('twrp', get_twrp), CommandHandler('pb', get_pbrp),
+                CommandHandler('of', get_ofrp), CommandHandler('unlockbl', unlock),
+                CommandHandler('tools', tools), CommandHandler('arb', arb),
                 CommandHandler('guides', guides), CommandHandler('oss', oss)]
     for command in commands:
         dispatcher.add_handler(command)

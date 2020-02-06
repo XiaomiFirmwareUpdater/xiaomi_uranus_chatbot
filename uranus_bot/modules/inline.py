@@ -1,6 +1,9 @@
 """Uranus Bot inline mode"""
+# pylint: disable=too-many-branches
+
 from uranus_bot.modules.xiaomi_firmware_updater import gen_fw_link
-from uranus_bot.modules.miui_updates_tracker import fetch_recovery, fetch_fastboot, history, check_latest
+from uranus_bot.modules.miui_updates_tracker import fetch_recovery,\
+    fetch_fastboot, history, check_latest
 from uranus_bot.modules.mi_vendor_updater import fetch_vendor
 from uranus_bot.modules.xiaomi_eu import xiaomi_eu
 from uranus_bot.modules.custom_recovery import twrp, ofrp, pbrp
@@ -10,6 +13,7 @@ from uranus_bot.modules.misc import guides, tools, unlock
 
 
 def process_query(command, query_request):
+    """Process inline query"""
     results = None
     if command == "firmware":
         results = gen_fw_link(query_request, inline=True)

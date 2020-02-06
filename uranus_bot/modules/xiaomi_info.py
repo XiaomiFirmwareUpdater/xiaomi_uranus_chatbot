@@ -5,8 +5,8 @@ from uuid import uuid4
 from requests import get
 from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode
 
-from .extras import check_codename, check_name
-from .mwt import MWT
+from uranus_bot.modules.extras import check_codename, check_name
+from uranus_bot.modules.mwt import MWT
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -49,8 +49,7 @@ def check_models(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN))]
         return results
-    else:
-        return message
+    return message
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -89,8 +88,7 @@ def whatis(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN))]
         return results
-    else:
-        return message
+    return message
 
 
 @MWT(timeout=60 * 60 * 6)

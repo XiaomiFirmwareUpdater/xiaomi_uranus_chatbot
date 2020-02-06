@@ -3,10 +3,10 @@
 from uuid import uuid4
 
 from bs4 import BeautifulSoup
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
-    ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup,\
+    InlineQueryResultArticle, InputTextMessageContent, ParseMode
 from requests import get
-from .mwt import MWT
+from uranus_bot.modules.mwt import MWT
 
 WIKI = 'https://xiaomiwiki.github.io/wiki'
 XDA = 'https://www.xda-developers.com'
@@ -41,8 +41,7 @@ def unlock(inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup
 
 
 def tools(inline=False):
@@ -58,8 +57,10 @@ def tools(inline=False):
          InlineKeyboardButton("Mi Unlock Tool", f'{url}#miunlock-by-xiaomi')],
         [InlineKeyboardButton("XiaomiTool", f'{url}#xiaomitool-v2-by-francesco-tescari'),
          InlineKeyboardButton("XiaomiADB", f'{url}#xiaomiadb-by-francesco-tescari'),
-         InlineKeyboardButton("Unofficial MiUnlock", f'{url}#miunlocktool-by-francesco-tescari')],
-        [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools", f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
+         InlineKeyboardButton("Unofficial MiUnlock",
+                              f'{url}#miunlocktool-by-francesco-tescari')],
+        [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
+                              f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
          InlineKeyboardButton("More Tools", f'{url}')]
     ])
     if inline:
@@ -69,8 +70,7 @@ def tools(inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup
 
 
 def arb():
@@ -94,10 +94,13 @@ def guides(inline=False):
     message = "Guides for Xiaomi devices"
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Flashing official ROMs", f'{WIKI}/Flash_official_ROMs.html')],
-        [InlineKeyboardButton("Flashing TWRP & custom ROMs", f'{WIKI}/Flash_TWRP_and_custom_ROMs.html')],
-        [InlineKeyboardButton("Fix notifications on MIUI", f'{WIKI}/Fix_notifications_on_MIUI.html')],
+        [InlineKeyboardButton("Flashing TWRP & custom ROMs",
+                              f'{WIKI}/Flash_TWRP_and_custom_ROMs.html')],
+        [InlineKeyboardButton("Fix notifications on MIUI",
+                              f'{WIKI}/Fix_notifications_on_MIUI.html')],
         [InlineKeyboardButton("Disable MIUI Ads 1", f'{WIKI}/Disable_ads_in_MIUI.html'),
-         InlineKeyboardButton("Disable MIUI Ads 2", f'{XDA}/xiaomi-miui-ads-hamper-user-experience/')]
+         InlineKeyboardButton("Disable MIUI Ads 2",
+                              f'{XDA}/xiaomi-miui-ads-hamper-user-experience/')]
     ])
     if inline:
         results = [InlineQueryResultArticle(
@@ -106,5 +109,4 @@ def guides(inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup

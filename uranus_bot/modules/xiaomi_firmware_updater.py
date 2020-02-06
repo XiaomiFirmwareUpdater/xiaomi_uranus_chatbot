@@ -4,11 +4,11 @@ from uuid import uuid4
 
 import yaml
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
-    ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup,\
+    InlineQueryResultArticle, InputTextMessageContent, ParseMode
 
-from .mwt import MWT
-from .extras import check_codename
+from uranus_bot.modules.mwt import MWT
+from uranus_bot.modules.extras import check_codename
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -19,7 +19,8 @@ def fetch_devices():
     """
     return yaml.load(get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
-        "xiaomifirmwareupdater.github.io/master/data/firmware_codenames.yml").text, Loader=yaml.CLoader)
+        "xiaomifirmwareupdater.github.io/master/"
+        "data/firmware_codenames.yml").text, Loader=yaml.CLoader)
 
 
 @check_codename(fetch_devices(), markup=True)
@@ -33,7 +34,8 @@ def gen_fw_link(device, inline=False):
     message = f"*Available firmware downloads for* `{device}`\n"
     latest = InlineKeyboardButton(f"Latest Firmware", f"{site}/firmware/{device}/")
     archive = InlineKeyboardButton(f"Firmware Archive", f"{site}/archive/firmware/{device}/")
-    channel = InlineKeyboardButton("XiaomiFirmwareUpdater", url="https://t.me/XiaomiFirmwareUpdater")
+    channel = InlineKeyboardButton("XiaomiFirmwareUpdater",
+                                   url="https://t.me/XiaomiFirmwareUpdater")
     reply_markup = InlineKeyboardMarkup([[latest, archive], [channel]])
     if inline:
         results = [InlineQueryResultArticle(
@@ -42,5 +44,4 @@ def gen_fw_link(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup

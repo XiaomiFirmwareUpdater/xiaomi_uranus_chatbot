@@ -1,10 +1,11 @@
 #!/usr/bin/env python3.7
 """Xiaomi devices gsmarena info"""
+# pylint: disable=too-many-locals
 
 from requests import get
 
-from .extras import check_codename
-from .mwt import MWT
+from uranus_bot.modules.extras import check_codename
+from uranus_bot.modules.mwt import MWT
 
 
 @check_codename(markup=False)

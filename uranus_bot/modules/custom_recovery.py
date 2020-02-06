@@ -1,17 +1,17 @@
 #!/usr/bin/env python3.7
 """custom recovery downloads scraper"""
+# pylint: disable=too-many-locals
 
 import xml.etree.ElementTree as eT
+from collections import OrderedDict
 from uuid import uuid4
 
 from bs4 import BeautifulSoup
-from collections import OrderedDict
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
-    ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, \
+    InlineQueryResultArticle, InputTextMessageContent, ParseMode
 
-from .extras import check_codename
-from .mwt import MWT
+from uranus_bot.modules.mwt import MWT
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -58,7 +58,8 @@ def twrp(device, inline=False):
     date = page.find("em").text.strip()
     message = f'*Latest TWRP for {name}:*\n' \
               f'*Updated:* {date}\n'
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(f"{dl_file} - {size}", url=dl_link)]])
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton(f"{dl_file} - {size}", url=dl_link)]])
     if inline:
         results = [InlineQueryResultArticle(
             id=uuid4(),
@@ -66,8 +67,7 @@ def twrp(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -105,8 +105,7 @@ def pbrp(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 2)
@@ -134,7 +133,8 @@ def ofrp(device, inline=False):
     has_beta = False
     name = info['fullname']
     maintainer = info['maintainer']
-    message = f'Latest {name} (`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n' \
+    message = f'Latest {name} (`{device}`) ' \
+              f'[OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n' \
               f'_Maintainer:_ {maintainer}\n'
     stable = info['stable_build']
     stable_markup = InlineKeyboardButton(f"{stable}", f"{url}-Stable/{device}/{stable}")
@@ -157,5 +157,4 @@ def ofrp(device, inline=False):
             input_message_content=InputTextMessageContent(
                 message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
         return results
-    else:
-        return message, reply_markup
+    return message, reply_markup

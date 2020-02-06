@@ -1,3 +1,4 @@
+""" Xiaomi Geeks Telegram Bot"""
 from uranus_bot.xfu_bot import main
 
 
