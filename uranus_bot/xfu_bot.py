@@ -16,10 +16,11 @@ from uranus_bot.modules import gsmarena, mi_vendor_updater as mi_vendor, \
 
 # from telegram.ext import MessageHandler, Filters
 
-WORK_DIR = '/'.join(dirname(__file__).split('/')[:-1])
+WORK_DIR = dirname(__file__)
+PARENT_DIR = '/'.join(dirname(__file__).split('/')[:-1])
 
 # read bog config
-with open(f'{WORK_DIR}/config.yml', 'r') as f:
+with open(f'{PARENT_DIR}/config.yml', 'r') as f:
     CONFIG = yaml.load(f, Loader=yaml.CLoader)
 TOKEN = CONFIG['tg_bot_token']
 
