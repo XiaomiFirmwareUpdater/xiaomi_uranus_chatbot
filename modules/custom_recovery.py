@@ -106,7 +106,7 @@ def load_ofrp_data():
     load latest json file every six hours
     :returns data
     """
-    return get("https://files.orangefox.tech/Other/update_v2.json").json()
+    return get("https://files.orangefox.tech/Others/update_v2.json").json()
 
 
 @MWT(timeout=60 * 60 * 2)
