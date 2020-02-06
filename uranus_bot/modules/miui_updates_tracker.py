@@ -80,21 +80,17 @@ def load_recovery_data(device):
     return data
 
 
-@check_codename
+@check_codename(markup=True)
 def fetch_recovery(device):
     """
     fetch latest recovery ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
     data = load_recovery_data(device)
-    status = None
     keyboard = []
     if not data:
-        message = "No such device!"
-        status = False
-        return message, status
+        return ""
     name = DEVICES[device]
     message = f"*Latest {name} MIUI Official Recovery ROMs*"
     for i in data:
@@ -106,24 +102,20 @@ def fetch_recovery(device):
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, status, reply_markup
+    return message, reply_markup
 
 
-@check_codename
+@check_codename(markup=True)
 def fetch_fastboot(device):
     """
     fetch latest fastboot ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
-    status = None
     keyboard = []
     data = load_fastboot_data(device)
     if not data:
-        message = "No such device!"
-        status = False
-        return message, status
+        return ""
     name = DEVICES[device]
     message = f"*Latest {name} MIUI Official Fastboot ROMs*"
     for i in data:
@@ -135,23 +127,20 @@ def fetch_fastboot(device):
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, status, reply_markup
+    return message, reply_markup
 
 
-@check_codename
+@check_codename(markup=False)
 def check_latest(device):
     """
     check latest version of ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
-    status = None
     data = load_fastboot_data(device)
     if not data:
-        message = "No such device!"
-        status = False
-        return message, status
+        message = f"Cannot find info about {device}!"
+        return message
     name = DEVICES[device]
     message = f"*Latest MIUI Versions for {name}*:\n"
     for i in data:
@@ -160,20 +149,18 @@ def check_latest(device):
         file = i['filename']
         region = set_region(file, version)
         message += f"{region} {rom_type}: `{version}`\n"
-    return message, status
+    return message
 
 
-@check_codename
+@check_codename(markup=True)
 def history(device):
     """
     generate latest firmware links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
-    status = None
     message = f"*MIUI ROMs archive for {DEVICES[device]}* (`{device}`)"
     archive = InlineKeyboardButton(f"ROMs Archive", f"{SITE}/archive/miui/{device}/")
     channel = InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")
     reply_markup = InlineKeyboardMarkup([[archive, channel]])
-    return message, status, reply_markup
+    return message, reply_markup

@@ -41,15 +41,10 @@ def twrp(device):
     fetch latest twrp links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
-    status = None
-    reply_markup = None
     data = load_twrp_data()
     if device not in list(data.keys()):
-        message = f"Can't find downloads for {device}!"
-        status = False
-        return message, status, reply_markup
+        return "", None
     name = data[device]['name']
     link = data[device]['link']
     page = BeautifulSoup(get(link).content, 'html.parser').find('table').find('tr')
@@ -61,7 +56,7 @@ def twrp(device):
     message = f'*Latest TWRP for {name}:*\n' \
               f'*Updated:* {date}\n'
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(f"{dl_file} - {size}", url=dl_link)]])
-    return message, status, reply_markup
+    return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -82,22 +77,17 @@ def pbrp(device):
     fetch latest pbrp links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
     data = load_pbrp_data()
-    reply_markup = None
     links = [i.find('link').text for i in data[0].findall('item')]
     try:
         link = [i for i in links if device in i][0]
     except IndexError:
-        message = f"Can't find downloads for {device}!"
-        status = False
-        return message, status, reply_markup
+        return "", None
     file = link.split('/')[-2]
     message = f'Latest [PitchBlack](https://pbrp.ml) Build for `{device}`:\n'
-    status = True
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(file, url=link)]])
-    return message, status, reply_markup
+    return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 2)
@@ -115,17 +105,13 @@ def ofrp(device):
     fetch latest ofrp links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
     data = load_ofrp_data()
-    reply_markup = None
     url = f'https://files.orangefox.tech/OrangeFox'
     try:
         info = data[device]
     except KeyError:
-        message = f"Can't find downloads for {device}!"
-        status = False
-        return message, status, reply_markup
+        return "", None
     has_beta = False
     name = info['fullname']
     maintainer = info['maintainer']
@@ -145,5 +131,4 @@ def ofrp(device):
     else:
         keyboard = [[stable_markup]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    status = True
-    return message, status, reply_markup
+    return message, reply_markup

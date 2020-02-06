@@ -4,11 +4,11 @@ from requests import get
 from .mwt import MWT
 
 
-@MWT(timeout=60*60)
+@MWT(timeout=60 * 60)
 def load_codenames():
     """
     load codenames data from XFU repo
-    :return:
+    :return: list of codenames
     """
     codenames = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
@@ -16,33 +16,38 @@ def load_codenames():
     return codenames
 
 
-def check_codename(func):
+def check_codename(devices=load_codenames(), markup=False):
     """check if codename is correct"""
-    def wrapper(*args, **kwargs):
-        codename = args[0].lower()
-        status = False
-        reply_markup = None
-        codenames = load_codenames()
-        if [i for i in codenames if codename == i.lower()]:
-            status = True
-        elif [i for i in codenames if codename == i.split('_')[0].lower()]:
-            status = True
-        if status:
-            try:
-                message, status, reply_markup = func(*args, **kwargs)
-            except ValueError:
-                message, status = func(*args, **kwargs)
-        else:
-            message = "Wrong codename!"
-        return message, status, reply_markup
-    return wrapper
+
+    def _check_codename(function):
+        def wrapper(*args, **kwargs):
+            codename = args[0].lower()
+            matched_devices = [i for i in devices if codename.split('_')[0] == i] \
+                              or [i for i in devices if codename == i.lower()]
+            if markup:
+                if matched_devices:
+                    message, reply_markup = function(*args, **kwargs)
+                else:
+                    message = ""
+                    reply_markup = None
+                return message, reply_markup
+            else:
+                if matched_devices:
+                    message = function(*args, **kwargs)
+                else:
+                    message = ""
+                return message
+
+        return wrapper
+
+    return _check_codename
 
 
-@MWT(timeout=60*60)
+@MWT(timeout=60 * 60)
 def load_names():
     """
     load names data from XFU repo
-    :return:
+    :return: list of names
     """
     names = get(
         "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/" +
@@ -53,15 +58,16 @@ def load_names():
 
 def check_name(func):
     """check if codename is correct"""
+
     def wrapper(*args, **kwargs):
         name = args[0].lower()
-        status = False
         names = load_names()
         if [i for i in names if name in i.lower()]:
-            message, status = func(*args, **kwargs)
+            message = func(*args, **kwargs)
         else:
-            message = "Wrong name!"
-        return message, status
+            message = ""
+        return message
+
     return wrapper
 
 

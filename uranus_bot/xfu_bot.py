@@ -46,22 +46,34 @@ except ImportError:
 HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
 
 
+def send_markdown_message(update, context, message, disable_web_preview='yes'):
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview=disable_web_preview)
+
+
+def send_reply_markup_message(update, context, message, reply_markup):
+    context.bot.send_message(chat_id=update.message.chat_id, text=message,
+                             reply_to_message_id=update.message.message_id,
+                             parse_mode='Markdown', disable_web_page_preview='yes',
+                             reply_markup=reply_markup)
+
+
 @run_async
 def start(update, context):
     """start command"""
-    message = "Hello {}! \nI'm Uranus, an all-in-one bot for Xiaomi users!\n" \
+    message = f"Hello {update.message.from_user.first_name}!\n" \
+              "I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
               " and many more things!\nCheck how to use me by clicking /help" \
-              "\n Join @yshalsager_projects to get all updates and announcements about the bot!" \
-        .format(update.message.from_user.first_name)
+              "\nJoin [my channel](https://t.me/yshalsager_projects)" \
+              "to get all updates and announcements about the bot!"
     keyboard = [
-        [InlineKeyboardButton("Join bot channel", url="https://t.me/yshalsager_projects"),
+        [InlineKeyboardButton("Join my channel", url="https://t.me/yshalsager_projects"),
          InlineKeyboardButton("Read bot usage", url=HELP_URL)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -70,21 +82,16 @@ def recovery(update, context):
     if not context.args:
         message = '*Usage: * `/recovery device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = miui.fetch_recovery(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = miui.fetch_recovery(device)
+    if not message:
+        message = f"Cannot find recovery downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong recovery ROM request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -93,21 +100,16 @@ def fastboot(update, context):
     if not context.args:
         message = '*Usage: * `/fastboot device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = miui.fetch_fastboot(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = miui.fetch_fastboot(device)
+    if not message:
+        message = f"Cannot find fastboot downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong fastboot ROM request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -116,24 +118,20 @@ def firmware(update, context):
     if not context.args:
         message = '*Usage: * `/firmware device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    try:
-        message, status, reply_markup = mi_firmware.gen_fw_link(device)[0]
-    except ValueError:
-        message, status, reply_markup = mi_firmware.gen_fw_link(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = mi_firmware.gen_fw_link(device)
+    # try:
+    #     message, reply_markup = mi_firmware.gen_fw_link(device)[0]
+    # except ValueError:
+    #     message, reply_markup = mi_firmware.gen_fw_link(device)
+    if not message or reply_markup is None:
+        message = f"Cannot find firmware links for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong firmware request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -142,20 +140,16 @@ def latest(update, context):
     if not context.args:
         message = '*Usage: * `/latest device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = miui.check_latest(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = miui.check_latest(device)
+    if not message:
+        message = f"Cannot find info about {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong latest info request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    send_markdown_message(update, context, message)
 
 
 @run_async
@@ -164,46 +158,34 @@ def oss(update, context):
     if not context.args:
         message = '*Usage: * `/oss device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status = mi_oss.oss(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = mi_oss.oss(device)
+    if not message:
+        message = f"Cannot find OSS kernel info for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong oss info request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    send_markdown_message(update, context, message)
 
 
 @run_async
 def history(update, context):
-    """reply with latest available OSS kernel links"""
+    """reply with miui available roms archive link"""
     if not context.args:
         message = '*Usage: * `/archive device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower().split('_')[0]
-    try:
-        message, status, reply_markup = miui.history(device)[0]
-    except ValueError:
-        message, status, reply_markup = miui.history(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = miui.history(device)
+    if not message:
+        message = f"Can't find info about {device}"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong list history request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -212,20 +194,16 @@ def models(update, context):
     if not context.args:
         message = '*Usage: * `/models codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower().split('_')[0]
-    message, status, reply_markup = info.check_models(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = info.check_models(device)
+    if not message:
+        message = f"Cannot find models info for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong list models request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    send_markdown_message(update, context, message)
 
 
 @run_async
@@ -234,20 +212,16 @@ def whatis(update, context):
     if not context.args:
         message = '*Usage: * `/whatis codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = info.whatis(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = info.whatis(device)
+    if not message:
+        message = f"Cannot find info about {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong whatis request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    send_markdown_message(update, context, message)
 
 
 @run_async
@@ -256,20 +230,16 @@ def codename(update, context):
     if not context.args:
         message = '*Usage: * `/codename device`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = ' '.join(context.args).lower()
-    message, status = info.get_codename(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = info.get_codename(device)
+    if not message:
+        message = f"Cannot find codename info about {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong codename request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes')
+    send_markdown_message(update, context, message)
 
 
 @run_async
@@ -278,20 +248,16 @@ def specs(update, context):
     if not context.args:
         message = '*Usage: * `/specs codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower().split('_')[0]
-    message, status, reply_markup = gsmarena.specs(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message = gsmarena.specs(device)
+    if not message:
+        message = f"Cannot find {device} specs!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong specs request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='no')
+    send_markdown_message(update, context, message, disable_web_preview='no')
 
 
 @run_async
@@ -300,24 +266,16 @@ def vendor(update, context):
     if not context.args:
         message = '*Usage: * `/vendor codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    try:
-        message, status, reply_markup = mi_vendor.fetch_vendor(device)[0]
-    except ValueError:
-        message, status, reply_markup = mi_vendor.fetch_vendor(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = mi_vendor.fetch_vendor(device)
+    if not message:
+        message = f"Cannot find vendor downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong vendor request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -326,21 +284,16 @@ def eu(update, context):
     if not context.args:
         message = '*Usage: * `/eu codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = xiaomi_eu.xiaomi_eu(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = xiaomi_eu.xiaomi_eu(device)
+    if not message:
+        message = f"Cannot find Xiaomi.eu downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong vendor request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -349,20 +302,16 @@ def get_twrp(update, context):
     if not context.args:
         message = '*Usage: * `/twrp codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = custom_recovery.twrp(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = custom_recovery.twrp(device)
+    if not message:
+        message = f"Cannot find TWRP downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong twrp request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -371,21 +320,16 @@ def get_pbrp(update, context):
     if not context.args:
         message = '*Usage: * `/pb codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = custom_recovery.pbrp(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = custom_recovery.pbrp(device)
+    if not message:
+        message = f"Cannot find PBRP downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong pbrp request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -394,51 +338,37 @@ def get_ofrp(update, context):
     if not context.args:
         message = '*Usage: * `/of codename`\n' \
                   'Check how to use the bot with examples /help'
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id,
-                                 parse_mode='Markdown')
+        send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, status, reply_markup = custom_recovery.ofrp(device)
-    if status is False:
-        context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                                 reply_to_message_id=update.message.message_id)
+    message, reply_markup = custom_recovery.ofrp(device)
+    if not message:
+        message = f"Cannot find OrangeFox downloads for {device}!"
+        send_markdown_message(update, context, message)
         LOGGER.info("wrong OF request: %s", update.message.text)
         return
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
 def unlock(update, context):
     """reply with device unlock info"""
     message, reply_markup = misc.unlock()
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
 def tools(update, context):
     """reply with device unlock info"""
     message, reply_markup = misc.tools()
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
 def guides(update, context):
     """reply with device unlock info"""
     message, reply_markup = misc.guides()
-    context.bot.send_message(chat_id=update.message.chat_id, text=message,
-                             reply_to_message_id=update.message.message_id,
-                             parse_mode='Markdown', disable_web_page_preview='yes',
-                             reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
@@ -455,8 +385,7 @@ def usage(update, context):
     """Help - How to use the bot"""
     message = "Available commands with examples:\n"
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check here", url=HELP_URL)]])
-    update.message.reply_text(message, parse_mode='Markdown',
-                              reply_to_message_id=update.message.message_id, reply_markup=reply_markup)
+    send_reply_markup_message(update, context, message, reply_markup)
 
 
 def error(update, context):
@@ -464,11 +393,11 @@ def error(update, context):
     LOGGER.warning('Update "%s" caused error "%s"', update, context.error)
 
 
-def unknown(update, context):
-    """Reply to unknown commands"""
-    context.bot.send_message(chat_id=update.message.chat_id,
-                             reply_to_message_id=update.message.message_id,
-                             text="Sorry, I didn't understand that command.")
+# def unknown(update, context):
+#     """Reply to unknown commands"""
+#     context.bot.send_message(chat_id=update.message.chat_id,
+#                              reply_to_message_id=update.message.message_id,
+#                              text="Sorry, I didn't understand that command.")
 
 
 def main():
@@ -481,70 +410,17 @@ def main():
     dispatcher = updater.dispatcher
     # This class dispatches all kinds of updates to its registered handlers.
 
-    start_handler = CommandHandler('start', start)
-    dispatcher.add_handler(start_handler)
-
+    commands = [CommandHandler('start', start), CommandHandler("help", usage), CommandHandler('recovery', recovery),
+                CommandHandler('fastboot', fastboot), CommandHandler('firmware', firmware),
+                CommandHandler('latest', latest), CommandHandler('oss', oss), CommandHandler('archive', history),
+                CommandHandler('models', models), CommandHandler('whatis', whatis), CommandHandler('specs', specs),
+                CommandHandler('codename', codename), CommandHandler('vendor', vendor), CommandHandler('eu', eu),
+                CommandHandler('twrp', get_twrp), CommandHandler('pb', get_pbrp), CommandHandler('of', get_ofrp),
+                CommandHandler('unlockbl', unlock), CommandHandler('tools', tools), CommandHandler('arb', arb),
+                CommandHandler('guides', guides), CommandHandler('oss', oss)]
+    for command in commands:
+        dispatcher.add_handler(command)
     dispatcher.add_error_handler(error)
-
-    help_handler = CommandHandler("help", usage)
-    dispatcher.add_handler(help_handler)
-
-    recovery_handler = CommandHandler('recovery', recovery)
-    dispatcher.add_handler(recovery_handler)
-
-    fastboot_handler = CommandHandler('fastboot', fastboot)
-    dispatcher.add_handler(fastboot_handler)
-
-    firmware_handler = CommandHandler('firmware', firmware)
-    dispatcher.add_handler(firmware_handler)
-
-    latest_handler = CommandHandler('latest', latest)
-    dispatcher.add_handler(latest_handler)
-
-    oss_handler = CommandHandler('oss', oss)
-    dispatcher.add_handler(oss_handler)
-
-    history_handler = CommandHandler('archive', history)
-    dispatcher.add_handler(history_handler)
-
-    models_handler = CommandHandler('models', models)
-    dispatcher.add_handler(models_handler)
-
-    whatis_handler = CommandHandler('whatis', whatis)
-    dispatcher.add_handler(whatis_handler)
-
-    codename_handler = CommandHandler('codename', codename)
-    dispatcher.add_handler(codename_handler)
-
-    specs_handler = CommandHandler('specs', specs)
-    dispatcher.add_handler(specs_handler)
-
-    vendor_handler = CommandHandler('vendor', vendor)
-    dispatcher.add_handler(vendor_handler)
-
-    eu_handler = CommandHandler('eu', eu)
-    dispatcher.add_handler(eu_handler)
-
-    twrp_handler = CommandHandler('twrp', get_twrp)
-    dispatcher.add_handler(twrp_handler)
-
-    pbrp_handler = CommandHandler('pb', get_pbrp)
-    dispatcher.add_handler(pbrp_handler)
-
-    ofrp_handler = CommandHandler('of', get_ofrp)
-    dispatcher.add_handler(ofrp_handler)
-
-    unlock_handler = CommandHandler('unlockbl', unlock)
-    dispatcher.add_handler(unlock_handler)
-
-    tools_handler = CommandHandler('tools', tools)
-    dispatcher.add_handler(tools_handler)
-
-    guides_handler = CommandHandler('guides', guides)
-    dispatcher.add_handler(guides_handler)
-
-    arb_handler = CommandHandler('arb', arb)
-    dispatcher.add_handler(arb_handler)
 
     if IS_ADMIN:  # load admin commands if module is found
         admin.main(dispatcher)
@@ -553,7 +429,6 @@ def main():
 
     # unknown_handler = MessageHandler(Filters.command, unknown)
     # dispatcher.add_handler(unknown_handler)
-
     updater.start_polling()  # start the bot
     updater.idle()
 

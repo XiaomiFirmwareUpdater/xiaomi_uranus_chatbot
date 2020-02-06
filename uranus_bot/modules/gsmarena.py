@@ -7,14 +7,13 @@ from .extras import check_codename
 from .mwt import MWT
 
 
-@check_codename
-@MWT(timeout=60*60*6)
+@check_codename(markup=False)
+@MWT(timeout=60 * 60 * 6)
 def specs(device):
     """
     Get device specs based on its codename
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
     message = ''
     data = get(
@@ -23,11 +22,7 @@ def specs(device):
     try:
         info = [i for i in data if device == i['codename']][0]
     except IndexError:
-        info = {}
-    if not info:
-        message = f"Can't find info about {device}!"
-        status = False
-        return message, status
+        return ""
     name = info['name']
     url = info['url']
     details = info['specs']
@@ -66,22 +61,21 @@ def specs(device):
     sensors = details['Features'][0]['Sensors']
     battery = details['Battery'][0]['info']
     message += f"[{name}]({url}) - *{device}*\n" \
-        f"*Status*: {device_status}\n" \
-        f"*Network:* {network}\n" \
-        f"*Weight*: {weight}\n" \
-        f"*Display*:\n{display}\n" \
-        f"*Chipset*:\n{chipset}\n" \
-        f"*Memory*: {memory}\n" \
-        f"*Rear Camera*: {main_cam}\n" \
-        f"*Front Camera*: {front_cam}\n" \
-        f"*3.5mm jack*: {jack}\n" \
-        f"*USB*: {usb}\n" \
-        f"*Sensors*: {sensors}\n" \
-        f"*Battery*: {battery}"
+               f"*Status*: {device_status}\n" \
+               f"*Network:* {network}\n" \
+               f"*Weight*: {weight}\n" \
+               f"*Display*:\n{display}\n" \
+               f"*Chipset*:\n{chipset}\n" \
+               f"*Memory*: {memory}\n" \
+               f"*Rear Camera*: {main_cam}\n" \
+               f"*Front Camera*: {front_cam}\n" \
+               f"*3.5mm jack*: {jack}\n" \
+               f"*USB*: {usb}\n" \
+               f"*Sensors*: {sensors}\n" \
+               f"*Battery*: {battery}"
     try:
         charging = details['Battery'][0]['Charging']
         message += f"\n*Charging*: {charging}"
     except KeyError:
         pass
-    status = True
-    return message, status
+    return message

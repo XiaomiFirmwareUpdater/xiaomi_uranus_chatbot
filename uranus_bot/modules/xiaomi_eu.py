@@ -8,7 +8,7 @@ from .extras import check_codename
 from .mwt import MWT
 
 
-@MWT(timeout=60*60*6)
+@MWT(timeout=60 * 60 * 6)
 def fetch_devices():
     """
     load latest devices data form json file
@@ -19,7 +19,7 @@ def fetch_devices():
     return data
 
 
-@MWT(timeout=60*60)
+@MWT(timeout=60 * 60)
 def load_data():
     """
     load latest xml files every one hour
@@ -36,23 +36,18 @@ def load_data():
     return stable, weekly
 
 
-@check_codename
+@check_codename(fetch_devices(), markup=True)
 def xiaomi_eu(device):
     """
     extract latest Xiaomi.eu links for a device
     :argument device - Xiaomi device codename
     :returns message - telegram message string
-    :returns status - Boolean for device status whether found or not
     """
-    status = None
-    reply_markup = None
     devices = fetch_devices()
     codename = device
     info = {i: devices[i] for i in devices if i == codename}
     if not info:
-        message = f"Can't find info about {codename}!"
-        status = False
-        return message, status
+        return "", None
     name, device = list(info.values())[0]
     stable, weekly = load_data()
     stable_links = [i.find('link').text for i in stable[0].findall('item')]
@@ -75,8 +70,6 @@ def xiaomi_eu(device):
     except IndexError:
         pass
     if not keyboard:
-        message = f"Can't find info about {codename}!"
-        status = False
-        return message, status, reply_markup
+        return "", None
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, status, reply_markup
+    return message, reply_markup
