@@ -3,5 +3,6 @@
 *__pycache__*
 config.json
 config.yml
-admin/
-private/
+uranus_bot/admin/
+uranus_bot/private/
+.idea

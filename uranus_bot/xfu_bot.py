@@ -2,24 +2,29 @@
 """Xiaomi Helper Bot"""
 
 import logging
+from os.path import dirname
+
 import yaml
-from modules import gsmarena, mi_vendor_updater as mi_vendor, \
-    xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info, \
-    miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CommandHandler
 from telegram.ext import Updater
 from telegram.ext.dispatcher import run_async
 
+from uranus_bot.modules import gsmarena, mi_vendor_updater as mi_vendor, \
+    xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info, \
+    miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
+
 # from telegram.ext import MessageHandler, Filters
 
+WORK_DIR = '/'.join(dirname(__file__).split('/')[:-1])
+
 # read bog config
-with open('config.yml', 'r') as f:
+with open(f'{WORK_DIR}/config.yml', 'r') as f:
     CONFIG = yaml.load(f, Loader=yaml.CLoader)
 TOKEN = CONFIG['tg_bot_token']
 
 # set logging
-logging.basicConfig(filename='current.log',
+logging.basicConfig(filename=f'{WORK_DIR}/current.log',
                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -27,17 +32,18 @@ LOGGER = logging.getLogger(__name__)
 IS_ADMIN = True
 IS_MORE = True
 try:
-    from admin import admin
+    from uranus_bot.admin import admin
 except ImportError:
     print("Can't find admin module, skipping it")
     IS_ADMIN = False
 try:
-    from private import private
+    from uranus_bot.private import private
 except ImportError:
     print("Can't find private commands module, skipping it")
     IS_MORE = False
 
 HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
+
 
 @run_async
 def start(update, context):
@@ -204,7 +210,7 @@ def models(update, context):
     """reply with latest available OSS kernel links"""
     if not context.args:
         message = '*Usage: * `/models codename`\n' \
-                 'Check how to use the bot with examples /help'
+                  'Check how to use the bot with examples /help'
         context.bot.send_message(chat_id=update.message.chat_id, text=message,
                                  reply_to_message_id=update.message.message_id,
                                  parse_mode='Markdown')

@@ -1,3 +1,4 @@
 bs4
 requests
-python-telegram-bot==12.0.0b1
+python-telegram-bot==12.3.0
+PyYAML==5.1.2
