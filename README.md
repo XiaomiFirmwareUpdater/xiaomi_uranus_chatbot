@@ -13,6 +13,8 @@ The whole bot functions in this repo, which are licensed under GPL3, are based o
 - [mi-firmware-updater](https://github.com/XiaomiFirmwareUpdater/mi-firmware-updater)
 - [miui-updates-tracker](https://github.com/XiaomiFirmwareUpdater/miui-updates-tracker)
 - [xiaomifirmwareupdater.github.io](https://github.com/XiaomiFirmwareUpdater/xiaomifirmwareupdater.github.io)
+- [mi-vendor-updater](https://github.com/TryHardDood/mi-vendor-updater)
+- [xiaomi_devices](https://github.com/XiaomiFirmwareUpdater/xiaomi_devices)
 
 However, [the telegram bot](https://t.me/XiaomiGeeksBot) may contain some other features that are not available in this code, like the Admins module.
 
@@ -24,5 +26,5 @@ However, [the telegram bot](https://t.me/XiaomiGeeksBot) may contain some other 
 pip3 install -r requirements.txt
 ```
 - Copy the bot config file and rename it to config.yml, place your bot API TOKEN at placeholder.
-- Run the bot using `python3 xfu_bot.py`
+- Run the bot using `python3 -m uranus_bot`
 
