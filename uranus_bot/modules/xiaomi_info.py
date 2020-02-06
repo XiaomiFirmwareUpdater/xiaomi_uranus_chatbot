@@ -1,7 +1,10 @@
 #!/usr/bin/env python3.7
 """Xiaomi devices info"""
+from uuid import uuid4
 
 from requests import get
+from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode
+
 from .extras import check_codename, check_name
 from .mwt import MWT
 
@@ -20,7 +23,7 @@ def fetch_models():
 
 @MWT(timeout=60 * 60 * 6)
 @check_codename(markup=False)
-def check_models(device):
+def check_models(device, inline=False):
     """
     get different models of device info
     :argument device - Xiaomi device codename
@@ -39,7 +42,15 @@ def check_models(device):
         models = item['models']
         for model, model_name in models.items():
             message += f"{model}: {model_name}\n"
-    return message
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} device models",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN))]
+        return results
+    else:
+        return message
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -56,7 +67,7 @@ def fetch_codenames():
 
 @MWT(timeout=60 * 60 * 6)
 @check_codename(markup=False)
-def whatis(device):
+def whatis(device, inline=False):
     """
     checks device name based on its codename
     :argument device - Xiaomi device codename
@@ -71,7 +82,15 @@ def whatis(device):
         codename = key
         name = value
         message += f"`{codename}` is *{name}*\n"
-    return message
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} device name",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN))]
+        return results
+    else:
+        return message
 
 
 @MWT(timeout=60 * 60 * 6)

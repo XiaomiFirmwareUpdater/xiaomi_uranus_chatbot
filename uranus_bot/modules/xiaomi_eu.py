@@ -1,7 +1,9 @@
 #!/usr/bin/env python3.7
 """Xiaomi EU links scraper"""
+from uuid import uuid4
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 import xml.etree.ElementTree as eT
 from requests import get
 from .extras import check_codename
@@ -37,7 +39,7 @@ def load_data():
 
 
 @check_codename(fetch_devices(), markup=True)
-def xiaomi_eu(device):
+def xiaomi_eu(device, inline=False):
     """
     extract latest Xiaomi.eu links for a device
     :argument device - Xiaomi device codename
@@ -72,4 +74,12 @@ def xiaomi_eu(device):
     if not keyboard:
         return "", None
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {codename} Xiaomi.eu downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup

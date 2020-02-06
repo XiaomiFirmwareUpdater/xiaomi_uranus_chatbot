@@ -1,8 +1,11 @@
 #!/usr/bin/env python3.7
 """MIUI Updates Tracker commands"""
+from uuid import uuid4
+
 from requests import get
 import yaml
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 
 from .mwt import MWT
 from .extras import check_codename, set_branch, set_region
@@ -81,7 +84,7 @@ def load_recovery_data(device):
 
 
 @check_codename(markup=True)
-def fetch_recovery(device):
+def fetch_recovery(device, inline=False):
     """
     fetch latest recovery ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
@@ -102,11 +105,19 @@ def fetch_recovery(device):
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} recovery ROM downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
 @check_codename(markup=True)
-def fetch_fastboot(device):
+def fetch_fastboot(device, inline=False):
     """
     fetch latest fastboot ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
@@ -127,11 +138,19 @@ def fetch_fastboot(device):
     keyboard.append([InlineKeyboardButton("ROMs Archive", f"{SITE}/archive/miui/{device}/"),
                      InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")])
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} fastboot ROM downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
 @check_codename(markup=False)
-def check_latest(device):
+def check_latest(device, inline=False):
     """
     check latest version of ROMs for a device from MIUI updates tracker yaml files
     :argument device - Xiaomi device codename
@@ -139,8 +158,7 @@ def check_latest(device):
     """
     data = load_fastboot_data(device)
     if not data:
-        message = f"Cannot find info about {device}!"
-        return message
+        return ""
     name = DEVICES[device]
     message = f"*Latest MIUI Versions for {name}*:\n"
     for i in data:
@@ -149,11 +167,19 @@ def check_latest(device):
         file = i['filename']
         region = set_region(file, version)
         message += f"{region} {rom_type}: `{version}`\n"
-    return message
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} latest MIUI versions",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN))]
+        return results
+    else:
+        return message
 
 
 @check_codename(markup=True)
-def history(device):
+def history(device, inline=False):
     """
     generate latest firmware links for a device
     :argument device - Xiaomi device codename
@@ -163,4 +189,12 @@ def history(device):
     archive = InlineKeyboardButton(f"ROMs Archive", f"{SITE}/archive/miui/{device}/")
     channel = InlineKeyboardButton("MIUIUpdatesTracker", url="https://t.me/MIUIUpdatesTracker")
     reply_markup = InlineKeyboardMarkup([[archive, channel]])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} Official ROMs archive",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup

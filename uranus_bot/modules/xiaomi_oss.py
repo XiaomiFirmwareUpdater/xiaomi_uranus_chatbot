@@ -1,12 +1,15 @@
 #!/usr/bin/env python3.7
 """Xiaomi devices oss checker"""
+from uuid import uuid4
 
 from requests import get
+from telegram import InlineQueryResultArticle, InputTextMessageContent, ParseMode
+
 from .mwt import MWT
 
 
 @MWT(timeout=60 * 60 * 6)
-def oss(device):
+def oss(device, inline=False):
     """
     get latest oss kernel for a device from MIUI Mi Code repo
     :argument device - Xiaomi device codename
@@ -28,4 +31,12 @@ def oss(device):
                    f"{android}\n" \
                    f"*Tag:* {tag}\n" \
                    f"{link}\n\n"
-    return message
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} OSS kernel",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN))]
+        return results
+    else:
+        return message

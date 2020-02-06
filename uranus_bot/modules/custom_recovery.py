@@ -2,10 +2,13 @@
 """custom recovery downloads scraper"""
 
 import xml.etree.ElementTree as eT
+from uuid import uuid4
+
 from bs4 import BeautifulSoup
 from collections import OrderedDict
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 
 from .extras import check_codename
 from .mwt import MWT
@@ -36,7 +39,7 @@ def load_twrp_data():
 
 
 @MWT(timeout=60 * 60 * 6)
-def twrp(device):
+def twrp(device, inline=False):
     """
     fetch latest twrp links for a device
     :argument device - Xiaomi device codename
@@ -56,7 +59,15 @@ def twrp(device):
     message = f'*Latest TWRP for {name}:*\n' \
               f'*Updated:* {date}\n'
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(f"{dl_file} - {size}", url=dl_link)]])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} TWRP downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 6)
@@ -72,7 +83,7 @@ def load_pbrp_data():
 
 
 @MWT(timeout=60 * 60 * 6)
-def pbrp(device):
+def pbrp(device, inline=False):
     """
     fetch latest pbrp links for a device
     :argument device - Xiaomi device codename
@@ -87,7 +98,15 @@ def pbrp(device):
     file = link.split('/')[-2]
     message = f'Latest [PitchBlack](https://pbrp.ml) Build for `{device}`:\n'
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton(file, url=link)]])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} PBRP downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
 @MWT(timeout=60 * 60 * 2)
@@ -100,7 +119,7 @@ def load_ofrp_data():
 
 
 @MWT(timeout=60 * 60 * 2)
-def ofrp(device):
+def ofrp(device, inline=False):
     """
     fetch latest ofrp links for a device
     :argument device - Xiaomi device codename
@@ -131,4 +150,12 @@ def ofrp(device):
     else:
         keyboard = [[stable_markup]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} OrangeFox downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup

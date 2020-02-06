@@ -2,17 +2,20 @@
 """Xiaomi Helper Bot"""
 
 import logging
+import re
 from os.path import dirname
 
 import yaml
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CommandHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle
+from telegram.ext import CommandHandler, InlineQueryHandler
 from telegram.ext import Updater
 from telegram.ext.dispatcher import run_async
 
 from uranus_bot.modules import gsmarena, mi_vendor_updater as mi_vendor, \
     xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info, \
     miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
+
+from uranus_bot.modules.inline import process_query
 
 # from telegram.ext import MessageHandler, Filters
 
@@ -85,7 +88,7 @@ def recovery(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = miui.fetch_recovery(device)
+    message, reply_markup = miui.fetch_recovery(device, inline=False)
     if not message:
         message = f"Cannot find recovery downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -103,7 +106,7 @@ def fastboot(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = miui.fetch_fastboot(device)
+    message, reply_markup = miui.fetch_fastboot(device, inline=False)
     if not message:
         message = f"Cannot find fastboot downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -121,7 +124,7 @@ def firmware(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = mi_firmware.gen_fw_link(device)
+    message, reply_markup = mi_firmware.gen_fw_link(device, inline=False)
     # try:
     #     message, reply_markup = mi_firmware.gen_fw_link(device)[0]
     # except ValueError:
@@ -143,7 +146,7 @@ def latest(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message = miui.check_latest(device)
+    message = miui.check_latest(device, inline=False)
     if not message:
         message = f"Cannot find info about {device}!"
         send_markdown_message(update, context, message)
@@ -161,7 +164,7 @@ def oss(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message = mi_oss.oss(device)
+    message = mi_oss.oss(device, inline=False)
     if not message:
         message = f"Cannot find OSS kernel info for {device}!"
         send_markdown_message(update, context, message)
@@ -179,7 +182,7 @@ def history(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower().split('_')[0]
-    message, reply_markup = miui.history(device)
+    message, reply_markup = miui.history(device, inline=False)
     if not message:
         message = f"Can't find info about {device}"
         send_markdown_message(update, context, message)
@@ -197,7 +200,7 @@ def models(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower().split('_')[0]
-    message = info.check_models(device)
+    message = info.check_models(device, inline=False)
     if not message:
         message = f"Cannot find models info for {device}!"
         send_markdown_message(update, context, message)
@@ -215,7 +218,7 @@ def whatis(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message = info.whatis(device)
+    message = info.whatis(device, inline=False)
     if not message:
         message = f"Cannot find info about {device}!"
         send_markdown_message(update, context, message)
@@ -269,7 +272,7 @@ def vendor(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = mi_vendor.fetch_vendor(device)
+    message, reply_markup = mi_vendor.fetch_vendor(device, inline=False)
     if not message:
         message = f"Cannot find vendor downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -287,7 +290,7 @@ def eu(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = xiaomi_eu.xiaomi_eu(device)
+    message, reply_markup = xiaomi_eu.xiaomi_eu(device, inline=False)
     if not message:
         message = f"Cannot find Xiaomi.eu downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -305,7 +308,7 @@ def get_twrp(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = custom_recovery.twrp(device)
+    message, reply_markup = custom_recovery.twrp(device, inline=False)
     if not message:
         message = f"Cannot find TWRP downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -323,7 +326,7 @@ def get_pbrp(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = custom_recovery.pbrp(device)
+    message, reply_markup = custom_recovery.pbrp(device, inline=False)
     if not message:
         message = f"Cannot find PBRP downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -341,7 +344,7 @@ def get_ofrp(update, context):
         send_markdown_message(update, context, message)
         return
     device = context.args[0].lower()
-    message, reply_markup = custom_recovery.ofrp(device)
+    message, reply_markup = custom_recovery.ofrp(device, inline=False)
     if not message:
         message = f"Cannot find OrangeFox downloads for {device}!"
         send_markdown_message(update, context, message)
@@ -353,21 +356,21 @@ def get_ofrp(update, context):
 @run_async
 def unlock(update, context):
     """reply with device unlock info"""
-    message, reply_markup = misc.unlock()
+    message, reply_markup = misc.unlock(inline=False)
     send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
 def tools(update, context):
     """reply with device unlock info"""
-    message, reply_markup = misc.tools()
+    message, reply_markup = misc.tools(inline=False)
     send_reply_markup_message(update, context, message, reply_markup)
 
 
 @run_async
 def guides(update, context):
     """reply with device unlock info"""
-    message, reply_markup = misc.guides()
+    message, reply_markup = misc.guides(inline=False)
     send_reply_markup_message(update, context, message, reply_markup)
 
 
@@ -386,6 +389,24 @@ def usage(update, context):
     message = "Available commands with examples:\n"
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Check here", url=HELP_URL)]])
     send_reply_markup_message(update, context, message, reply_markup)
+
+
+@run_async
+def inline_query(update, context):
+    """Handle the inline query."""
+    query = update.inline_query.query
+    query_args = re.findall(r'\S+', query.strip())
+    if not query or len(query_args) < 1:
+        return
+    command = query_args[0]
+    try:
+        query_request = query_args[1]
+    except IndexError:
+        query_request = None
+    results = process_query(command, query_request)
+    if results and not isinstance(results, tuple):
+        context.bot.answer_inline_query(update.inline_query.id, results)
+        # update.inline_query.answer(results)
 
 
 def error(update, context):
@@ -420,6 +441,7 @@ def main():
                 CommandHandler('guides', guides), CommandHandler('oss', oss)]
     for command in commands:
         dispatcher.add_handler(command)
+    dispatcher.add_handler(InlineQueryHandler(inline_query))
     dispatcher.add_error_handler(error)
 
     if IS_ADMIN:  # load admin commands if module is found

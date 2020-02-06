@@ -26,7 +26,11 @@ def check_codename(devices=load_codenames(), markup=False):
                               or [i for i in devices if codename == i.lower()]
             if markup:
                 if matched_devices:
-                    message, reply_markup = function(*args, **kwargs)
+                    try:
+                        message, reply_markup = function(*args, **kwargs)
+                    except ValueError:  # workaround for inline
+                        results = function(*args, **kwargs)
+                        return results
                 else:
                     message = ""
                     reply_markup = None

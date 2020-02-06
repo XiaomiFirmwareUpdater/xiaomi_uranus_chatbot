@@ -1,8 +1,10 @@
 #!/usr/bin/env python3.7
 """Uranus Bot misc funcs"""
+from uuid import uuid4
 
 from bs4 import BeautifulSoup
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 from requests import get
 from .mwt import MWT
 
@@ -22,7 +24,7 @@ def arb_table():
     return img
 
 
-def unlock():
+def unlock(inline=False):
     """
     device unlock info
     :returns message - telegram message string
@@ -32,10 +34,18 @@ def unlock():
         [InlineKeyboardButton("How to Unlock the bootloader", f'{WIKI}/Unlock_the_bootloader.html'),
          InlineKeyboardButton("Mi Unlock Tool", f'http://en.miui.com/unlock/download_en.html')]
     ])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"How to unlock the bootloader guides",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
-def tools():
+def tools(inline=False):
     """
     various tools for Xiaomi devices
     :returns message - telegram message string
@@ -52,7 +62,15 @@ def tools():
         [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools", f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
          InlineKeyboardButton("More Tools", f'{url}')]
     ])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Useful tools for Xiaomi devices",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
 
 
 def arb():
@@ -68,7 +86,7 @@ def arb():
     return caption, photo
 
 
-def guides():
+def guides(inline=False):
     """
     various useful guides
     :returns message - telegram message string
@@ -81,4 +99,12 @@ def guides():
         [InlineKeyboardButton("Disable MIUI Ads 1", f'{WIKI}/Disable_ads_in_MIUI.html'),
          InlineKeyboardButton("Disable MIUI Ads 2", f'{XDA}/xiaomi-miui-ads-hamper-user-experience/')]
     ])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Various guides fpr Xiaomi devices",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup

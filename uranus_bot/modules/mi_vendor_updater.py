@@ -1,9 +1,11 @@
 #!/usr/bin/env python3.7
 """Mi Vendor updater"""
+from uuid import uuid4
 
 import yaml
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 
 from .mwt import MWT
 from .extras import check_codename
@@ -21,7 +23,7 @@ def fetch_devices():
 
 
 @check_codename(fetch_devices(), markup=True)
-def fetch_vendor(device):
+def fetch_vendor(device, inline=False):
     """
     generate latest vendor links for a device
     :argument device - Xiaomi device codename
@@ -33,4 +35,12 @@ def fetch_vendor(device):
     archive = InlineKeyboardButton(f"Vendor Archive", f"{site}/archive/vendor/{device}/")
     channel = InlineKeyboardButton("MIUIVendorUpdater", url="https://t.me/MIUIVendorUpdater")
     reply_markup = InlineKeyboardMarkup([[latest, archive], [channel]])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} vendor downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup

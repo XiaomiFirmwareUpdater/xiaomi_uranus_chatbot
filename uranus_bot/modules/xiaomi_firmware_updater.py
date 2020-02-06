@@ -1,9 +1,11 @@
 #!/usr/bin/env python3.7
 """Xiaomi Firmware Updater commands"""
+from uuid import uuid4
 
 import yaml
 from requests import get
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultArticle, InputTextMessageContent, \
+    ParseMode
 
 from .mwt import MWT
 from .extras import check_codename
@@ -21,7 +23,7 @@ def fetch_devices():
 
 
 @check_codename(fetch_devices(), markup=True)
-def gen_fw_link(device):
+def gen_fw_link(device, inline=False):
     """
     generate latest firmware links for a device
     :argument device - Xiaomi device codename
@@ -33,4 +35,12 @@ def gen_fw_link(device):
     archive = InlineKeyboardButton(f"Firmware Archive", f"{site}/archive/firmware/{device}/")
     channel = InlineKeyboardButton("XiaomiFirmwareUpdater", url="https://t.me/XiaomiFirmwareUpdater")
     reply_markup = InlineKeyboardMarkup([[latest, archive], [channel]])
-    return message, reply_markup
+    if inline:
+        results = [InlineQueryResultArticle(
+            id=uuid4(),
+            title=f"Search {device} firmware downloads",
+            input_message_content=InputTextMessageContent(
+                message, parse_mode=ParseMode.MARKDOWN), reply_markup=reply_markup)]
+        return results
+    else:
+        return message, reply_markup
