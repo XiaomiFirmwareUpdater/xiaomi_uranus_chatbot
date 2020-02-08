@@ -1,8 +1,10 @@
 *log*
 *tmp*
 *__pycache__*
-config.json
-config.yml
+config.*
 uranus_bot/admin/
 uranus_bot/private/
-.idea
+.idea/
+venv/
+*.session
+*.db

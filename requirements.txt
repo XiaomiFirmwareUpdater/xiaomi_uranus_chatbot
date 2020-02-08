@@ -1,4 +1,9 @@
+# Dependecies for web scraping
 bs4
 requests
-python-telegram-bot==12.3.0
-PyYAML==5.1.2
+# Telethon Dependecies
+telethon
+cryptg
+pillow
+# YAML
+PyYAML
