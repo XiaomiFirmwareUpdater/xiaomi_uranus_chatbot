@@ -94,6 +94,7 @@ def set_region(filename, version):
     :param version: MIUI version
     :return: region
     """
+    filename = filename.lower()
     if 'eea_global' in filename or 'EU' in version:
         region = 'EEA'
     elif 'id_global' in filename or 'ID' in version:
