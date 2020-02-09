@@ -11,11 +11,11 @@ from telegram.ext import CommandHandler, InlineQueryHandler
 from telegram.ext import Updater
 from telegram.ext.dispatcher import run_async
 
-from uranus_bot.modules import gsmarena, mi_vendor_updater as mi_vendor, \
+from uranus_bot import gsmarena, mi_vendor_updater as mi_vendor, \
     xiaomi_firmware_updater as mi_firmware, xiaomi_oss as mi_oss, xiaomi_info as info, \
     miui_updates_tracker as miui, xiaomi_eu, custom_recovery, misc
 
-from uranus_bot.modules.inline import process_query
+from uranus_bot import process_query
 
 # from telegram.ext import MessageHandler, Filters
 
@@ -36,12 +36,12 @@ LOGGER = logging.getLogger(__name__)
 IS_ADMIN = True
 IS_MORE = True
 try:
-    from uranus_bot.admin import admin
+    from uranus_bot import admin
 except ImportError:
     print("Can't find admin module, skipping it")
     IS_ADMIN = False
 try:
-    from uranus_bot.private import private
+    from uranus_bot import private
 except ImportError:
     print("Can't find private commands module, skipping it")
     IS_MORE = False

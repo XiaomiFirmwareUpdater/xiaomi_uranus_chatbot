@@ -26,8 +26,7 @@ class Database:
 
     def add_chat_to_db(self, sender_info):
         """ Add new row to the table"""
-        check = self.cursor.execute(f"""SELECT id FROM chats WHERE id=:id""", {'id': sender_info["id"]})
-        if check.fetchone():
+        if self.is_known_chat(sender_info["id"]):
             return
         try:
             self.cursor.execute(f"""INSERT INTO chats (id, username, name, type)
@@ -40,6 +39,11 @@ class Database:
             print(err)
         finally:
             self.conn.commit()
+
+    def is_known_chat(self, sender_id):
+        """ Check if user is already in database """
+        check = self.cursor.execute(f"""SELECT id FROM chats WHERE id=:id""", {'id': sender_id})
+        return True if check.fetchone() else False
 
     def __del__(self):
         """ close the connection """

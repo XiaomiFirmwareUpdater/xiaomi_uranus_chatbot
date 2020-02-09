@@ -18,7 +18,7 @@ BOT_TOKEN = CONFIG['tg_bot_token']
 BOT_ID = CONFIG['tg_bot_id']
 
 # set logging
-logging.basicConfig(filename=f'{PARENT_DIR}/bot.log',
+logging.basicConfig(filename=f'{PARENT_DIR}/tgbot.log',
                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ XFU_WEBSITE = "http://www.xiaomifirmwareupdater.com"
 TG_CHANNEL = "https://t.me/yshalsager_projects"
 
 # set Database
-DATABASE = Database(f"{PARENT_DIR}/{CONFIG['db']}")
+DATABASE = Database(f"{PARENT_DIR}/{CONFIG['tg_bot_db']}")
 DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS chats (
                                     id NUMERIC NOT NULL PRIMARY KEY,
                                     username text UNIQUE, name text, type text); """)

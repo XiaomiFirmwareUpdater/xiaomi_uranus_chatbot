@@ -2,8 +2,8 @@
 from telethon import events, Button
 
 from uranus_bot import DATABASE, HELP_URL, BOT_ID
-from uranus_bot.tg_bot import BOT
-from uranus_bot.utils.chat import get_user_info
+from uranus_bot.telegram.tg_bot import BOT
+from uranus_bot.utils.chat import get_user_info, get_chat_id
 
 
 @BOT.on(events.NewMessage(pattern='/start'))
@@ -38,13 +38,14 @@ async def start(event):
 async def on_new_message(event):
     """Add user to the db on new message
     This is temporary until active users are added to the database."""
-    sender_info = await get_user_info(event)
-    DATABASE.add_chat_to_db(sender_info)
+    if not DATABASE.is_known_chat(await get_chat_id(event)):
+        DATABASE.add_chat_to_db(await get_user_info(event))
 
 
-@BOT.on(events.chataction.ChatAction)
-async def on_adding_to_chat(event):
-    """Adds the chat that bot was added to into the database"""
-    if event.user_added and BOT_ID in event.action_message.action.users:
-        sender_info = await get_user_info(event)
-        DATABASE.add_chat_to_db(sender_info)
+# Add new chats to database
+# @BOT.on(events.chataction.ChatAction)
+# async def on_adding_to_chat(event):
+#     """Adds the chat that bot was added to into the database"""
+#     if event.user_added and BOT_ID in event.action_message.action.users:
+#         if not DATABASE.is_known_chat(await get_chat_id(event)):
+#             DATABASE.add_chat_to_db(await get_user_info(event))
