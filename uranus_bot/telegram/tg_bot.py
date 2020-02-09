@@ -9,6 +9,7 @@ from uranus_bot import API_KEY, API_HASH, BOT_TOKEN, LOGGER
 from uranus_bot.telegram.modules import ALL_MODULES
 
 BOT = TelegramClient('xfu_bot', API_KEY, API_HASH).start(bot_token=BOT_TOKEN)
+BOT.parse_mode = 'markdown'
 BOT_INFO = {}
 
 

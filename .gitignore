@@ -6,5 +6,5 @@ uranus_bot/admin/
 uranus_bot/private/
 .idea/
 venv/
-*.session
+*.session*
 *.db

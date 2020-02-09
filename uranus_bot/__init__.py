@@ -3,8 +3,10 @@ import logging
 from os.path import dirname
 
 import yaml
+import sentry_sdk
 
 from uranus_bot.database.database import Database
+from uranus_bot.utils.sentry_logging import sentry_before_send
 
 WORK_DIR = dirname(__file__)
 PARENT_DIR = '/'.join(dirname(__file__).split('/')[:-1])
@@ -33,3 +35,7 @@ DATABASE = Database(f"{PARENT_DIR}/{CONFIG['tg_bot_db']}")
 DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS chats (
                                     id NUMERIC NOT NULL PRIMARY KEY,
                                     username text UNIQUE, name text, type text); """)
+
+# Init sentry sdk for errors reporting
+SENTRY_KEY = CONFIG['sentry_sdk_key']
+sentry_sdk.init(SENTRY_KEY, before_send=sentry_before_send)

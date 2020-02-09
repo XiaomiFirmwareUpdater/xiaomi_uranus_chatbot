@@ -7,3 +7,6 @@ cryptg
 pillow
 # YAML
 PyYAML
+# aiohttp
+aiohttp[speedups]
+sentry-sdk==0.14.1

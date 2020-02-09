@@ -3,7 +3,7 @@
 # https://github.com/PaulSonOfLars/tgbot/blob/master/tg_bot/modules/__init__.py
 
 from glob import glob
-from os.path import dirname, isfile
+from os.path import isfile
 
 
 def get_modules(modules_path):

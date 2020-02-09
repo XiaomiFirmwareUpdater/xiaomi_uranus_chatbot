@@ -9,7 +9,7 @@ from uranus_bot.telegram.utils.chat import get_user_info, get_chat_id
 @BOT.on(events.NewMessage(pattern='/start'))
 async def start(event):
     """Send a message when the command /start is sent."""
-    sender_info = await get_user_info(event)
+    # sender_info = await get_user_info(event)
     # DATABASE.add_chat_to_db(sender_info)
     message = f"Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
               "I can get you latest Official ROMs, Firmware updates links," \
