@@ -3,8 +3,8 @@ import re
 
 from telethon import events
 
-from uranus_bot.telegram.messages.twrp import twrp_inline
-from uranus_bot.telegram.tg_bot import BOT
+from uranus_bot.telegram_bot.messages.twrp import twrp_inline
+from uranus_bot.telegram_bot.tg_bot import BOT
 
 
 @BOT.on(events.InlineQuery)

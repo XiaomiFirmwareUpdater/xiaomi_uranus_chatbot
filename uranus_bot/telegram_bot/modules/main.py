@@ -2,8 +2,8 @@
 from telethon import events, Button
 
 from uranus_bot import DATABASE, HELP_URL
-from uranus_bot.telegram.tg_bot import BOT
-from uranus_bot.telegram.utils.chat import get_user_info, get_chat_id
+from uranus_bot.telegram_bot.tg_bot import BOT
+from uranus_bot.telegram_bot.utils.chat import get_user_info, get_chat_id
 
 
 @BOT.on(events.NewMessage(pattern='/start'))

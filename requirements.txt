@@ -9,4 +9,7 @@ pillow
 PyYAML
 # aiohttp
 aiohttp[speedups]
+# sentry logging
 sentry-sdk==0.14.1
+# discord bot
+discord.py

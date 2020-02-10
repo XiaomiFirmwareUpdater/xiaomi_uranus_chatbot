@@ -43,7 +43,7 @@ class Database:
     def is_known_chat(self, sender_id):
         """ Check if user is already in database """
         check = self.cursor.execute(f"""SELECT id FROM chats WHERE id=:id""", {'id': sender_id})
-        return True if check.fetchone() else False
+        return bool(check.fetchone())
 
     def __del__(self):
         """ close the connection """

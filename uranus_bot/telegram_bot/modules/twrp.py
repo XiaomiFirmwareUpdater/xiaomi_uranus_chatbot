@@ -1,8 +1,8 @@
 """ TWRP command handler """
 from telethon import events
 
-from uranus_bot.telegram.messages.twrp import twrp_message
-from uranus_bot.telegram.tg_bot import BOT
+from uranus_bot.telegram_bot.messages.twrp import twrp_message
+from uranus_bot.telegram_bot.tg_bot import BOT
 
 
 @BOT.on(events.NewMessage(pattern='/twrp (.+)'))
