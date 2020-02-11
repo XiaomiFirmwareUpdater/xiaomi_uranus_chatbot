@@ -19,8 +19,9 @@ API_KEY = CONFIG['api_key']
 API_HASH = CONFIG['api_hash']
 BOT_TOKEN = CONFIG['tg_bot_token']
 BOT_ID = CONFIG['tg_bot_id']
+TG_BOT_DB = CONFIG['tg_bot_db']
 DISCORD_TOKEN = CONFIG['discord_bot_token']
-
+DISCORD_DB = CONFIG['discord_bot_db']
 # set logging
 # logging.basicConfig(filename=f'{PARENT_DIR}/bot.log',
 #                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -43,12 +44,6 @@ HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
 XFU_WEBSITE = "http://www.xiaomifirmwareupdater.com"
 TG_CHANNEL = "https://t.me/yshalsager_projects"
 
-# set Database
-DATABASE = Database(f"{PARENT_DIR}/{CONFIG['tg_bot_db']}")
-DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS chats (
-                                    id NUMERIC NOT NULL PRIMARY KEY,
-                                    username text UNIQUE, name text, type text); """)
-
 # Init sentry sdk for errors reporting
-SENTRY_KEY = CONFIG['sentry_sdk_key']
-sentry_sdk.init(SENTRY_KEY, before_send=sentry_before_send)
+# SENTRY_KEY = CONFIG['sentry_sdk_key']
+# sentry_sdk.init(SENTRY_KEY, before_send=sentry_before_send)

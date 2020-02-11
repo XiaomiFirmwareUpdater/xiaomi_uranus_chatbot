@@ -1,7 +1,8 @@
 """ Xiaomi Geeks Telegram Bot main module"""
 from telethon import events, Button
 
-from uranus_bot import DATABASE, HELP_URL
+from uranus_bot import HELP_URL
+from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.tg_bot import BOT
 from uranus_bot.telegram_bot.utils.chat import get_user_info, get_chat_id
 

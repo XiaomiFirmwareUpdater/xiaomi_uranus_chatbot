@@ -28,12 +28,10 @@ async def load_twrp_data():
         return data
 
 
-async def get_twrp(twrp_data, device):
+async def get_twrp(device, twrp_data):
     """
     fetch latest twrp links for a device
     """
-    if device not in list(twrp_data.keys()):
-        return
     name = twrp_data[device]['name']
     link = twrp_data[device]['link']
     async with ClientSession() as session:
