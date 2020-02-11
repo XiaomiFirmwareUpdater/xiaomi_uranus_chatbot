@@ -6,12 +6,14 @@ from importlib import import_module
 from telethon.sync import TelegramClient
 
 from uranus_bot import API_KEY, API_HASH, BOT_TOKEN
+from uranus_bot.providers.provider import Provider
 from uranus_bot.telegram_bot import TG_LOGGER
 from uranus_bot.telegram_bot.modules import ALL_MODULES
 
 BOT = TelegramClient('xfu_bot', API_KEY, API_HASH).start(bot_token=BOT_TOKEN)
 BOT.parse_mode = 'markdown'
 BOT_INFO = {}
+PROVIDER = Provider(BOT.loop)
 
 
 def main():

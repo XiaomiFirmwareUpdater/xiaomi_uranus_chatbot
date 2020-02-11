@@ -8,8 +8,10 @@ from discord.ext import commands
 from uranus_bot import DISCORD_TOKEN
 from uranus_bot.discord_bot import DISCORD_LOGGER
 from uranus_bot.discord_bot.modules import ALL_MODULES
+from uranus_bot.providers.provider import Provider
 
 BOT = commands.Bot(command_prefix='!')
+PROVIDER = Provider(BOT.loop)
 
 
 @BOT.event

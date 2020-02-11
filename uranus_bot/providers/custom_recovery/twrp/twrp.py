@@ -1,24 +1,9 @@
-"""custom recovery downloads scraper"""
-import asyncio
+"""twrp custom recovery downloads scraper"""
 
 from bs4 import BeautifulSoup
 from aiohttp import ClientSession
 
-from uranus_bot import LOGGER
 from uranus_bot.providers.utils.utils import fetch
-
-TWRP_DATA = {}
-
-
-async def twrp_data_loop():
-    """
-    loop devices' info every six hours
-    """
-    while True:
-        LOGGER.info("Refetching twrp data")
-        TWRP_DATA.clear()
-        await load_twrp_data()
-        await asyncio.sleep(60 * 60 * 6)
 
 
 async def load_twrp_data():
@@ -29,6 +14,7 @@ async def load_twrp_data():
         html = await fetch(session, 'https://twrp.me/Devices/Xiaomi/')
         page = BeautifulSoup(html, 'html.parser')
         devices = page.find("ul", {"class": "post-list"}).findAll('a')
+        data = {}
         for i in devices:
             info = {}
             codename = i.text.split('(')[-1].split(')')[0]
@@ -38,20 +24,18 @@ async def load_twrp_data():
             device = i.text
             info.update({'name': device})
             info.update({'link': link})
-            TWRP_DATA.update({codename: info})
+            data.update({codename: info})
+        return data
 
 
-async def get_twrp(device):
+async def get_twrp(twrp_data, device):
     """
     fetch latest twrp links for a device
-    :argument device - Xiaomi device codename
     """
-    if not TWRP_DATA:
-        await load_twrp_data()
-    if device not in list(TWRP_DATA.keys()):
+    if device not in list(twrp_data.keys()):
         return
-    name = TWRP_DATA[device]['name']
-    link = TWRP_DATA[device]['link']
+    name = twrp_data[device]['name']
+    link = twrp_data[device]['link']
     async with ClientSession() as session:
         html = await fetch(session, link)
         page = BeautifulSoup(html, 'html.parser').find('table').find('tr')

@@ -1,4 +1,4 @@
-""" Xiaomi Geeks Telegram Bot modules loader"""
+""" Xiaomi Geeks Discord Bot modules loader"""
 from os.path import dirname
 
 from uranus_bot.discord_bot import DISCORD_LOGGER
