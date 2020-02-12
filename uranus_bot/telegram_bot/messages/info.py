@@ -1,4 +1,5 @@
 """ info messages generator """
+from uranus_bot.providers.devices_info.info import get_codename
 
 
 async def models_message(device, models_data):
@@ -36,12 +37,7 @@ async def whatis_inline(event, device, codenames_names):
 async def codename_message(device, names_codenames):
     """ Generate telegram message of whatis command """
     message = ""
-    info = {}
-    for name, codename in names_codenames.items():
-        if name.lower().startswith(device.lower()):
-            info.update({name: codename})
-        if '/' in name and name.split('/')[1].lower().startswith(device.lower()):
-            info.update({name: codename})
+    info = await get_codename(device, names_codenames)
     if len(info) > 8:
         message = f"{device} is too general! Please be more specific."
         return message

@@ -65,6 +65,17 @@ async def load_models():
         return models
 
 
+async def get_codename(device, names_codenames):
+    """ Get codename of a devce by its name """
+    info = {}
+    for name, codename in names_codenames.items():
+        if name.lower().startswith(device.lower()):
+            info.update({name: codename})
+        if '/' in name and name.split('/')[1].lower().startswith(device.lower()):
+            info.update({name: codename})
+    return info
+
+
 # if __name__ == '__main__':
 #     loop = asyncio.get_event_loop()
 #     loop.run_until_complete(asyncio.gather(load_firmware_codenames(), load_vendor_codenames()))
