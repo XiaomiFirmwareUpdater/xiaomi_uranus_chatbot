@@ -1,14 +1,14 @@
 """ MIUI Updates commands handlers """
 from telethon import events
 
-from uranus_bot.telegram_bot.messages.miui_tracker import miui_message, archive_message, latest_miui_message
+from uranus_bot.telegram_bot.messages.miui_updates import miui_message, archive_message, latest_miui_message
 from uranus_bot.utils.error_message import error_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
 @BOT.on(events.NewMessage(pattern='/recovery (.+)'))
 @BOT.on(events.NewMessage(pattern='/fastboot (.+)'))
-async def recovery(event):
+async def miui(event):
     """Send a message when the command /recovery is sent."""
     device = event.pattern_match.group(1)
     if device not in list(PROVIDER.miui_codenames):

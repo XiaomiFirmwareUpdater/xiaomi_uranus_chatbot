@@ -6,7 +6,7 @@ from telethon import events
 from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot.messages.firmware import firmware_inline
 from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
-from uranus_bot.telegram_bot.messages.miui_tracker import miui_inline, archive_inline, latest_miui_inline
+from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
