@@ -29,4 +29,4 @@ async def codename_message(device, names_codenames):
     message = ""
     for name, codename in info.items():
         message += f"**{name}** is `{codename}`\n"
-    return Embed(title=f"**Search result:**", description=message)
+    return Embed(title=f"**Search result:**", description=message) if message else None
