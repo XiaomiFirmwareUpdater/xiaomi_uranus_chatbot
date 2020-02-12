@@ -14,6 +14,6 @@ async def firmware(event):
     if device not in PROVIDER.firmware_codenames:
         await event.reply(await error_message(device))
         return
-    message, buttons = await firmware_message(device)
+    message, buttons = await firmware_message(device, PROVIDER.codenames_names)
     await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation

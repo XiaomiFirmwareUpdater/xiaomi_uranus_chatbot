@@ -47,3 +47,4 @@ TG_CHANNEL = "https://t.me/yshalsager_projects"
 # Init sentry sdk for errors reporting
 # SENTRY_KEY = CONFIG['sentry_sdk_key']
 # sentry_sdk.init(SENTRY_KEY, before_send=sentry_before_send)
+GITHUB_ORG = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater"

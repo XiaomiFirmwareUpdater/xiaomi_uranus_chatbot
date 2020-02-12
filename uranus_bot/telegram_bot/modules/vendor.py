@@ -3,8 +3,7 @@ from telethon import events
 
 from uranus_bot.utils.error_message import error_message
 from uranus_bot.telegram_bot.messages.vendor import vendor_message
-from uranus_bot.telegram_bot.tg_bot import BOT
-from uranus_bot.telegram_bot.tg_bot import PROVIDER
+from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
 @BOT.on(events.NewMessage(pattern='/vendor (.+)'))
@@ -14,6 +13,6 @@ async def vendor(event):
     if device not in PROVIDER.vendor_codenames:
         await event.reply(await error_message(device))
         return
-    message, buttons = await vendor_message(device)
+    message, buttons = await vendor_message(device, PROVIDER.codenames_names)
     await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation

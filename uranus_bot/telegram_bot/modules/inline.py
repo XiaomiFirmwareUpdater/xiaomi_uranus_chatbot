@@ -6,10 +6,10 @@ from telethon import events
 from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot.messages.firmware import firmware_inline
 from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
+from uranus_bot.telegram_bot.messages.miui_tracker import miui_inline, archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
-from uranus_bot.telegram_bot.tg_bot import BOT
-from uranus_bot.telegram_bot.tg_bot import PROVIDER
+from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
 @BOT.on(events.InlineQuery)
@@ -31,10 +31,10 @@ async def handler(event):
             result = await twrp_inline(event, query_request, PROVIDER.twrp_data)
     if query == 'firmware':
         if query_request in PROVIDER.firmware_codenames:
-            result = await firmware_inline(event, query_request)
+            result = await firmware_inline(event, query_request, PROVIDER.codenames_names)
     if query == 'vendor':
         if query_request in PROVIDER.vendor_codenames:
-            result = await vendor_inline(event, query_request)
+            result = await vendor_inline(event, query_request, PROVIDER.codenames_names)
     if query == 'models':
         if query_request in list(PROVIDER.models_data.keys()):
             result = await models_inline(event, query_request, PROVIDER.models_data)
@@ -45,6 +45,21 @@ async def handler(event):
         query_request = ' '.join(query_args[1:])
         if await get_codename(query_request, PROVIDER.names_codenames):
             result = await codename_inline(event, query_request, PROVIDER.names_codenames)
+    if query == 'recovery':
+        if query_request in list(PROVIDER.miui_codenames):
+            result = await miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
+                                       PROVIDER.codenames_names)
+    if query == 'fastboot':
+        if query_request in list(PROVIDER.miui_codenames):
+            result = await miui_inline(event, query_request, PROVIDER.miui_fastboot_updates,
+                                       PROVIDER.codenames_names)
+    if query == 'latest':
+        if query_request in list(PROVIDER.miui_codenames):
+            result = await latest_miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
+                                              PROVIDER.codenames_names)
+    if query == 'archive':
+        if query_request in PROVIDER.miui_codenames:
+            result = await archive_inline(event, query_request, PROVIDER.codenames_names)
     else:
         pass
     if result:

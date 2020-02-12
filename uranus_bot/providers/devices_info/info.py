@@ -5,9 +5,8 @@ import json
 import yaml
 from aiohttp import ClientSession
 
+from uranus_bot import GITHUB_ORG
 from uranus_bot.providers.utils.utils import fetch
-
-GITHUB_ORG = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater"
 
 
 async def load_firmware_codenames():

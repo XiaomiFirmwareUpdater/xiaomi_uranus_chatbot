@@ -11,4 +11,4 @@ async def firmware(ctx, device):
     if device not in PROVIDER.firmware_codenames:
         await ctx.send(await error_message(device))
         return
-    await ctx.send(None, embed=await firmware_message(device))
+    await ctx.send(None, embed=await firmware_message(device, PROVIDER.codenames_names))

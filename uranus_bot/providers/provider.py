@@ -5,6 +5,7 @@ from uranus_bot import LOGGER
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
+from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import load_fastboot_data, load_recovery_data
 
 
 class Provider:
@@ -19,16 +20,20 @@ class Provider:
         self.codenames_names = {}
         self.names_codenames = {}
         self.models_data = {}
+        self.miui_fastboot_updates = []
+        self.miui_recovery_updates = []
         self.loop.create_task(self.twrp_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
         self.loop.create_task(self.miui_codenames_loop())
         self.loop.create_task(self.vendor_codenames_loop())
         self.loop.create_task(self.devices_names_loop())
         self.loop.create_task(self.models_loop())
+        self.loop.create_task(self.miui_fasboot_loop())
+        self.loop.create_task(self.miui_recovery_loop())
 
     async def twrp_data_loop(self):
         """
-        loop devices' twrp_data info every six hours
+        fetch devices' twrp_data info every six hours
         """
         while True:
             LOGGER.info("Refreshing twrp data")
@@ -37,7 +42,7 @@ class Provider:
 
     async def firmware_codenames_loop(self):
         """
-        loop devices' firmware codenames every six hours
+        fetch devices' firmware codenames every six hours
         """
         while True:
             LOGGER.info("Refreshing firmware codenames")
@@ -46,7 +51,7 @@ class Provider:
 
     async def miui_codenames_loop(self):
         """
-        loop devices' miui codenames every six hours
+        fetch devices' miui codenames every six hours
         """
         while True:
             LOGGER.info("Refreshing miui codenames")
@@ -55,7 +60,7 @@ class Provider:
 
     async def vendor_codenames_loop(self):
         """
-        loop devices' vendor codenames every six hours
+        fetch devices' vendor codenames every six hours
         """
         while True:
             LOGGER.info("Refreshing vendor codenames")
@@ -64,7 +69,7 @@ class Provider:
 
     async def devices_names_loop(self):
         """
-        loop devices' codenames and names every six hours
+        fetch devices' codenames and names every six hours
         """
         while True:
             LOGGER.info("Refreshing devices codenames and names")
@@ -73,9 +78,27 @@ class Provider:
 
     async def models_loop(self):
         """
-        loop devices' models every six hours
+        fetch devices' models every six hours
         """
         while True:
             LOGGER.info("Refreshing models data")
             self.models_data = await load_models()
             await asyncio.sleep(60 * 60 * 6)
+
+    async def miui_fasboot_loop(self):
+        """
+        fetch devices' miui fasboot roms data every hour
+        """
+        while True:
+            LOGGER.info("Refreshing miui fasboot data")
+            self.miui_fastboot_updates = await load_fastboot_data()
+            await asyncio.sleep(60 * 60)
+
+    async def miui_recovery_loop(self):
+        """
+        fetch devices' miui recovery roms data every hour
+        """
+        while True:
+            LOGGER.info("Refreshing miui recovery data")
+            self.miui_recovery_updates = await load_recovery_data()
+            await asyncio.sleep(60 * 60)
