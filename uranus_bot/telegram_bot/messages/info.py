@@ -44,3 +44,12 @@ async def codename_message(device, names_codenames):
     for name, codename in info.items():
         message += f"**{name}** is `{codename}`\n"
     return message
+
+
+async def codename_inline(event, device, names_codenames):
+    """ Generate telegram result of whatis inline query """
+    builder = event.builder
+    message = await codename_message(device, names_codenames)
+    result = builder.article(
+        f'Search {device} device codename', text=message)
+    return result

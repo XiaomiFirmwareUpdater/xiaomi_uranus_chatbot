@@ -3,8 +3,9 @@ import re
 
 from telethon import events
 
+from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot.messages.firmware import firmware_inline
-from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline
+from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
 from uranus_bot.telegram_bot.tg_bot import BOT
@@ -40,6 +41,10 @@ async def handler(event):
     if query == 'whatis':
         if query_request in list(PROVIDER.codenames_names.keys()):
             result = await whatis_inline(event, query_request, PROVIDER.codenames_names)
+    if query == 'codename':
+        query_request = ' '.join(query_args[1:])
+        if await get_codename(query_request, PROVIDER.names_codenames):
+            result = await codename_inline(event, query_request, PROVIDER.names_codenames)
     else:
         pass
     if result:
