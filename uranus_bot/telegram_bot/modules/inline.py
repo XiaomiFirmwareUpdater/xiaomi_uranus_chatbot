@@ -9,6 +9,7 @@ from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, 
 from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
+from uranus_bot.telegram_bot.messages.xiaomi_eu import eu_inline
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
@@ -60,6 +61,9 @@ async def handler(event):
     if query == 'archive':
         if query_request in PROVIDER.miui_codenames:
             result = await archive_inline(event, query_request, PROVIDER.codenames_names)
+    if query == 'eu':
+        if query_request in list(PROVIDER.eu_codenames.keys()):
+            result = await eu_inline(event, query_request, PROVIDER.eu_data, PROVIDER.eu_codenames)
     else:
         pass
     if result:
