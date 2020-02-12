@@ -31,7 +31,7 @@ async def run():
                    BOT_INFO['name'], BOT_INFO['username'], BOT_INFO['id'])
     # Load all modules in modules list
     for module_name in ALL_MODULES:
-        # print(f"{__name__.split('.')[0]}.telegram_bot.modules.{module_name}")
-        import_module(f"{__name__.split('.')[0]}.telegram_bot.modules.{module_name}")
+        # print(f"{__package__}.modules.{module_name}")
+        import_module(f"{__package__}.modules.{module_name}")
     async with BOT:
         await BOT.run_until_disconnected()

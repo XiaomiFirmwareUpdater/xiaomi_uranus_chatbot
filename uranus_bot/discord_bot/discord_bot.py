@@ -25,8 +25,8 @@ async def on_ready():
 
 # Load all modules in modules list
 for module_name in ALL_MODULES:
-    # print(f"{__name__.split('.')[0]}.discord_bot.modules.{module_name}")
-    import_module(f"{__name__.split('.')[0]}.discord_bot.modules.{module_name}")
+    # print(f"{__package__}.modules.{module_name}")
+    import_module(f"{__package__}.modules.{module_name}")
 
 
 def main():
