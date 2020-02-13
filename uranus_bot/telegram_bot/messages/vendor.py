@@ -20,6 +20,6 @@ async def vendor_inline(event, device, codenames_names):
     builder = event.builder
     message, buttons = await vendor_message(device, codenames_names)
     result = builder.article(
-        f'Search {codenames_names[device]}** (`{device}`) Vendor downloads', text=message,
+        f'Search {codenames_names[device]} ({device}) Vendor downloads', text=message,
         buttons=buttons, link_preview=False)
     return result

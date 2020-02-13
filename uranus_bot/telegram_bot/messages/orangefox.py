@@ -18,7 +18,7 @@ async def orangefox_message(device, orangefox_data):
 
 
 async def orangefox_inline(event, device, orangefox_data):
-    """ Generate telegram result  of orangefox inline query """
+    """ Generate telegram result of orangefox inline query """
     builder = event.builder
     message, buttons = await orangefox_message(device, orangefox_data)
     result = builder.article(

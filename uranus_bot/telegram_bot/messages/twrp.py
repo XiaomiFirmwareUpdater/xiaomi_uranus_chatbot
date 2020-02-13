@@ -16,7 +16,7 @@ async def twrp_message(device, twrp_data):
 
 
 async def twrp_inline(event, device, twrp_data):
-    """ Generate telegram result  of twrp inline query """
+    """ Generate telegram result of twrp inline query """
     builder = event.builder
     message, buttons = await twrp_message(device, twrp_data)
     result = builder.article(

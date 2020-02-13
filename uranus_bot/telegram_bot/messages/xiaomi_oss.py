@@ -18,7 +18,7 @@ async def oss_message(device):
 
 
 async def oss_inline(event, device):
-    """ Generate telegram result  of oss inline query """
+    """ Generate telegram result of oss inline query """
     builder = event.builder
     message = await oss_message(device)
     result = builder.article(

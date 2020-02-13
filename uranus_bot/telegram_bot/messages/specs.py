@@ -29,7 +29,7 @@ async def specs_message(device, specs_data):
 
 
 async def specs_inline(event, device, specs_data):
-    """ Generate telegram result  of specs inline query """
+    """ Generate telegram result of specs inline query """
     builder = event.builder
     message = await specs_message(device, specs_data)
     result = builder.article(

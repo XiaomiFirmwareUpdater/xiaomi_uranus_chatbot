@@ -17,7 +17,7 @@ async def models_message(device, models_data):
 
 async def whatis_message(device, codenames_names):
     """ Generate discord message of whatis command """
-    return Embed(title=f"`{device}` is **{codenames_names[device]}**")
+    return Embed(title=f"{device} is {codenames_names[device]}")
 
 
 async def codename_message(device, names_codenames):

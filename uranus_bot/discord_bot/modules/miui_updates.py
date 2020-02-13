@@ -4,8 +4,8 @@ from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
 from uranus_bot.utils.error_message import error_message
 
 
-@BOT.command(aliases=['recovery', 'fastboot'])
-async def miui(ctx, device):
+@BOT.command(name='recovery', aliases=['fastboot'])
+async def miui_updates(ctx, device):
     """Send latest recovery/fastboot ROMs for a device Example: !recovery whyred / !fastboot whyred"""
     if device not in PROVIDER.miui_codenames:
         await ctx.send(await error_message(device))

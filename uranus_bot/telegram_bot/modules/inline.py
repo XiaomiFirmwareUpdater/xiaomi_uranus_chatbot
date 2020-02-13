@@ -6,6 +6,7 @@ from telethon import events
 from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot.messages.firmware import firmware_inline
 from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
+from uranus_bot.telegram_bot.messages.misc import unlockbl_inline, tools_inline, guides_inline
 from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.orangefox import orangefox_inline
 from uranus_bot.telegram_bot.messages.pitchblack import pitchblack_inline
@@ -78,6 +79,12 @@ async def handler(event):
         result = await specs_inline(event, query_request, PROVIDER.specs_data)
     if query == 'oss':
         result = await oss_inline(event, query_request)
+    if query == 'unlockbl':
+        result = await unlockbl_inline(event)
+    if query == 'tools':
+        result = await tools_inline(event)
+    if query == 'guides':
+        result = await guides_inline(event)
     else:
         pass
     if result:
