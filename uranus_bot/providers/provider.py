@@ -3,6 +3,7 @@ import asyncio
 
 from uranus_bot import LOGGER
 from uranus_bot.providers.custom_recovery.orangefox.orangefox import load_orangefox_data
+from uranus_bot.providers.custom_recovery.pitchblack.pitchblack import load_pitchblack_data
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
@@ -17,6 +18,7 @@ class Provider:
         self.loop = _loop
         self.twrp_data = {}
         self.orangefox_data = {}
+        self.pitchblack_data = []
         self.firmware_codenames = []
         self.miui_codenames = []
         self.vendor_codenames = []
@@ -29,6 +31,7 @@ class Provider:
         self.eu_data = []
         self.loop.create_task(self.twrp_data_loop())
         self.loop.create_task(self.orangefox_data_loop())
+        self.loop.create_task(self.pitchblack_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
         self.loop.create_task(self.miui_codenames_loop())
         self.loop.create_task(self.vendor_codenames_loop())
@@ -56,6 +59,15 @@ class Provider:
             LOGGER.info("Refreshing orangefox data")
             self.orangefox_data = await load_orangefox_data()
             await asyncio.sleep(60 * 60 * 6)
+
+    async def pitchblack_data_loop(self):
+        """
+        fetch PitchBlack recovery data every six hours
+        """
+        while True:
+            LOGGER.info("Refreshing PitchBlack downloads data")
+            self.pitchblack_data = await load_pitchblack_data()
+            await asyncio.sleep(60 * 60)
 
     async def firmware_codenames_loop(self):
         """
@@ -122,7 +134,7 @@ class Provider:
 
     async def eu_codenames_loop(self):
         """
-        fetch devices' miui recovery roms data every six hours
+        fetch devices' Xiaomi.eu codenames every hour
         """
         while True:
             LOGGER.info("Refreshing eu codenames data")
@@ -131,7 +143,7 @@ class Provider:
 
     async def eu_data_loop(self):
         """
-        fetch devices' miui recovery roms data every six hours
+        fetch devices' Xiaomi.eu data every hour
         """
         while True:
             LOGGER.info("Refreshing eu downloads data")

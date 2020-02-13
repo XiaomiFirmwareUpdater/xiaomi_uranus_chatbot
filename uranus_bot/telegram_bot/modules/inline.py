@@ -8,6 +8,7 @@ from uranus_bot.telegram_bot.messages.firmware import firmware_inline
 from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
 from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.orangefox import orangefox_inline
+from uranus_bot.telegram_bot.messages.pitchblack import pitchblack_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
 from uranus_bot.telegram_bot.messages.xiaomi_eu import eu_inline
@@ -34,6 +35,9 @@ async def handler(event):
     if query == 'of':
         if query_request in list(PROVIDER.orangefox_data.keys()):
             result = await orangefox_inline(event, query_request, PROVIDER.orangefox_data)
+    if query == 'pb':
+        if query_request in str(PROVIDER.pitchblack_data):
+            result = await pitchblack_inline(event, query_request, PROVIDER.pitchblack_data)
     if query == 'firmware':
         if query_request in PROVIDER.firmware_codenames:
             result = await firmware_inline(event, query_request, PROVIDER.codenames_names)
