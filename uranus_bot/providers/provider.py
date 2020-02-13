@@ -2,6 +2,7 @@
 import asyncio
 
 from uranus_bot import LOGGER
+from uranus_bot.providers.custom_recovery.orangefox.orangefox import load_orangefox_data
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
@@ -15,6 +16,7 @@ class Provider:
     def __init__(self, _loop):
         self.loop = _loop
         self.twrp_data = {}
+        self.orangefox_data = {}
         self.firmware_codenames = []
         self.miui_codenames = []
         self.vendor_codenames = []
@@ -26,6 +28,7 @@ class Provider:
         self.eu_codenames = {}
         self.eu_data = []
         self.loop.create_task(self.twrp_data_loop())
+        self.loop.create_task(self.orangefox_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
         self.loop.create_task(self.miui_codenames_loop())
         self.loop.create_task(self.vendor_codenames_loop())
@@ -43,6 +46,15 @@ class Provider:
         while True:
             LOGGER.info("Refreshing twrp data")
             self.twrp_data = await load_twrp_data()
+            await asyncio.sleep(60 * 60 * 6)
+
+    async def orangefox_data_loop(self):
+        """
+        fetch devices' orangefox_data info every six hours
+        """
+        while True:
+            LOGGER.info("Refreshing orangefox data")
+            self.orangefox_data = await load_orangefox_data()
             await asyncio.sleep(60 * 60 * 6)
 
     async def firmware_codenames_loop(self):
