@@ -13,6 +13,7 @@ from uranus_bot.telegram_bot.messages.specs import specs_inline
 from uranus_bot.telegram_bot.messages.twrp import twrp_inline
 from uranus_bot.telegram_bot.messages.vendor import vendor_inline
 from uranus_bot.telegram_bot.messages.xiaomi_eu import eu_inline
+from uranus_bot.telegram_bot.messages.xiaomi_oss import oss_inline
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
@@ -75,6 +76,8 @@ async def handler(event):
             result = await eu_inline(event, query_request, PROVIDER.eu_data, PROVIDER.eu_codenames)
     if query == 'specs':
         result = await specs_inline(event, query_request, PROVIDER.specs_data)
+    if query == 'oss':
+        result = await oss_inline(event, query_request)
     else:
         pass
     if result:
