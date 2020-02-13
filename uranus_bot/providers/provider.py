@@ -8,6 +8,7 @@ from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import load_fastboot_data, load_recovery_data
+from uranus_bot.providers.specs.specs import load_specs_data
 from uranus_bot.providers.xiaomi_eu.xiaomi_eu import load_eu_codenames, load_eu_data
 
 
@@ -29,6 +30,7 @@ class Provider:
         self.miui_recovery_updates = []
         self.eu_codenames = {}
         self.eu_data = []
+        self.specs_data = []
         self.loop.create_task(self.twrp_data_loop())
         self.loop.create_task(self.orangefox_data_loop())
         self.loop.create_task(self.pitchblack_data_loop())
@@ -41,6 +43,7 @@ class Provider:
         self.loop.create_task(self.miui_recovery_loop())
         self.loop.create_task(self.eu_codenames_loop())
         self.loop.create_task(self.eu_data_loop())
+        self.loop.create_task(self.specs_data_loop())
 
     async def twrp_data_loop(self):
         """
@@ -67,7 +70,7 @@ class Provider:
         while True:
             LOGGER.info("Refreshing PitchBlack downloads data")
             self.pitchblack_data = await load_pitchblack_data()
-            await asyncio.sleep(60 * 60)
+            await asyncio.sleep(60 * 60 * 6)
 
     async def firmware_codenames_loop(self):
         """
@@ -139,7 +142,7 @@ class Provider:
         while True:
             LOGGER.info("Refreshing eu codenames data")
             self.eu_codenames = await load_eu_codenames()
-            await asyncio.sleep(60 * 60)
+            await asyncio.sleep(60 * 60 * 6)
 
     async def eu_data_loop(self):
         """
@@ -149,3 +152,12 @@ class Provider:
             LOGGER.info("Refreshing eu downloads data")
             self.eu_data = await load_eu_data()
             await asyncio.sleep(60 * 60)
+
+    async def specs_data_loop(self):
+        """
+        fetch devices' specs every six hours
+        """
+        while True:
+            LOGGER.info("Refreshing specs data")
+            self.specs_data = await load_specs_data()
+            await asyncio.sleep(60 * 60 * 6)
