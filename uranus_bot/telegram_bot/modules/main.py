@@ -1,9 +1,12 @@
 """ Xiaomi Geeks Telegram Bot main module"""
+from base64 import b64decode
+
 from telethon import events, Button
 
 from uranus_bot import HELP_URL
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.modules.help import show_help
+from uranus_bot.telegram_bot.modules.subscriptions import subscribe
 from uranus_bot.telegram_bot.tg_bot import BOT
 from uranus_bot.telegram_bot.utils.chat import get_user_info, get_chat_id
 
@@ -13,15 +16,21 @@ async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
     # DATABASE.add_chat_to_db(sender_info)
+    key = event.message.message.split('/start ')[1]
     if event.message.message.endswith('help'):
         await show_help(event)
+    elif key:
+        decoded = b64decode(key).decode()
+        if "/subscribe" in decoded:
+            event.message.message = decoded
+            await subscribe(event)
     else:
         message = f"Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\n" \
                   "I can get you latest Official ROMs, Firmware updates links," \
                   " and many more things!\n\nCheck how to use me by clicking help button below." \
                   "\nJoin [my channel](https://t.me/yshalsager_projects) " \
                   "to get all updates and announcements about the bot!"
-        await event.respond(message, buttons=[
+        await event.reply(message, buttons=[
             [Button.url("Join my channel", url="https://t.me/yshalsager_projects"),
              Button.url("Join support group", url="https://t.me/joinchat/CRWESlKSb5yEqDwTLgWYnQ")],
             [Button.url('Read help', HELP_URL),

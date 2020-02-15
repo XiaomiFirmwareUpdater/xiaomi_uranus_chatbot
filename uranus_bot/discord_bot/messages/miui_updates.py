@@ -10,7 +10,8 @@ async def miui_message(device, updates, codenames_names):
     """ Generate discord message of recovery/fastboot command """
     data = await get_miui(device, updates)
     rom_type = await get_type(str(data))
-    embed = Embed(title=f"**Latest {codenames_names[device]}** (`{device}`) **MIUI Official {rom_type} ROMs**")
+    embed = Embed(title=f"**Latest {codenames_names[device]}** (`{device}`) "
+                        f"**MIUI Official {rom_type} ROMs**")
     for i in data:
         version = i['version']
         android = i['android']
@@ -44,4 +45,3 @@ async def latest_miui_message(device, updates, codenames_names):
     embed = Embed(title=f"**Latest MIUI Versions for {codenames_names[device]}** (`{device}`)",
                   description=description)
     return embed
-

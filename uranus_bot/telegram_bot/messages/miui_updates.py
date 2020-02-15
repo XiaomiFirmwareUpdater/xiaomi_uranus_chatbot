@@ -77,3 +77,16 @@ async def latest_miui_inline(event, device, updates, codenames_names):
     result = builder.article(
         f'Search {codenames_names[device]} ({device}) latest MIUI versions', text=message)
     return result
+
+
+async def miui_update_message(data, codenames_names):
+    """ Generate telegram message of miui update """
+    rom_type = await get_type(str(data))
+    device = data['codename']
+    region = await get_region(data['filename'], device, data['version'])
+    message = f"**New MIUI {rom_type} Update Available for " \
+              f"{codenames_names[device]}** (`{device}`)!\n" \
+              f"**Region:** {region} \n" \
+              f"**Size**: {data['size']}"
+    buttons = [Button.url(f"{data['version']} | {data['android']}", url=data['download'])]
+    return message, buttons

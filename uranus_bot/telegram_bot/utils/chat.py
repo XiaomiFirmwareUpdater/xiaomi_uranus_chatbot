@@ -1,6 +1,14 @@
 """ Xiaomi Geeks Telegram Bot chat utilities"""
 
-from telethon.tl.types import User
+from telethon.tl.types import User, ChannelParticipantsAdmins
+
+
+async def is_group_admin(event) -> bool:
+    """Check if a use is an admin"""
+    return bool([i for i in
+                 await event.client.get_participants(event.message.to_id,
+                                                     filter=ChannelParticipantsAdmins)
+                 if event.message.sender_id == i.id])
 
 
 async def get_chat_id(event) -> int:

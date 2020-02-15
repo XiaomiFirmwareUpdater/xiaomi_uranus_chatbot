@@ -8,3 +8,4 @@ config.*
 venv/
 *.session*
 *.db
+*.stf

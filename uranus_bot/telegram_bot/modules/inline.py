@@ -7,7 +7,8 @@ from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot.messages.firmware import firmware_inline
 from uranus_bot.telegram_bot.messages.info import models_inline, whatis_inline, codename_inline
 from uranus_bot.telegram_bot.messages.misc import unlockbl_inline, tools_inline, guides_inline
-from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, archive_inline, latest_miui_inline
+from uranus_bot.telegram_bot.messages.miui_updates import miui_inline, \
+    archive_inline, latest_miui_inline
 from uranus_bot.telegram_bot.messages.orangefox import orangefox_inline
 from uranus_bot.telegram_bot.messages.pitchblack import pitchblack_inline
 from uranus_bot.telegram_bot.messages.specs import specs_inline
@@ -21,6 +22,7 @@ from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 @BOT.on(events.InlineQuery)
 async def handler(event):
     """Handle inline queries"""
+    # pylint: disable=too-many-branches, too-many-statements
     result = None
     query = None
     query_args = re.findall(r'\S+', event.text.lower().strip())

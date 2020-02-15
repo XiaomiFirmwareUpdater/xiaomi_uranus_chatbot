@@ -1,7 +1,6 @@
 """orangefox custom recovery downloads scraper"""
 import json
 
-from bs4 import BeautifulSoup
 from aiohttp import ClientSession
 
 from uranus_bot.providers.utils.utils import fetch

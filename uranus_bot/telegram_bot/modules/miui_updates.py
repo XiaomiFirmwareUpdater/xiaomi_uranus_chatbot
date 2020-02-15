@@ -1,7 +1,8 @@
 """ MIUI Updates commands handlers """
 from telethon import events
 
-from uranus_bot.telegram_bot.messages.miui_updates import miui_message, archive_message, latest_miui_message
+from uranus_bot.telegram_bot.messages.miui_updates import miui_message, \
+    archive_message, latest_miui_message
 from uranus_bot.utils.error_message import error_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 

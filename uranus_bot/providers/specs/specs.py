@@ -19,6 +19,7 @@ async def load_specs_data():
 
 async def get_specs(device, specs_data):
     """ Get specs of a device by its codename """
+    #pylint: disable=too-many-locals
     try:
         info = [i for i in specs_data if device == i['codename']][0]
     except IndexError:

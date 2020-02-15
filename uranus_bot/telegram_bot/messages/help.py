@@ -9,8 +9,10 @@ async def help_main_message():
     """ Generate telegram message of help command """
     message = f"**How to use {BOT_INFO['name']}**\n\n" \
               f"@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\n" \
-              f"It can get you latest Official ROMs, Firmware updates links, and many more things!\n" \
-              f"The full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)" \
+              f"It can get you latest Official ROMs, " \
+              f"Firmware updates links, and many more things!\n" \
+              f"The full usage guide is available " \
+              f"[Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)" \
               f"Here are all commands available:\n\n" \
               f"/start: Check if bot is running\n" \
               f"/help: Show this help message"
@@ -88,4 +90,4 @@ async def miscellaneous_help_message():
     return "/guides: Various useful guides for every Xiaomi user\n" \
            "/unlockbl: Unlocking bootloader help and tools\n" \
            "/tools: Various useful tools for every Xiaomi user\n" \
-           "/arb: Anti-Rollback Protection information" \
+           "/arb: Anti-Rollback Protection information"

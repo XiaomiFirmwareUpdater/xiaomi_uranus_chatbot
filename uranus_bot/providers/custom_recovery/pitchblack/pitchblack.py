@@ -1,9 +1,10 @@
 """PitchBlack recovery downloads scraper"""
 
+import xml.etree.ElementTree as eT
+
 from aiohttp import ClientSession
 
 from uranus_bot.providers.utils.utils import fetch
-import xml.etree.ElementTree as eT
 
 
 async def load_pitchblack_data():

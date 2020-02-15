@@ -16,3 +16,6 @@ DATABASE = Database(f"{PARENT_DIR}/{TG_BOT_DB}")
 DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS chats (
                                     id NUMERIC NOT NULL PRIMARY KEY,
                                     username text UNIQUE, name text, type text); """)
+DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS subscriptions (
+                                    id NUMERIC NOT NULL, chat_type text,
+                                    sub_type text, device text); """)

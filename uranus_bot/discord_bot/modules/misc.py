@@ -1,10 +1,12 @@
 """ Miscellaneous commands handler """
-from discord import File
 import io
+
 import aiohttp
-from uranus_bot.discord_bot.messages.misc import arb_message, unlockbl_message,\
-    tools_message, guides_message
+from discord import File
+
 from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
+from uranus_bot.discord_bot.messages.misc import arb_message, unlockbl_message, \
+    tools_message, guides_message
 
 
 @BOT.command(name='arb')

@@ -1,12 +1,14 @@
 """ MIUI Updates command handler """
-from uranus_bot.discord_bot.messages.miui_updates import miui_message, archive_message, latest_miui_message
+from uranus_bot.discord_bot.messages.miui_updates import miui_message, \
+    archive_message, latest_miui_message
 from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
 from uranus_bot.utils.error_message import error_message
 
 
 @BOT.command(name='recovery', aliases=['fastboot'])
 async def miui_updates(ctx, device):
-    """Send latest recovery/fastboot ROMs for a device Example: !recovery whyred / !fastboot whyred"""
+    """Send latest recovery/fastboot ROMs
+    for a device Example: !recovery whyred / !fastboot whyred"""
     if device not in PROVIDER.miui_codenames:
         await ctx.send(await error_message(device))
         return
@@ -31,4 +33,5 @@ async def latest(ctx, device):
     if device not in PROVIDER.miui_codenames:
         await ctx.send(await error_message(device))
         return
-    await ctx.send(None, embed=await latest_miui_message(device, PROVIDER.miui_recovery_updates, PROVIDER.codenames_names))
+    await ctx.send(None, embed=await latest_miui_message(
+        device, PROVIDER.miui_recovery_updates, PROVIDER.codenames_names))

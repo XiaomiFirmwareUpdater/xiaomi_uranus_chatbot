@@ -13,17 +13,21 @@ async def load_fastboot_data():
     :returns data - a list with merged stable, weekly, current, and EOL data
     """
     async with ClientSession() as session:
-        stable_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                     f'stable_fastboot/stable_fastboot.yml'),
+        stable_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'stable_fastboot/stable_fastboot.yml'),
                                 Loader=yaml.FullLoader)
-        weekly_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                     f'weekly_fastboot/weekly_fastboot.yml'),
+        weekly_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'weekly_fastboot/weekly_fastboot.yml'),
                                 Loader=yaml.FullLoader)
-        eol_stable_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                         f'EOL/stable_fastboot/stable_fastboot.yml'),
+        eol_stable_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'EOL/stable_fastboot/stable_fastboot.yml'),
                                     Loader=yaml.FullLoader)
-        eol_weekly_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                         f'EOL/weekly_fastboot/weekly_fastboot.yml'),
+        eol_weekly_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'EOL/weekly_fastboot/weekly_fastboot.yml'),
                                     Loader=yaml.FullLoader)
         data = [*stable_roms, *weekly_roms, *eol_stable_roms, *eol_weekly_roms]
         return data
@@ -46,18 +50,22 @@ async def load_recovery_data():
     :returns data - a list with merged stable, weekly, current, and EOL data
     """
     async with ClientSession() as session:
-        stable_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                     f'stable_recovery/stable_recovery.yml'),
+        stable_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'stable_recovery/stable_recovery.yml'),
                                 Loader=yaml.FullLoader)
-        weekly_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/xiaomifirmwareupdater.github.io/master/'
-                                                     f'data/devices/miui11.yml'),
+        weekly_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/xiaomifirmwareupdater.github.io/master/'
+                     f'data/devices/miui11.yml'),
                                 Loader=yaml.FullLoader)
         weekly_roms = await filter_recovery_weekly(weekly_roms)
-        eol_stable_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                         f'EOL/stable_recovery/stable_recovery.yml'),
+        eol_stable_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'EOL/stable_recovery/stable_recovery.yml'),
                                     Loader=yaml.FullLoader)
-        eol_weekly_roms = yaml.load(await fetch(session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                                                         f'EOL/weekly_recovery/weekly_recovery.yml'),
+        eol_weekly_roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
+                     f'EOL/weekly_recovery/weekly_recovery.yml'),
                                     Loader=yaml.FullLoader)
         data = [*stable_roms, *weekly_roms, *eol_stable_roms, *eol_weekly_roms]
         return data
@@ -66,3 +74,38 @@ async def load_recovery_data():
 async def get_miui(device, updates):
     """ Get miui from for a device """
     return [i for i in updates if device == i['codename'].split('_')[0]]
+
+
+async def diff_miui_updates(new, old):
+    """ diff miui updates to get the changes """
+    changes = {}
+    if not old:
+        return changes
+    for item in new:
+        codename = item['codename'].split('_')[0]
+        for old_item in old:
+            if old_item['codename'] == item['codename'] and item['version'] != old_item['version']:
+                is_new = None
+                if "V" in item['version'] and "V" in old_item['version']:
+                    new_version_array = item['version'].split('.')
+                    old_version_array = old_item['version'].split('.')
+                    if new_version_array[-1][0] > old_version_array[-1][0] \
+                            or new_version_array[0][1:] > old_version_array[0][1:] \
+                            or new_version_array[1] > old_version_array[1] \
+                            or new_version_array[2] > old_version_array[2]:
+                        is_new = True
+                elif "V" not in item['version'] and "V" not in old_item['version']:
+                    new_version_array = item['version'].split('.')
+                    old_version_array = old_item['version'].split('.')
+                    if new_version_array[0] > old_version_array[0] \
+                            or new_version_array[1] > old_version_array[1] \
+                            or new_version_array[2] > old_version_array[2]:
+                        is_new = True
+                if is_new:
+                    try:
+                        if changes[codename]:
+                            changes.update({codename: changes[codename] + [item]})
+                    except KeyError:
+                        # when a new device is added
+                        changes.update({codename: [item]})
+    return changes

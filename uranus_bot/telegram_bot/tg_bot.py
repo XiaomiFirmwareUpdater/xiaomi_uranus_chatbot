@@ -4,7 +4,7 @@ import asyncio
 
 from telethon.sync import TelegramClient
 
-from uranus_bot import API_KEY, API_HASH, BOT_TOKEN
+from uranus_bot import API_KEY, API_HASH, BOT_TOKEN, WITH_EXTRA
 from uranus_bot.providers.provider import Provider
 from uranus_bot.telegram_bot import TG_LOGGER
 from uranus_bot.telegram_bot.modules import ALL_MODULES
@@ -30,5 +30,8 @@ async def run():
     TG_LOGGER.info("Bot started as %s! Username is %s and ID is %s",
                    BOT_INFO['name'], BOT_INFO['username'], BOT_INFO['id'])
     load_modules(ALL_MODULES, __package__)
+    if WITH_EXTRA:
+        from uranus_bot.telegram_bot.bot_private.private import load_private_modules
+        await load_private_modules()
     async with BOT:
         await BOT.run_until_disconnected()

@@ -20,6 +20,7 @@ API_HASH = CONFIG['api_hash']
 BOT_TOKEN = CONFIG['tg_bot_token']
 BOT_ID = CONFIG['tg_bot_id']
 TG_BOT_DB = CONFIG['tg_bot_db']
+WITH_EXTRA = CONFIG['tg_bot_extra']
 DISCORD_TOKEN = CONFIG['discord_bot_token']
 DISCORD_DB = CONFIG['discord_bot_db']
 # set logging

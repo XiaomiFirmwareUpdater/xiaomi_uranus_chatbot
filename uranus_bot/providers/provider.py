@@ -7,9 +7,12 @@ from uranus_bot.providers.custom_recovery.pitchblack.pitchblack import load_pitc
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
+from uranus_bot.providers.firmware.firmware import load_firmware_data
 from uranus_bot.providers.misc.arb import get_arb_table
-from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import load_fastboot_data, load_recovery_data
+from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import load_fastboot_data,\
+    load_recovery_data
 from uranus_bot.providers.specs.specs import load_specs_data
+from uranus_bot.providers.vendor.vendor import load_vendor_data
 from uranus_bot.providers.xiaomi_eu.xiaomi_eu import load_eu_codenames, load_eu_data
 
 
@@ -22,13 +25,19 @@ class Provider:
         self.orangefox_data = {}
         self.pitchblack_data = []
         self.firmware_codenames = []
-        self.miui_codenames = []
+        self.firmware_data = {}
+        self.bak_firmware_data = {}
         self.vendor_codenames = []
+        self.vendor_data = {}
+        self.bak_vendor_data = {}
         self.codenames_names = {}
         self.names_codenames = {}
         self.models_data = {}
+        self.miui_codenames = []
         self.miui_fastboot_updates = []
+        self.bak_miui_fastboot_updates = []
         self.miui_recovery_updates = []
+        self.bak_miui_recovery_updates = []
         self.eu_codenames = {}
         self.eu_data = []
         self.specs_data = []
@@ -37,12 +46,14 @@ class Provider:
         self.loop.create_task(self.orangefox_data_loop())
         self.loop.create_task(self.pitchblack_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
-        self.loop.create_task(self.miui_codenames_loop())
+        self.loop.create_task(self.firmware_data_loop())
         self.loop.create_task(self.vendor_codenames_loop())
+        self.loop.create_task(self.vendor_data_loop())
         self.loop.create_task(self.devices_names_loop())
         self.loop.create_task(self.models_loop())
-        self.loop.create_task(self.miui_fasboot_loop())
+        self.loop.create_task(self.miui_codenames_loop())
         self.loop.create_task(self.miui_recovery_loop())
+        self.loop.create_task(self.miui_fasboot_loop())
         self.loop.create_task(self.eu_codenames_loop())
         self.loop.create_task(self.eu_data_loop())
         self.loop.create_task(self.specs_data_loop())
@@ -83,6 +94,26 @@ class Provider:
             LOGGER.info("Refreshing firmware codenames")
             self.firmware_codenames = await load_firmware_codenames()
             await asyncio.sleep(60 * 60 * 6)
+
+    async def firmware_data_loop(self):
+        """
+        fetch devices' firmware data every hour
+        """
+        while True:
+            LOGGER.info("Refreshing firmware data")
+            self.bak_firmware_data = self.firmware_data
+            self.firmware_data = await load_firmware_data()
+            await asyncio.sleep(60 * 60)
+
+    async def vendor_data_loop(self):
+        """
+        fetch devices' vendor data every hour
+        """
+        while True:
+            LOGGER.info("Refreshing vendor data")
+            self.bak_vendor_data = self.vendor_data
+            self.vendor_data = await load_vendor_data()
+            await asyncio.sleep(60 * 60)
 
     async def miui_codenames_loop(self):
         """
@@ -126,6 +157,7 @@ class Provider:
         """
         while True:
             LOGGER.info("Refreshing miui fasboot data")
+            self.bak_miui_fastboot_updates = self.miui_fastboot_updates
             self.miui_fastboot_updates = await load_fastboot_data()
             await asyncio.sleep(60 * 60)
 
@@ -135,6 +167,7 @@ class Provider:
         """
         while True:
             LOGGER.info("Refreshing miui recovery data")
+            self.bak_miui_recovery_updates = self.miui_recovery_updates
             self.miui_recovery_updates = await load_recovery_data()
             await asyncio.sleep(60 * 60)
 

@@ -1,12 +1,11 @@
 """Xiaomi.eu downloads scraper"""
 import json
+import xml.etree.ElementTree as eT
 
 from aiohttp import ClientSession
-from bs4 import BeautifulSoup
 
 from uranus_bot import GITHUB_ORG
 from uranus_bot.providers.utils.utils import fetch
-import xml.etree.ElementTree as eT
 
 
 async def load_eu_data():

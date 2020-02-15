@@ -21,5 +21,6 @@ async def get_arb_guides():
     """Anti-Rollback Protection info"""
     return [{
         "About Anti-Rollback Protection": f"{WIKI}/About_Anti-Rollback_Protection.html",
-        "Xiaomi’s Anti-Rollback Protection Explained": f"{XDA}/xiaomi-anti-rollback-protection-brick-phone/"
+        "Xiaomi’s Anti-Rollback Protection Explained":
+            f"{XDA}/xiaomi-anti-rollback-protection-brick-phone/"
     }]
