@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.7
 """ Xiaomi Geeks discord Bot"""
-from importlib import import_module
 
 from discord import ActivityType, Activity
 from discord.ext import commands
@@ -9,6 +8,7 @@ from uranus_bot import DISCORD_TOKEN
 from uranus_bot.discord_bot import DISCORD_LOGGER
 from uranus_bot.discord_bot.modules import ALL_MODULES
 from uranus_bot.providers.provider import Provider
+from uranus_bot.utils.loader import load_modules
 
 BOT = commands.Bot(command_prefix='!')
 PROVIDER = Provider(BOT.loop)
@@ -24,9 +24,7 @@ async def on_ready():
 
 
 # Load all modules in modules list
-for module_name in ALL_MODULES:
-    # print(f"{__package__}.modules.{module_name}")
-    import_module(f"{__package__}.modules.{module_name}")
+load_modules(ALL_MODULES, __package__)
 
 
 def main():

@@ -2,8 +2,8 @@
 *tmp*
 *__pycache__*
 config.*
-uranus_bot/admin/
-uranus_bot/private/
+*_admin*
+*_private*
 .idea/
 venv/
 *.session*
