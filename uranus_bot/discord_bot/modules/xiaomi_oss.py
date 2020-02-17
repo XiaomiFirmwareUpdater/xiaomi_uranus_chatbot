@@ -2,7 +2,7 @@
 
 from uranus_bot.discord_bot.messages.xiaomi_oss import oss_message
 from uranus_bot.discord_bot.discord_bot import BOT
-from uranus_bot.utils.error_message import error_message
+from uranus_bot.messages.error_message import error_message
 
 
 @BOT.command(name='oss')

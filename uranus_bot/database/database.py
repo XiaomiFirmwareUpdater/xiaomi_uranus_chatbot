@@ -84,6 +84,17 @@ class Database:
                      {'sub_type': sub_type, 'device': device})
         return check.fetchall()
 
+    def get_stats(self):
+        """ Get stats of the bot """
+        groups = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='group'""").fetchone()[0]
+        channels = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='channel'""").fetchone()[0]
+        users = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='user'""").fetchone()[0]
+        firmware = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='firmware'""").fetchone()[0]
+        miui = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='miui'""").fetchone()[0]
+        vendor = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='vendor'""").fetchone()[0]
+        return {"usage": {"groups": groups, "channels": channels, "users": users},
+                "subscriptions": {"firmware": firmware, "miui": miui, "vendor": vendor}}
+
     def __del__(self):
         """ close the connection """
         self.conn.close()

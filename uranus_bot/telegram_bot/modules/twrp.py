@@ -1,7 +1,7 @@
 """ TWRP command handler """
 from telethon import events
 
-from uranus_bot.utils.error_message import error_message
+from uranus_bot.messages.error_message import error_message
 from uranus_bot.telegram_bot.messages.twrp import twrp_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 

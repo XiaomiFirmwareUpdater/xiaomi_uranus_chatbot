@@ -2,7 +2,7 @@
 from uranus_bot.discord_bot.messages.miui_updates import miui_message, \
     archive_message, latest_miui_message
 from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
-from uranus_bot.utils.error_message import error_message
+from uranus_bot.messages.error_message import error_message
 
 
 @BOT.command(name='recovery', aliases=['fastboot'])
