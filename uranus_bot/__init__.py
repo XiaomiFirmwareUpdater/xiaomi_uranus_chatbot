@@ -24,6 +24,8 @@ TG_BOT_DB = CONFIG['tg_bot_db']
 WITH_EXTRA = CONFIG['tg_bot_extra']
 DISCORD_TOKEN = CONFIG['discord_bot_token']
 DISCORD_DB = CONFIG['discord_bot_db']
+DISCORD_BOT_ADMINS = CONFIG['discord_bot_admins']
+
 # set logging
 # logging.basicConfig(filename=f'{PARENT_DIR}/bot.log',
 #                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

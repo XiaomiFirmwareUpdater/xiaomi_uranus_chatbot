@@ -1,59 +1,62 @@
 """ subscribe command handler """
 from asyncio import sleep
-from telethon import events, Button
 
-from uranus_bot import XFU_WEBSITE
+from discord import Embed, DMChannel
+
+from uranus_bot import XFU_WEBSITE, DISCORD_BOT_ADMINS
+from uranus_bot.discord_bot.utils.chat import get_chat_info
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
-from uranus_bot.telegram_bot import DATABASE
-from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message
-from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
-from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin
+from uranus_bot.discord_bot import DATABASE
+from uranus_bot.discord_bot.messages.miui_updates import miui_update_message
+from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
 
 
-@BOT.on(events.NewMessage(pattern=r'/subscribe (firmware|miui|vendor) (\w+)'))
-async def subscribe(event):
-    """Subscribe to updates"""
-    if not await subscription_allowed(event):
+@BOT.command(name='subscribe')
+async def subscribe(ctx, *args):
+    """Subscribe to firmware/miui/vendor updates"""
+    if len(args) > 2:
         return
-    try:
-        sub_type = event.pattern_match.group(1)
-        device = event.pattern_match.group(2)
-    except IndexError:
-        sub_type = event.message.message.split(' ')[1]
-        device = event.message.message.split(' ')[2]
+    sub_type = args[0]
+    if sub_type not in ["firmware", "miui", "vendor"]:
+        return
+    device = args[1]
     if not await is_device(sub_type, device):
-        await event.reply("**Wrong codename!**")
+        await ctx.send("**Wrong codename!**")
         return
-    if DATABASE.add_subscription(await get_user_info(event), sub_type, device):
+    if not await subscription_allowed(ctx.message):
+        return
+    if DATABASE.add_subscription(await get_chat_info(ctx), sub_type, device):
         message = f"Subscribed to {device} {sub_type} updates successfully!"
     else:
         message = f"You are already subscribed to {device} {sub_type} updates!"
-    await event.reply(message)
-    raise events.StopPropagation
+    await ctx.send(None, embed=Embed(title=message))
 
 
-@BOT.on(events.NewMessage(pattern=r'/unsubscribe (firmware|miui|vendor) (\w+)'))
-async def unsubscribe(event):
-    """Unsubscribe to updates"""
-    if not await subscription_allowed(event):
+@BOT.command(name='unsubscribe')
+async def unsubscribe(ctx, *args):
+    """unsubscribe from firmware/miui/vendor updates"""
+    if not await subscription_allowed(ctx.message):
         return
-    sub_type = event.pattern_match.group(1)
-    device = event.pattern_match.group(2)
+    if len(args) > 2:
+        return
+    sub_type = args[0]
+    if sub_type not in ["firmware", "miui", "vendor"]:
+        return
+    device = args[1]
     if not await is_device(sub_type, device):
-        await event.reply("**Wrong codename!**")
+        await ctx.send("**Wrong codename!**")
         return
-    DATABASE.remove_subscription(await get_user_info(event), sub_type, device)
+    DATABASE.remove_subscription(await get_chat_info(ctx), sub_type, device)
     message = f"Unsubscribed from {device} {sub_type} updates successfully!"
-    await event.reply(message)
-    raise events.StopPropagation
+    await ctx.send(None, embed=Embed(title=message))
 
 
-async def subscription_allowed(event) -> bool:
+async def subscription_allowed(message) -> bool:
     """Check if the subscription is allowed"""
-    return bool(event.is_private \
-                or await is_group_admin(event) \
-                or event.is_channel and not event.is_private and not event.is_group)
+    return bool(isinstance(message.channel, DMChannel)
+                or message.author.guild_permissions.administrator
+                or message.author.id in DISCORD_BOT_ADMINS)
 
 
 async def is_device(sub_type, device) -> bool:
@@ -75,11 +78,13 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        await BOT.send_message(subscription[0],
-                                               f"**New Firmware update available for {codename} by** "
-                                               f"@XiaomiFirmwareUpdater\n",
-                                               buttons=[Button.url(f"{update}",
-                                                                   f"{XFU_WEBSITE}/firmware/{codename}/")])
+                        chat = BOT.get_user(subscription[0]) \
+                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        await chat.send(
+                            None, embed=Embed(title=
+                                              f"**New Firmware update available for {codename}**",
+                                              description=f"{update}",
+                                              url=f"{XFU_WEBSITE}/firmware/{codename}/"))
                         await sleep(2)
         await sleep(65 * 60)
 
@@ -101,8 +106,10 @@ async def post_miui_updates():
                 if subscriptions:
                     for subscription in subscriptions:
                         for update in updates:
-                            message, buttons = await miui_update_message(update, PROVIDER.codenames_names)
-                            await BOT.send_message(subscription[0], message, buttons=buttons)
+                            embed = await miui_update_message(update, PROVIDER.codenames_names)
+                            chat = BOT.get_user(subscription[0]) \
+                                if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                            await chat.send(None, embed=embed)
                             await sleep(2)
             await sleep(65 * 60)
 
@@ -122,10 +129,13 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        await BOT.send_message(subscription[0],
-                                               f"**New Vendor update available for {codename} by** "
-                                               f"@MIUIVendorUpdater\n",
-                                               buttons=[Button.url(f"{update}", f"{XFU_WEBSITE}/vendor/{codename}/")])
+                        chat = BOT.get_user(subscription[0]) \
+                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        await chat.send(None, embed=Embed(
+                            title=
+                            f"**New Vendor update available for {codename}**",
+                            description=f"{update}",
+                            url=f"{XFU_WEBSITE}/vendor/{codename}/"))
                         await sleep(2)
         await sleep(65 * 60)
 
