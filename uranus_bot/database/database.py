@@ -95,6 +95,11 @@ class Database:
         return {"usage": {"groups": groups, "channels": channels, "users": users},
                 "subscriptions": {"firmware": firmware, "miui": miui, "vendor": vendor}}
 
+    def get_chats(self, chat_type):
+        """ get chats list from  database """
+        check = self.cursor.execute(f"""SELECT id FROM chats WHERE type=:chat_type""", {'chat_type': chat_type})
+        return check.fetchall()
+
     def __del__(self):
         """ close the connection """
         self.conn.close()
