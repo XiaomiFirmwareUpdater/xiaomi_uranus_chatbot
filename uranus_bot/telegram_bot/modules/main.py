@@ -36,8 +36,8 @@ async def start(event):
         await event.reply(message, buttons=[
             [Button.url("Join my channel", url="https://t.me/yshalsager_projects"),
              Button.url("Join support group", url="https://t.me/joinchat/CRWESlKSb5yEqDwTLgWYnQ")],
-            [Button.url('Read help', HELP_URL),
-             Button.url('Add to a group', "http://t.me/XiaomiGeeksBot?startgroup=true")]
+            [Button.inline('Read help', data="help"),
+             Button.url('Add to a group', "https://t.me/XiaomiGeeksBot?startgroup=true")]
         ], link_preview=False)
     raise events.StopPropagation  # Other handlers won't have an event to work with
 
