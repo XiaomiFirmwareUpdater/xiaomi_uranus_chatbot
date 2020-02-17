@@ -16,7 +16,10 @@ async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
     # DATABASE.add_chat_to_db(sender_info)
-    key = event.message.message.split('/start ')[1]
+    try:
+        key = event.message.message.split('/start ')[1]
+    except IndexError:
+        key = None
     if event.message.message.endswith('help'):
         await show_help(event)
     elif key:
