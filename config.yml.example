@@ -1,5 +1,9 @@
-tg_bot_token: 
-tg_bot_id: 
-api_key: 
-api_hash: 
-tg_bot_db: 
+tg_bot_token:
+tg_bot_id:
+api_key:
+api_hash:
+tg_bot_db:
+tg_bot_admins:
+tg_bot_extra:
+discord_bot_token:
+discord_bot_db:

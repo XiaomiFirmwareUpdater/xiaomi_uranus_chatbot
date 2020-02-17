@@ -2,13 +2,16 @@
 
 from telethon.tl.types import User, ChannelParticipantsAdmins
 
+from uranus_bot import TG_BOT_ADMINS
+
 
 async def is_group_admin(event) -> bool:
     """Check if a use is an admin"""
     return bool([i for i in
                  await event.client.get_participants(event.message.to_id,
                                                      filter=ChannelParticipantsAdmins)
-                 if event.message.sender_id == i.id])
+                 if event.message.sender_id == i.id
+                 or event.message.sender.id in TG_BOT_ADMINS])
 
 
 async def get_chat_id(event) -> int:
@@ -31,6 +34,9 @@ async def get_user_info(event) -> dict:
         chat_id = sender.id
     else:
         name = chat.title
-        username = chat.username if chat.username else None
+        try:
+            username = chat.username if chat.username else None
+        except AttributeError:
+            username = None
         chat_id = chat.id
     return {'id': chat_id, 'username': username, 'name': name, 'type': chat_type}
