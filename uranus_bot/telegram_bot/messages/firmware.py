@@ -2,25 +2,31 @@
 from telethon import Button
 
 from uranus_bot import XFU_WEBSITE
+from uranus_bot.telegram_bot.tg_bot import LOCALIZE
 
 
-async def firmware_message(device, codenames_names):
+async def firmware_message(device, codenames_names, locale):
     """ Generate telegram message of firmware command """
-    message = f'**Available firmware downloads for {codenames_names[device]}** (`{device}`)\n'
+    message = f'**{LOCALIZE.get_text(locale, "available_firmware")} {codenames_names[device]}** ' \
+              f'(`{device}`)\n'
     buttons = [
-        [Button.url("Latest Firmware", f"{XFU_WEBSITE}/firmware/{device}/"),
-         Button.url("Firmware Archive", f"{XFU_WEBSITE}/archive/firmware/{device}/")],
-        [Button.url("XiaomiFirmwareUpdater", "https://t.me/XiaomiFirmwareUpdater")]
+        [Button.url(LOCALIZE.get_text(locale, "latest_firmware"),
+                    f"{XFU_WEBSITE}/firmware/{device}/"),
+         Button.url(LOCALIZE.get_text(locale, "archive_firmware"),
+                    f"{XFU_WEBSITE}/archive/firmware/{device}/")],
+        [Button.url(LOCALIZE.get_text(locale, "XiaomiFirmwareUpdater"),
+                    "https://t.me/XiaomiFirmwareUpdater")]
     ]
     return message, buttons
 
 
-async def firmware_inline(event, device, codenames_names):
+async def firmware_inline(event, device, codenames_names, locale):
     """ Generate telegram result of firmware inline query """
     builder = event.builder
-    message, buttons = await firmware_message(device, codenames_names)
+    message, buttons = await firmware_message(device, codenames_names, locale)
     result = builder.article(
-        f'Search {codenames_names[device]} ({device}) Firmware downloads', text=message,
-        buttons=buttons, link_preview=False
+        LOCALIZE.get_text(locale, "firmware_inline").replace(
+            "{codenames_names[device]}", {codenames_names[device]}).replace("{device}", {device}),
+        text=message, buttons=buttons, link_preview=False
     )
     return result

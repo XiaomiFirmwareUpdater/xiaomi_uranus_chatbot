@@ -96,7 +96,8 @@ class Database:
         groups = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='group'""").fetchone()[0]
         channels = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='channel'""").fetchone()[0]
         users = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='user'""").fetchone()[0]
-        firmware = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='firmware'""").fetchone()[0]
+        firmware = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='firmware'"""
+                                       ).fetchone()[0]
         miui = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='miui'""").fetchone()[0]
         vendor = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='vendor'""").fetchone()[0]
         return {"usage": {"groups": groups, "channels": channels, "users": users},
@@ -106,6 +107,12 @@ class Database:
         """ get chats list from  database """
         check = self.cursor.execute(f"""SELECT id FROM chats WHERE type=:chat_type""", {'chat_type': chat_type})
         return check.fetchall()
+
+    def get_locale(self, chat_id):
+        """ Get locale of a chat """
+        check = self.cursor.execute("""SELECT lang FROM i18n WHERE id=:chat_id""",
+                                    {'chat_id': chat_id}).fetchone()
+        return check[0] if check else 'en'
 
     def __del__(self):
         """ close the connection """

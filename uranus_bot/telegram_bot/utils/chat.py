@@ -14,11 +14,6 @@ async def is_group_admin(event) -> bool:
                  or event.message.sender.id in TG_BOT_ADMINS])
 
 
-async def get_chat_id(event) -> int:
-    """Returns chat ID of user or channel"""
-    return event.message.from_id if event.message.from_id else event.message.to_id.channel_id
-
-
 async def get_user_info(event) -> dict:
     """Returns a dictionary of user information"""
     chat_type = "user" if event.is_private else "group" if event.is_group else "channel"

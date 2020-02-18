@@ -1,7 +1,7 @@
 """ OSS command handler """
 from telethon import events
 
-from uranus_bot.messages.error_message import error_message
+from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.messages.xiaomi_oss import oss_message
 from uranus_bot.telegram_bot.tg_bot import BOT
 
@@ -14,5 +14,5 @@ async def oss(event):
     if message:
         await event.reply(message)
     else:
-        await event.reply(await error_message(device))
+        await event.reply(await error_message(device, 'en'))
     raise events.StopPropagation

@@ -9,3 +9,4 @@ venv/
 *.session*
 *.db
 *.stf
+sync_*
