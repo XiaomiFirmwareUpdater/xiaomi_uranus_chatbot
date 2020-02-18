@@ -77,6 +77,13 @@ class Database:
         finally:
             self.conn.commit()
 
+    def get_chat_subscriptions(self, chat_id):
+        """ Get all subscriptions of a chat """
+        check = self.cursor \
+            .execute("""SELECT sub_type, device FROM subscriptions WHERE id=:chat_id""",
+                     {'chat_id': chat_id})
+        return check.fetchall()
+
     def get_subscriptions(self, sub_type, device):
         """ Get subscriptions list of a user """
         check = self.cursor \

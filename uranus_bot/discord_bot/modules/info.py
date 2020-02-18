@@ -25,7 +25,7 @@ async def whatis(ctx, device):
 
 @BOT.command(name='codename', description='')
 async def codename(ctx, *args):
-    """Send device codename of a given device Example: !whatis mi 6"""
+    """Send device codename of a given device Example: !codename mi 6"""
     device = ' '.join(args)
     embed = await codename_message(device, PROVIDER.names_codenames)
     if embed:

@@ -8,7 +8,7 @@ from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
-from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin
+from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin, get_chat_id
 
 
 @BOT.on(events.NewMessage(pattern=r'/subscribe (firmware|miui|vendor) (\w+)'))
@@ -45,6 +45,19 @@ async def unsubscribe(event):
         return
     DATABASE.remove_subscription(await get_user_info(event), sub_type, device)
     message = f"Unsubscribed from {device} {sub_type} updates successfully!"
+    await event.reply(message)
+    raise events.StopPropagation
+
+
+@BOT.on(events.NewMessage(pattern=r'/subscription'))
+async def subscription_handler(event):
+    """List your current subscriptions"""
+    if not await subscription_allowed(event):
+        return
+    subscriptions = DATABASE.get_chat_subscriptions(await get_chat_id(event))
+    message = f"**You're subscribed to:**\n"
+    for subscription in subscriptions:
+        message += f"{subscription[1]} ({subscription[0]})"
     await event.reply(message)
     raise events.StopPropagation
 

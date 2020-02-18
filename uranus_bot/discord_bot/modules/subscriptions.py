@@ -52,6 +52,19 @@ async def unsubscribe(ctx, *args):
     await ctx.send(None, embed=Embed(title=message))
 
 
+@BOT.command(name='subscription')
+async def subscription_handler(ctx):
+    """List your current subscriptions"""
+    if not await subscription_allowed(ctx.message):
+        return
+    subscriptions = DATABASE.get_chat_subscriptions(ctx.message.channel.id)
+    message = ""
+    for subscription in subscriptions:
+        message += f"{subscription[1]} ({subscription[0]})"
+    embed = Embed(title=f"**You're subscribed to:**", description=message)
+    await ctx.send(None, embed=embed)
+
+
 async def subscription_allowed(message) -> bool:
     """Check if the subscription is allowed"""
     return bool(isinstance(message.channel, DMChannel)
