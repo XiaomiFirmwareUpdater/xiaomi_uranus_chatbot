@@ -3,11 +3,10 @@ from base64 import b64decode
 
 from telethon import events, Button
 
-from uranus_bot import HELP_URL
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.modules.help import show_help
 from uranus_bot.telegram_bot.modules.subscriptions import subscribe
-from uranus_bot.telegram_bot.tg_bot import BOT
+from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 from uranus_bot.telegram_bot.utils.chat import get_user_info, get_chat_id
 
 
@@ -16,13 +15,17 @@ async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
     # DATABASE.add_chat_to_db(sender_info)
+    if not event.is_private:
+        await event.reply("Open this message in PM", buttons=[
+            Button.url('Click here', f"https://t.me/{BOT_INFO['username']}?start=start")])
+        return
     try:
         key = event.message.message.split('/start ')[1]
     except IndexError:
         key = None
     if event.message.message.endswith('help'):
         await show_help(event)
-    elif key:
+    elif key and key != 'start':
         decoded = b64decode(key).decode()
         if "/subscribe" in decoded:
             event.message.message = decoded

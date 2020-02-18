@@ -12,11 +12,12 @@ async def help_main_message():
               f"It can get you latest Official ROMs, " \
               f"Firmware updates links, and many more things!\n" \
               f"The full usage guide is available " \
-              f"[Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)" \
-              f"Here are all commands available:\n\n" \
+              f"[Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\n" \
+              f"Here are all commands available:\n" \
               f"/start: Check if bot is running\n" \
               f"/help: Show this help message"
     buttons = [
+        [Button.inline("Subscriptions", data="subscriptions_help")],
         [Button.inline("MIUI Updates", data="miui_help"),
          Button.inline("Firmware", data="firmware_help")],
         [Button.inline("Vendor", data="vendor_help"),
@@ -76,7 +77,7 @@ async def specs_help_message():
 
 
 async def info_help_message():
-    """ Generate telegram message of miui help"""
+    """ Generate telegram message of info help"""
     return "/models `codename`: Gets all available models of a device\n" \
            "__Example:__ `/models whyred`\n" \
            "/whatis `codename`: Tells you which device's codename is this\n" \
@@ -86,8 +87,20 @@ async def info_help_message():
 
 
 async def miscellaneous_help_message():
-    """ Generate telegram message of miui help"""
+    """ Generate telegram message of miscellaneous help"""
     return "/guides: Various useful guides for every Xiaomi user\n" \
            "/unlockbl: Unlocking bootloader help and tools\n" \
            "/tools: Various useful tools for every Xiaomi user\n" \
            "/arb: Anti-Rollback Protection information"
+
+
+async def subscriptions_help_message():
+    """ Generate telegram message of subscriptions help"""
+    return "/subscribe `firmware`|`miui`|`vendor` `codename`: " \
+           "Subscribe to this device firmware/miui/vendor updates\n" \
+           "__Example:__ `/subscribe firmware whyred`\n" \
+           "/unsubscribe `firmware`|`miui`|`vendor` `codename`: " \
+           "Unsubscribe from this device firmware/miui/vendor updates\n" \
+           "__Example:__ `/subscribe firmware whyred`\n" \
+           "/subscription: List your current subscriptions"
+

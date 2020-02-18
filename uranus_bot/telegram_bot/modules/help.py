@@ -5,7 +5,7 @@ from telethon import events, Button
 from uranus_bot.telegram_bot.messages.help import help_main_message, miui_help_message, \
     miscellaneous_help_message, info_help_message, specs_help_message, \
     custom_recovery_help_message, vendor_help_message, firmware_help_message, \
-    eu_help_message
+    eu_help_message, subscriptions_help_message
 from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 
 
@@ -88,5 +88,13 @@ async def info_help(event):
 async def misc_help(event):
     """misc help callback handler"""
     await event.edit(await miscellaneous_help_message(), buttons=[
+        [Button.inline("Back", data="help")],
+    ])
+
+
+@BOT.on(events.CallbackQuery(data='subscriptions_help'))
+async def subscriptions_help(event):
+    """subscriptions help callback handler"""
+    await event.edit(await subscriptions_help_message(), buttons=[
         [Button.inline("Back", data="help")],
     ])
