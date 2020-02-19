@@ -1,0 +1,125 @@
+---
+welcome: "嘿！我是 Uranus，一个为小米用户打造的一体化机器人！\n我可以帮助你获取最新的官方 ROM 、Firmware 的下载链接和更多的东西！\n\n点击下面的帮助按钮来查看使用方法。\n加入 [我的频道](https://t.me/yshalsager_projects) 获取关于机器人的所有更新和公告！"
+join_channel: '加入我的频道'
+join_group: '加入支持群组'
+read_help: '阅读帮助'
+add_to_group: '添加至群组'
+error_message: '找不到所请求的 {device} 的信息！'
+available_firmware: '可用 Firmware 下载'
+latest_firmware: '最新 Firmware'
+archive_firmware: 'Firmware 存档'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUUpdatesTracker
+firmware_inline: '搜索 {codenames_name[device]} ({device}) 的 Firmware 下载'
+open_in_pm: '在对话中打开此消息'
+click_here: '点击此处'
+device_models: '{model_data[device][''name'']} ({device} - {model_data[device][''internal_name'']}) 型号'
+models_inline: '搜索 {device} 设备型号'
+whatis_message: '`{device}` 是 **{codenames_names[device]}**'
+whatis_inline: '搜索 {device} 商品名称'
+too_much_codenames: '{device} 太笼统了！请更具体一些。'
+codename_message: "**{name}** 是 `{codename}`\n"
+codename_inline: '搜索 {device} 设备代号'
+unlock_bl: 'Bootloader 解锁教程与工具'
+unlock_bl_inline: '如何解锁 Bootloader'
+tools: '小米设备工具'
+tools_inline: '用于小米设备的实用工具'
+guides: '小米设备指南'
+guides_inline: '多份小米设备指南'
+Stable: 稳定版
+Weekly: 开发版
+Region: 地区
+EEA: EEA
+Indonesia: 印度尼西亚
+India: 印度
+Russia: 俄罗斯
+Global: 国际版
+China: 中国版
+Fastboot: Fastboot
+Recovery: Recovery
+Size: 大小
+miui_message: '最新的 {codenames_names[device]}** (`{device}`) **MIUI 官方 {rom_type} ROM'
+roms_archive: 'ROM 存档'
+miui_inline: '搜索 {codenames_names[device]} ({device}) 的官方 ROM 下载'
+miui_archive: '**{codenames_names[device]} 的 MIUI ROM 归档** (`{device}`)'
+archive_inline: '搜索 {codenames_names[device]} ({device}) 官方 ROM 归档'
+latest_message: '**{codenames_names[device]} 的最新 MIUI 版本** (`{device}`)'
+latest_inline: '搜索 {codenames_names[device]} ({device}) 的最新 MIUI 版本'
+miui_update: '**{codenames_name[device]}** (`{device}`) 现有新的 MIUI {rom_type} 更新！'
+wrong_codename: '错误的设备代号！'
+subscribed: '成功订阅了 {device} {sub_type} 的更新！'
+already_subscribed: '您已经订阅了 {device} {sub_type} 的更新！'
+unsubscribed: '成功取消订阅了 {device} {sub_type} 的更新！'
+your_subscriptions: '您订阅了'
+no_subscriptions: '空空如也'
+firmware_update: '**现有新的 Firmware 更新可用于 {codename} by** @XiaomiFirmwareUpdater'
+vendor_update: '**现有新的 Vendor 更新可用于 {codename} by** @MIUIVendorUpdater'
+orangefox_message: "**最新的 {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) 版本:\n__维护者:__ {data['maintainer']}"
+orangefox_inline: '搜索 {device} 的 OrangeFox Recovery 下载'
+pitchblack_message: '**最新的 [PitchBlack](https://pbrp.ml) 版本**`{device}`'
+pitchblack_inline: '搜索 {device} 的 PitchBlack 下载'
+Devices: 设备
+Tag: 标签
+oss_inline: '搜索 {device} 的 OOS 内核'
+eu_message: '**{name} (**`{device}`**) 最新的 Xiaomi.eu ROM:**'
+eu_inline: '搜索 {name} ({device}) 的 Xiaomi.eu 下载'
+vendor_message: '**{codenames_names[device]} 的可用 Vendor 下载** (`{device}`)'
+latest_vendor: '最新的 Vendor'
+archive_vendor: 'Vendor 存档'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: '搜索 {codenames_name[device]} ({device}) 的 Vendor 下载'
+twrp_message: "**{data ['name']} 最新的 TWRP：**\n**更新日期：** {data['date']}"
+twrp_inline: 'Search {codenames_names[device]} ({device}) TWRP downloads'
+Status: Status
+Network: Network
+Weight: Weight
+Display: Display
+Chipset: Chipset
+Memory: Memory
+rear_camera: 'Rear Camera'
+front_camera: 'Front Camera'
+headphone_jack: '3.5mm jack'
+USB: USB
+Sensors: Sensors
+Battery: Battery
+Charging: Charging
+specs_inline: 'Search {device} Specifications'
+help_message: "**How to use {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\nIt can get you latest Official ROMs, Firmware updates links, and many more things!\nThe full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nHere are all commands available:\n/start: Check if the bot is running\n/help: Show this help message"
+Subscriptions: Subscriptions
+miui_updates: 'MIUI Updates'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Custom Recovery'
+devices_specs: 'Devices specs'
+devices_info: 'Devices Information'
+Miscellaneous: Miscellaneous
+Example: Example
+recovery_help: 'Gets latest recovery ROMs info and links'
+fastboot_help: 'Gets latest fastboot ROMs info and links'
+latest_help: 'Gets latest MIUI versions info'
+archive_help: 'Send all official available MIUI ROMs archive links for device'
+firmware_help: '获取设备的可用 Firmware'
+vendor_help: '获取设备的可用 Firmware + Vendor'
+eu_help: 'Gets latest Xiaomi.eu ROMs downloads for device'
+twrp_help: '获取设备最新的 TWRP 下载链接'
+of_help: '获取设备最新的 OrangeFox Recovery 下载链接'
+pb_help: '获取设备最新的 PitchBlack Recovery 下载链接'
+specs_help: '从 GSMARena 获取设备参数'
+models_help: '获取设备的所有可用的设备型号'
+whatis_help: 'Tells you which device''s codename is this'
+codename_help: 'Tells you what is the codename of this device'
+guides_help: 'Various useful guides for every Xiaomi user'
+unlockbl_help: 'Unlocking bootloader help and tools'
+tools_help: 'Various useful tools for every Xiaomi user'
+arb_help: 'Anti-Rollback Protection information'
+subscribe_help: 'Subscribe to this device firmware/miui/vendor updates'
+unsubscribe_help: 'Unsubscribe from this device firmware/miui/vendor updates'
+subscription_help: 'List your current subscriptions'
+set_locale_message: 'Bot language has been changed to {lang} successfully!'
+wrong_locale_message: "Unfortunately {lang} language support is not available yet :(\nThe good news is that you can contribute to the bot and add it!\n[Check Here](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot Settings'
+bot_lang: 'Bot Language'
+available_languages: 'Available Languages'
+change_language: 'Change language'
+Back: Back

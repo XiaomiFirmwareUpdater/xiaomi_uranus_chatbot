@@ -1,0 +1,125 @@
+---
+welcome: "Hey! Ben Uranüs, Xiaomi kullanıcıları için hepsi bir arada bot!\n Size en son Resmi ROM'ları, Bellenim güncelleme bağlantılarını ve daha birçok şeyi alabilirim!\n\n Aşağıdaki yardım düğmesini tıklayarak beni nasıl kullanacağınızı kontrol edin.\n Bot hakkındaki tüm güncellemeleri ve duyuruları almak için [kanalım](https://t.me/yshalsager_projects) katılın!"
+join_channel: 'Kanalıma katıl'
+join_group: 'Destek grubuna katıl'
+read_help: 'Yardım okumak'
+add_to_group: 'Bir gruba ekle'
+error_message: '{device} istenen bilgisi bulunamadı!'
+available_firmware: 'İçin mevcut yazılım yüklemeleri'
+latest_firmware: 'En Son Yazılım'
+archive_firmware: 'Yazılım Arşivi'
+XiaomiFirmwareUpdater: Xiaomi Yazılım Güncelleyici
+MIUIUpdatesTracker: MIUIU Güncelleme Takibi
+firmware_inline: '{codenames_names[device]} ({device}) Yazılım indirmelerini ara'
+open_in_pm: 'Bu mesajı DM''de aç'
+click_here: 'Buraya Tıkla'
+device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modeller'
+models_inline: '{device} cihaz modellerinde arama yapın'
+whatis_message: '`{device}`, **{codenames_names[device]}**'
+whatis_inline: '{device} cihaz adını arayın'
+too_much_codenames: '{device} çok genel! Lütfen daha spesifik ol.'
+codename_message: "** {name} ** \"{codename}\"\n"
+codename_inline: '{device} cihaz kod adını arayın'
+unlock_bl: 'Bot yükleyicisi kılavuzunun ve aracının kilidinin açılması'
+unlock_bl_inline: 'Bot yükleyicinin kılavuzunun kilidini açma'
+tools: 'Xiaomi cihazları için araçlar'
+tools_inline: 'Xiaomi cihazları için kullanışlı araçlar'
+guides: 'Xiaomi cihazları için kılavuzlar'
+guides_inline: 'Xiaomi cihazları için çeşitli kılavuzlar'
+Stable: Kararlı
+Weekly: Haftalık
+Region: Bölge
+EEA: EEA
+Indonesia: Endonezya
+India: Hindistan
+Russia: Rusya
+Global: Dünya Genelinde
+China: Çin
+Fastboot: Fastboot
+Recovery: Kurtarma
+Size: Boyut
+miui_message: 'En yeni {codenames_names[device]}** (`{device}`) **MIUI resmi {rom_type} ROM''ları'
+roms_archive: 'ROM Arşivi'
+miui_inline: '{codenames_names[device]} ({device}) Resmi ROM''larını Ara'
+miui_archive: '** MIUI ROM''ları {codenames_names[device]}} için arşivliyor ** (`{device}`)'
+archive_inline: '{codenames_names[device]} ({device}) Resmi ROM arşivinde ara'
+latest_message: '** {codenames_names[device]} için en son MIUI Sürümleri ** (`{device}`)'
+latest_inline: '{codenames_names[device]} ({device}) en son MIUI sürümlerini arayın'
+miui_update: '** Yeni MIUI {rom_type} Güncellemesi {kod_adı_adı [device]} ** için kullanılabilir (`{device}`)!'
+wrong_codename: 'Yanlış Kod Adı!'
+subscribed: '{device} {sub_type} güncellemesine başarıyla abone olun!'
+already_subscribed: '{device} {sub_type} güncellemelerine zaten abone oldunuz!'
+unsubscribed: '{device} {sub_type} güncellemesinden abonelik başarıyla alındı!'
+your_subscriptions: 'Abone oldunuz'
+no_subscriptions: 'Henüz değil'
+firmware_update: '** {codename} için ** @XiaomiFirmwareUpdater tarafından yeni Bellenim güncellemesi mevcut'
+vendor_update: '** @MIUIVendorUpdater tarafından {codename} için yeni Satıcı güncellemesi mevcut'
+orangefox_message: "** En son {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home):\n __Anatainer:__ {data['maintainer']}"
+orangefox_inline: '{device} OrangeFox kurtarma indirmelerini arayın'
+pitchblack_message: '** En son [PitchBlack](https://pbrp.ml) ** `{device}` için derleme'
+pitchblack_inline: '{device} PitchBlack indirmelerini ara'
+Devices: Cihaz
+Tag: Etiket
+oss_inline: 'Arama {device} OSS çekirdeği'
+eu_message: '** {name} (**`{device}`**) en son Xiaomi.eu ROM''ları: **'
+eu_inline: '{name} ({device}) Xiaomi.eu indirmelerini ara'
+vendor_message: '** {codenames_names[device]} için kullanılabilir tedarikçi indirmeleri ** (`{device}`)'
+latest_vendor: 'Son Satıcı'
+archive_vendor: 'Tedarikçi Arşivi'
+MIUIVendorUpdater: MIUI Satıcı Güncelleyici
+vendor_inline: '{codenames_names[device]} ({device}) Satıcı indirmelerini ara'
+twrp_message: "** {data['name']} için en son TWRP: **\n ** Güncellendi: ** {data['date']}"
+twrp_inline: 'Search {codenames_names[device]} ({device}) TWRP downloads'
+Status: Durum
+Network: Ağ
+Weight: Ağırlık
+Display: Görüntüle
+Chipset: Yonga seti
+Memory: Hafıza
+rear_camera: 'Arka kamera'
+front_camera: 'Ön kamera'
+headphone_jack: '3,5 mm jak'
+USB: USB
+Sensors: Sensörler
+Battery: Batarya
+Charging: Şarj oluyor
+specs_inline: '{device} Özelliklerini Ara'
+help_message: "** {BOT_INFO['name']} nasıl kullanılır **\n\n @{BOT_INFO['username']}, Xiaomi kullanıcıları için hepsi bir arada bir bot!\n Size en son Resmi ROM'lar, Bellenim güncellemeleri bağlantıları ve daha birçok şey alabilirsiniz!\n Kullanım kılavuzunun tamamı [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\n Mevcut tüm komutlar:\n /start: Botun çalışıp çalışmadığını kontrol edin\n /help: Bu yardım iletisini göster"
+Subscriptions: Abonelikler
+miui_updates: 'MIUI Güncellemeleri'
+Firmware: Yazılım
+Vendor: Satıcı
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Özel Kurtarma'
+devices_specs: 'Cihaz özellikleri'
+devices_info: 'Cihaz Bilgileri'
+Miscellaneous: Çeşitli
+Example: Örnek
+recovery_help: 'En son kurtarma ROM''ları bilgilerini ve bağlantılarını alır'
+fastboot_help: 'En son fastboot ROM bilgileri ve bağlantılarını alır'
+latest_help: 'En son MIUI sürüm bilgilerini alır'
+archive_help: 'Cihaz için tüm resmi MIUI ROM arşiv bağlantılarını gönder'
+firmware_help: 'Bir cihaz için mevcut yazılımı alır'
+vendor_help: 'Bir cihaz için mevcut yazılımı + satıcıyı alır'
+eu_help: 'Gets latest Xiaomi.eu ROMs downloads for device'
+twrp_help: 'Cihaz için en son TWRP indirme bağlantısını alır'
+of_help: 'Cihaz için en son OrangeFox kurtarma indirme bağlantısını alır'
+pb_help: 'Cihaz için en son PitchBlack kurtarma indirme bağlantısını alır'
+specs_help: 'GSMArena''dan cihaz teknik özelliklerini alır'
+models_help: 'Bir cihazın tüm mevcut modellerini alır'
+whatis_help: 'Hangi cihazın kod adının bu olduğunu söyler'
+codename_help: 'Bu cihazın kod adının ne olduğunu söyler'
+guides_help: 'Her Xiaomi kullanıcısı için çeşitli yararlı kılavuzlar'
+unlockbl_help: 'Bootloader yardımının ve araçlarının kilidini açma'
+tools_help: 'Her Xiaomi kullanıcısı için çeşitli yararlı araçlar'
+arb_help: 'Geri Dönüş Koruması bilgileri'
+subscribe_help: 'Bu cihaza abone ol firmware / miui / satıcı güncellemeleri'
+unsubscribe_help: 'Bu aygıtın ürün yazılımı/miui/satıcı güncellemelerinden çıkın'
+subscription_help: 'Mevcut aboneliklerinizi listeleyin'
+set_locale_message: 'Bot dili başarıyla {lang} olarak değiştirildi!'
+wrong_locale_message: "Maalesef {lang} dil desteği henüz mevcut değil :(\n İyi haber, bot'a katkıda bulunabilmeniz ve ekleyebilmenizdir!\n [Buraya Bakın](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot Ayarları'
+bot_lang: 'Bot Dili'
+available_languages: 'Mevcut Diller'
+change_language: 'Dili Değiştir'
+Back: Geri

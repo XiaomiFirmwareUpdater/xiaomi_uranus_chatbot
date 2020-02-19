@@ -1,0 +1,125 @@
+---
+welcome: "مرحبا! أنا أورانوس، بوت صُنع خصيصا لمستخدمي شاومي!\nيمكنني تزويدك بروابط لأحدث الرومات الرسمية وتحديثات firrmware، والعديد من اﻷشياء اﻷخرى.\n\nتعرف على كيفية استخدامي بالضغط على زر المساعدة باﻷسفل، وانضم إلى [قناتي](https://t.me/yshalsager_projects) لتصلك جميع تحديثات وأخبار البوت!"
+join_channel: 'الانضمام إلى القناة'
+join_group: 'الانضمام إلى مجموعة الدعم'
+read_help: 'كيفية الاستخدام'
+add_to_group: 'الإضافة إلى مجموعة'
+error_message: 'تعذر إيجاد المعلومات المطلوبة حول {device}!'
+available_firmware: 'ملفات firmware المتوفرة ل'
+latest_firmware: 'أحدث Firmware'
+archive_firmware: 'أرشيف ملفات Firmware'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUpdatesTracker
+firmware_inline: 'البحث عن تحميلات ال firmware لهاتف {codenames_names[device]} ({device})'
+open_in_pm: 'افتح هذه الرسالة في محادثة خاصة'
+click_here: 'اضغط هنا'
+device_models: 'موديلات {models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']})'
+models_inline: 'البحث عن موديلات جهاز {device}'
+whatis_message: '`{device}` هو **{codenames_names[device]}**'
+whatis_inline: 'البحث عن اسم جهاز {device}'
+too_much_codenames: 'البحث عن {device} عام للغاية! من فضلك كن أكثر تحديدا.'
+codename_message: "**{name}** هو `{codename}`\n"
+codename_inline: 'البحث عن الاسم الرمزي لجهاز {device}'
+unlock_bl: 'أداة وشرح فك البووت لودر'
+unlock_bl_inline: 'شرح كيفية فك البووت لودر'
+tools: 'أدوات هامة لهواتف شاومي'
+tools_inline: 'أدوات مفيدة لمستخدمي هواتف شاومي'
+guides: 'شروحات خاصة بهواتف شاومي'
+guides_inline: 'شروحات مختلفة خاصة بهواتف شاومي'
+Stable: مستقر
+Weekly: أسبوعي
+Region: المنطقة
+EEA: الاتحاد الأوروبي
+Indonesia: إندونيسيا
+India: الهند
+Russia: روسيا
+Global: عالمي
+China: الصين
+Fastboot: Fastboot
+Recovery: ريكفري
+Size: الحجم
+miui_message: 'آخر تحديثات روم MIUI نسخة {rom_type} الرسمية لجهاز ** {codenames_names[device]}** (`{device}`)'
+roms_archive: 'أرشيف الرومات'
+miui_inline: 'البحث عن تحميلات الروم الرسمي لهاتف {codenames_names[device]} ({device})'
+miui_archive: '**أرشيف ملفات MIUI لجهاز {codenames_names[device]}** (`{device}`)'
+archive_inline: 'البحث في أرشيف الروم الرسمي لهاتف {codenames_names[device]} ({device})'
+latest_message: '**آخر إصدارات MIUI لجهاز {codenames_names[device]}** (`{device}`)'
+latest_inline: 'البحث عن آخر إصدارات MIUI لجهاز {codenames_names[device]} ({device})'
+miui_update: '**تحديث MIUI نسخة {rom_type} جديد متاح لهاتف {codenames_names[device]}** (`{device}`)!'
+wrong_codename: 'كود الجهاز خطأ!'
+subscribed: 'تم الاشتراك في تحديثات {sub_type} لجهاز {device} بنجاح!'
+already_subscribed: 'أنت بالفعل مشترك في تحديثات {sub_type} لجهاز {device}!'
+unsubscribed: 'تم إلغاء الاشتراك في تحديثات {sub_type} لجهاز {device} بنجاح!'
+your_subscriptions: 'أنت مشترك في'
+no_subscriptions: 'لا شيء حتى الآن'
+firmware_update: '**تحديث Firmware جديد متاح ل {codename} من مشروع** @XiaomiFirmwareUpdater'
+vendor_update: '**تحديث Vendor جديد متاح ل {codename} من مشروع** @MIUIVendorUpdater'
+orangefox_message: "آخر إصدار من ريكفري [OrangeFox](https://wiki.orangefox.tech/en/home) لهاتف **Latest {data['name']} **(`{device}`):\n__المطور:__ {data['maintainer']}"
+orangefox_inline: 'البحث عن تحميلات ريكفري OrangeFox المعدل لجهاز {device}'
+pitchblack_message: '**آخر إصدار من ريكفري [PitchBlack](https://pbrp.ml) المعدل لجهاز** `{device}`'
+pitchblack_inline: 'البحث عن تحميلات ريكفري PitchBlack المعدل لجهاز {device}'
+Devices: الأجهزة
+Tag: الوسم
+oss_inline: 'البحث عن الكود المصدري لنواة هاتف {device}'
+eu_message: '**آخر إصدار من روم** Xiaomi.eu لهاتف {name} (**`{device}`**)'
+eu_inline: 'البحث عن تحميلات روم Xiaomi.eu لهاتف {name} ({device})'
+vendor_message: '**ملفات vendor المتوفرة لجهاز {codenames_names[device]}** (`{device}`)'
+latest_vendor: 'أحدث ملفات Vendor'
+archive_vendor: 'أرشيف ملفات Vendor'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: 'البحث عن تحميلات ملفات Vendor لهاتف {codenames_names[device]} ({device})'
+twrp_message: "**آخر إصدار ريكفري TWRP المعدل لهاتف{data['name']}:**\n** تم التحديث في:** {data['date']}"
+twrp_inline: 'البحث عن تحميلات ريكفري TWRP المعدل لهاتف {codenames_names[device]} ({device})'
+Status: الحالة
+Network: الشبكة
+Weight: الوزن
+Display: الشاشة
+Chipset: المعالج
+Memory: الذاكرة
+rear_camera: 'الكاميرا الخلفية'
+front_camera: 'الكاميرا الأمامية'
+headphone_jack: 'جاك الصوت 3.5mm'
+USB: USB
+Sensors: المستشعرات
+Battery: البطارية
+Charging: الشحن
+specs_inline: 'البحث عن مواصفات {device}'
+help_message: "** كيفية استخدام بوت {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} هو بوت صُنع خصيصا لمستخدمي شاومي على تيليجرام!\nيستطيع البوت تزويدك بروابط لأحدث الرومات الرسمية وتحديثات firrmware، والعديد من اﻷشياء اﻷخرى.\nدليل الاستخدام الكامل متوفر للقراءة [هنا]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nوإليك كل اﻷوامر المتاحة:\n/start: التحقق من عمل البوت\n/help: عرض رسالة المساعدة"
+Subscriptions: الاشتراكات
+miui_updates: 'تحديثات MIUI'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'الريكفري المعدل'
+devices_specs: 'مواصفات الأجهزة'
+devices_info: 'معلومات الأجهزة'
+Miscellaneous: متفرقات
+Example: مثال
+recovery_help: 'معلومات وروابط روم الريكفري'
+fastboot_help: 'معلومات وروابط روم fastboot'
+latest_help: 'معلومات أحدث نسخة من MIUI'
+archive_help: 'أرشيف روابط كل الرومات الرسمية للهاتف'
+firmware_help: 'ملفات firmware المتوفرة للهاتف'
+vendor_help: 'ملفات firmware و vendor المتوفرة للهاتف'
+eu_help: 'تحميل آخر إصدار من روم Xiaomi EU للهاتف'
+twrp_help: 'تحميل آخر إصدار من ريكفري TWRP المعدل'
+of_help: 'تحميل آخر إصدار من ريكفري OrangeFox المعدل'
+pb_help: 'تحميل آخر إصدار من ريكفري PitcBlack المعدل'
+specs_help: 'معلومات الهاتف من موقع GSMArena'
+models_help: 'أرقام موديلات الهاتف المتوفرة بالأسواق'
+whatis_help: 'معرفة اسم الهاتف الذي ينتمي إليه الاسم الرمزي'
+codename_help: 'معرفة الاسم الرمزي لهاتف ما'
+guides_help: 'مجموعة من الشروحات المفيدة لكل مستخدم هواتف شاومي'
+unlockbl_help: 'أداة وشرح فك البووت لودر'
+tools_help: 'مجموعة من الأدوات المفيدة لكل مستخدم هواتف شاومي'
+arb_help: 'معلومات حول حماية الرجوع إلى إصدار أقدم ARB'
+subscribe_help: 'الاشتراك في تحديثات ال firmware و MIUI و Vendor لهاتف ما'
+unsubscribe_help: 'إلغاء الاشتراك في تحديثات ال firmware و MIUI و Vendor لهاتف ما'
+subscription_help: 'عرض قائمة اشتراكاتك'
+set_locale_message: 'تم تغيير لغة البوت إلى {lang} بنجاح!'
+wrong_locale_message: "لسوء الحظ لا يدعم البوت لغة {lang} حاليا :(\nلكن يمكنك المساهمة وإضافتها بنفسك عن طريق [هذا الرابط](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'إعدادات البوت'
+bot_lang: 'لغة البوت'
+available_languages: 'اللغات المتوفرة'
+change_language: 'تغيير اللغة'
+Back: رجوع
