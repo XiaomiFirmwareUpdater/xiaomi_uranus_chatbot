@@ -6,7 +6,10 @@ from uranus_bot import XFU_WEBSITE
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
 from uranus_bot.telegram_bot import DATABASE
-from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message
+from uranus_bot.telegram_bot.messages.firmware import firmware_update_message
+from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message, \
+    wrong_codename_message, subscribed_message, already_subscribed_message, subscriptions_message
+from uranus_bot.telegram_bot.messages.vendor import vendor_update_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin
 
@@ -22,13 +25,14 @@ async def subscribe(event):
     except IndexError:
         sub_type = event.message.message.split(' ')[1]
         device = event.message.message.split(' ')[2]
+    locale = DATABASE.get_locale(event.chat_id)
     if not await is_device(sub_type, device):
-        await event.reply("**Wrong codename!**")
+        await event.reply(await wrong_codename_message(locale))
         return
     if DATABASE.add_subscription(await get_user_info(event), sub_type, device):
-        message = f"Subscribed to {device} {sub_type} updates successfully!"
+        message = await subscribed_message(sub_type, device, locale)
     else:
-        message = f"You are already subscribed to {device} {sub_type} updates!"
+        message = await already_subscribed_message(sub_type, device, locale)
     await event.reply(message)
     raise events.StopPropagation
 
@@ -40,11 +44,12 @@ async def unsubscribe(event):
         return
     sub_type = event.pattern_match.group(1)
     device = event.pattern_match.group(2)
+    locale = DATABASE.get_locale(event.chat_id)
     if not await is_device(sub_type, device):
-        await event.reply("**Wrong codename!**")
+        await event.reply(await wrong_codename_message(locale))
         return
     DATABASE.remove_subscription(await get_user_info(event), sub_type, device)
-    message = f"Unsubscribed from {device} {sub_type} updates successfully!"
+    message = await subscribed_message(sub_type, device, locale)
     await event.reply(message)
     raise events.StopPropagation
 
@@ -54,11 +59,9 @@ async def subscription_handler(event):
     """List your current subscriptions"""
     if not await subscription_allowed(event):
         return
+    locale = DATABASE.get_locale(event.chat_id)
     subscriptions = DATABASE.get_chat_subscriptions(event.chat_id)
-    message = f"**You're subscribed to:**\n"
-    for subscription in subscriptions:
-        message += f"{subscription[1]} ({subscription[0]})"
-    await event.reply(message)
+    await event.reply(await subscriptions_message(subscriptions, locale))
     raise events.StopPropagation
 
 
@@ -88,11 +91,9 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
+                        locale = DATABASE.get_locale(subscription[0])
                         await BOT.send_message(subscription[0],
-                                               f"**New Firmware update available for {codename} by** "
-                                               f"@XiaomiFirmwareUpdater\n",
-                                               buttons=[Button.url(f"{update}",
-                                                                   f"{XFU_WEBSITE}/firmware/{codename}/")])
+                                               await firmware_update_message(codename, update, locale))
                         await sleep(2)
         await sleep(65 * 60)
 
@@ -114,7 +115,8 @@ async def post_miui_updates():
                 if subscriptions:
                     for subscription in subscriptions:
                         for update in updates:
-                            message, buttons = await miui_update_message(update, PROVIDER.codenames_names)
+                            locale = DATABASE.get_locale(subscription[0])
+                            message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
                             await BOT.send_message(subscription[0], message, buttons=buttons)
                             await sleep(2)
             await sleep(65 * 60)
@@ -135,10 +137,9 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
+                        locale = DATABASE.get_locale(subscription[0])
                         await BOT.send_message(subscription[0],
-                                               f"**New Vendor update available for {codename} by** "
-                                               f"@MIUIVendorUpdater\n",
-                                               buttons=[Button.url(f"{update}", f"{XFU_WEBSITE}/vendor/{codename}/")])
+                                               await vendor_update_message(codename, update, locale))
                         await sleep(2)
         await sleep(65 * 60)
 

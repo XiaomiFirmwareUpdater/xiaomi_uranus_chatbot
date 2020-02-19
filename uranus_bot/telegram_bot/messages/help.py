@@ -2,105 +2,116 @@
 from telethon import Button
 
 from uranus_bot import XFU_WEBSITE
-from uranus_bot.telegram_bot.tg_bot import BOT_INFO
+from uranus_bot.telegram_bot.tg_bot import BOT_INFO, LOCALIZE
 
 
-async def help_main_message():
+async def open_in_pm_message(locale):
+    return LOCALIZE.get_text(locale, "open_in_pm")
+
+
+async def help_main_message(locale):
     """ Generate telegram message of help command """
-    message = f"**How to use {BOT_INFO['name']}**\n\n" \
-              f"@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\n" \
-              f"It can get you latest Official ROMs, " \
-              f"Firmware updates links, and many more things!\n" \
-              f"The full usage guide is available " \
-              f"[Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\n" \
-              f"Here are all commands available:\n" \
-              f"/start: Check if bot is running\n" \
-              f"/help: Show this help message"
+    message = LOCALIZE.get_text(locale, "help_message").replace(
+        "{BOT_INFO['name']}", BOT_INFO['name']).replace(
+        "{BOT_INFO['username']}", BOT_INFO['username']
+    ).replace("{XFU_WEBSITE}", XFU_WEBSITE)
     buttons = [
-        [Button.inline("Subscriptions", data="subscriptions_help")],
-        [Button.inline("MIUI Updates", data="miui_help"),
-         Button.inline("Firmware", data="firmware_help")],
-        [Button.inline("Vendor", data="vendor_help"),
-         Button.inline("Xiaomi.eu", data="eu_help")],
-        [Button.inline("Custom Recovery", data="custom_recovery_help"),
-         Button.inline("Devices specs", data="specs_help")],
-        [Button.inline("Devices Information", data="info_help"),
-         Button.inline("Miscellaneous", data="misc_help")]
+        [Button.inline(LOCALIZE.get_text(locale, "Subscriptions"),
+                       data="subscriptions_help")],
+        [Button.inline(LOCALIZE.get_text(locale, "miui_updates"),
+                       data="miui_help"),
+         Button.inline(LOCALIZE.get_text(locale, "Firmware"),
+                       data="firmware_help")],
+        [Button.inline(LOCALIZE.get_text(locale, "Vendor"),
+                       data="vendor_help"),
+         Button.inline(LOCALIZE.get_text(locale, "xiaomi_eu"),
+                       data="eu_help")],
+        [Button.inline(LOCALIZE.get_text(locale, "custom_recovery"),
+                       data="custom_recovery_help"),
+         Button.inline(LOCALIZE.get_text(locale, "devices_specs"),
+                       data="specs_help")],
+        [Button.inline(LOCALIZE.get_text(locale, "devices_info"),
+                       data="info_help"),
+         Button.inline(LOCALIZE.get_text(locale, "Miscellaneous"),
+                       data="misc_help")]
     ]
     return message, buttons
 
 
-async def miui_help_message():
+async def miui_help_message(locale):
     """ Generate telegram message of miui help"""
-    return "/recovery `codename`: Gets latest recovery ROMs info and links\n" \
-           "__Example:__ `/recovery whyred`\n" \
-           "/fastboot `codename`: Gets latest fastboot ROMs info and links\n" \
-           "__Example:__ `/fastboot whyred`\n" \
-           "/latest `codename`: Gets latest MIUI versions info\n" \
-           "__Example:__ `/latest sagit`\n" \
-           "/archive `codename`: Send all official available MIUI ROMs for device archive link\n" \
-           "__Example:__ `/archive mido`"
+    example = LOCALIZE.get_text(locale, "Example")
+    return f"/recovery `codename`: {LOCALIZE.get_text(locale, 'recovery_help')}\n" \
+           f"__{example}:__ `/recovery whyred`\n\n" \
+           f"/fastboot `codename`: {LOCALIZE.get_text(locale, 'fastboot_help')}\n" \
+           f"__{example}:__ `/fastboot whyred`\n\n" \
+           f"/latest `codename`: {LOCALIZE.get_text(locale, 'latest_help')}\n" \
+           f"__{example}:__ `/latest sagit`\n\n" \
+           f"/archive `codename`: {LOCALIZE.get_text(locale, 'archive_help')}\n" \
+           f"__{example}:__ `/archive mido`"
 
 
-async def firmware_help_message():
+async def firmware_help_message(locale):
     """ Generate telegram message of firmware help"""
-    return "/firmware `codename`: Gets available firmware for a device\n" \
-           "__Example:__ `/firmware dipper`"
+    return f"/firmware `codename`: {LOCALIZE.get_text(locale, 'firmware_help')}\n" \
+           f"__{LOCALIZE.get_text(locale, 'Example')}:__ `/firmware dipper`"
 
 
-async def vendor_help_message():
+async def vendor_help_message(locale):
     """ Generate telegram message of vendor help"""
-    return "/vendor `codename`: Gets available firmware+vendor for a device\n" \
-           "__Example:__ `/vendor dipper`"
+    return f"/vendor `codename`: {LOCALIZE.get_text(locale, 'vendor_help')}\n" \
+           f"__{LOCALIZE.get_text(locale, 'Example')}:__ `/vendor dipper`"
 
 
-async def eu_help_message():
+async def eu_help_message(locale):
     """ Generate telegram message of eu help"""
-    return "/eu `codename`: Gets latest Xiaomi EU ROMs downloads for device\n" \
-           "__Example:__ `/eu dipper`"
+    return f"/eu `codename`: {LOCALIZE.get_text(locale, 'eu_help')}\n" \
+           f"__{LOCALIZE.get_text(locale, 'Example')}:__ `/eu dipper`"
 
 
-async def custom_recovery_help_message():
+async def custom_recovery_help_message(locale):
     """ Generate telegram message of custom_recovery help"""
-    return "/twrp `codename`: Gets latest TWRP download link for device\n" \
-           "__Example:__ `/twrp whyred`\n" \
-           "/of `codename`: Gets latest PitchBlack recovery download link for device\n" \
-           "__Example:__ `/of whyred`\n" \
-           "/pb `codename`: Gets latest OrangeFox recovery download link for device\n" \
-           "__Example:__ `/pb sagit`"
+    example = LOCALIZE.get_text(locale, "Example")
+    return f"/twrp `codename`: {LOCALIZE.get_text(locale, 'twrp_help')}\n" \
+           f"__{example}:__ `/twrp whyred`\n\n" \
+           f"/of `codename`: {LOCALIZE.get_text(locale, 'of_help')}\n" \
+           f"__{example}:__ `/of whyred`\n\n" \
+           f"/pb `codename`: {LOCALIZE.get_text(locale, 'pb_help')}\n" \
+           f"__{example}:__ `/pb sagit`"
 
 
-async def specs_help_message():
+async def specs_help_message(locale):
     """ Generate telegram message of specs help"""
-    return "/specs `codename`: Gets device specs from GSMArena\n" \
-           "__Example:__ `/specs riva`"
+    return f"/specs `codename`: {LOCALIZE.get_text(locale, 'specs_help')}\n" \
+           f"__{LOCALIZE.get_text(locale, 'Example')}:__ `/specs riva`"
 
 
-async def info_help_message():
+async def info_help_message(locale):
     """ Generate telegram message of info help"""
-    return "/models `codename`: Gets all available models of a device\n" \
-           "__Example:__ `/models whyred`\n" \
-           "/whatis `codename`: Tells you which device's codename is this\n" \
-           "__Example:__ `/whatis whyred`\n" \
-           "/codename `codename`: Tells you what is the codename of this device\n" \
-           "__Example:__ `/codename sagit`"
+    example = LOCALIZE.get_text(locale, "Example")
+    return f"/models `codename`: {LOCALIZE.get_text(locale, 'models_help')}\n" \
+           f"__{example}:__ `/models whyred`\n\n" \
+           f"/whatis `codename`: {LOCALIZE.get_text(locale, 'whatis_help')}\n" \
+           f"__{example}:__ `/whatis whyred`\n\n" \
+           f"/codename `codename`: {LOCALIZE.get_text(locale, 'codename_help')}\n" \
+           f"__{example}:__ `/codename sagit`"
 
 
-async def miscellaneous_help_message():
+async def miscellaneous_help_message(locale):
     """ Generate telegram message of miscellaneous help"""
-    return "/guides: Various useful guides for every Xiaomi user\n" \
-           "/unlockbl: Unlocking bootloader help and tools\n" \
-           "/tools: Various useful tools for every Xiaomi user\n" \
-           "/arb: Anti-Rollback Protection information"
+    return f"/guides: {LOCALIZE.get_text(locale, 'guides_help')}\n" \
+           f"/unlockbl: {LOCALIZE.get_text(locale, 'unlockbl_help')}\n" \
+           f"/tools: {LOCALIZE.get_text(locale, 'tools_help')}\n" \
+           f"/arb: {LOCALIZE.get_text(locale, 'arb_help')}"
 
 
-async def subscriptions_help_message():
+async def subscriptions_help_message(locale):
     """ Generate telegram message of subscriptions help"""
+    example = LOCALIZE.get_text(locale, "Example")
     return "/subscribe `firmware`|`miui`|`vendor` `codename`: " \
-           "Subscribe to this device firmware/miui/vendor updates\n" \
-           "__Example:__ `/subscribe firmware whyred`\n" \
-           "/unsubscribe `firmware`|`miui`|`vendor` `codename`: " \
-           "Unsubscribe from this device firmware/miui/vendor updates\n" \
-           "__Example:__ `/subscribe firmware whyred`\n" \
-           "/subscription: List your current subscriptions"
-
+           f"\n{LOCALIZE.get_text(locale, 'subscribe_help')}\n" \
+           f"__{example}:__ `/subscribe firmware whyred`\n\n" \
+           f"/unsubscribe `firmware`|`miui`|`vendor` `codename`: " \
+           f"\n{LOCALIZE.get_text(locale, 'unsubscribe_help')}\n" \
+           f"__{example}:__ `/subscribe firmware whyred`\n\n" \
+           f"/subscription: {LOCALIZE.get_text(locale, 'subscription_help')}"

@@ -5,10 +5,12 @@ from uranus_bot.providers.devices_info.info import get_codename
 
 async def models_message(device, models_data, locale):
     """ Generate telegram message of models command """
-    message = f'**{LOCALIZE.get_text(locale, "device_models")}:**\n\n'
-    message = message.replace("{models_data[device]['name']}", models_data[device]['name'])
-    message = message.replace("{device}", device)
-    message = message.replace("{models_data[device]['internal_name']}", models_data[device]['internal_name'])
+    message = '**' + LOCALIZE.get_text(locale, "device_models").replace(
+        "{models_data[device]['name']}",
+        models_data[device]['name']).replace(
+        "{device}", device).replace(
+        "{models_data[device]['internal_name']}",
+        models_data[device]['internal_name']) + ':**\n\n'
     for model, model_name in models_data[device]["models"].items():
         message += f"{model}: {model_name}\n"
     return message

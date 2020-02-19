@@ -13,7 +13,8 @@ class Localize:
 
     @staticmethod
     def get_available_locales() -> list:
-        return [lang.split('/')[-1].split('.')[0] for lang in glob(f"{WORK_DIR}/i18n/*.yml")]
+        return [lang.split('/')[-1].split('.')[0] for lang in glob(f"{WORK_DIR}/i18n/*.yml")
+                if not lang.endswith("locales.yml")]
 
     def load_text(self) -> dict:
         text = {}
