@@ -86,7 +86,7 @@ ce:
 ny:
   name: "Chichewa"
   nativeName: "chiCheŵa"
-zh:
+zh-CN:
   name: Chinese
   nativeName: "中文"
 cv:
@@ -371,8 +371,8 @@ pl:
 ps:
   name: "Pashto, Pushto"
   nativeName: "پښتو"
-pt:
-  name: Portuguese
+pt-BR:
+  name: Portuguese (Brazil)
   nativeName: "Português"
 qu:
   name: Quechua
@@ -431,7 +431,7 @@ so:
 st:
   name: "Southern Sotho"
   nativeName: Sesotho
-es:
+es-ES:
   name: "Spanish"
   nativeName: "español"
 su:

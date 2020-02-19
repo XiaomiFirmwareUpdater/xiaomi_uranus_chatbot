@@ -37,12 +37,12 @@ async def setlang_keyboard(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern=r'[a-z]{2} - \S* \(\S*\)'))
+@BOT.on(events.NewMessage(pattern=r'[a-z]{2}(?:-[A-Z]{2})? - \S* \(\S*\)'))
 async def setlang_handler(event):
     """ Set the language based on the user selection"""
-    locale = DATABASE.get_locale(event.chat_id)
     lang = event.message.message.split(' ')[0]
     DATABASE.set_locale(event.chat_id, lang)
+    locale = DATABASE.get_locale(event.chat_id)
     message = await set_locale_message(lang, locale)
     await event.reply(message, buttons=Button.clear())
     raise events.StopPropagation

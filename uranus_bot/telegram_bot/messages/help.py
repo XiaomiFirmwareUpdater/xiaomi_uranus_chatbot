@@ -6,7 +6,12 @@ from uranus_bot.telegram_bot.tg_bot import BOT_INFO, LOCALIZE
 
 
 async def open_in_pm_message(locale):
-    return LOCALIZE.get_text(locale, "open_in_pm")
+    """ generate open in pm message """
+    message = LOCALIZE.get_text(locale, "open_in_pm")
+    buttons = [
+        Button.url(LOCALIZE.get_text(locale, "click_here"),
+                   f"https://t.me/{BOT_INFO['username']}?start=help")]
+    return message, buttons
 
 
 async def help_main_message(locale):

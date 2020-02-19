@@ -7,11 +7,16 @@ from uranus_bot import TG_BOT_ADMINS
 
 async def is_group_admin(event) -> bool:
     """Check if a use is an admin"""
-    return bool([i for i in
-                 await event.client.get_participants(event.message.to_id,
-                                                     filter=ChannelParticipantsAdmins)
-                 if event.message.sender_id == i.id
-                 or event.message.sender.id in TG_BOT_ADMINS])
+    admins = await event.client.get_participants(event.chat_id,
+                                                 filter=ChannelParticipantsAdmins)
+    try:
+        return bool([i for i in admins
+                     if event.message.sender_id == i.id
+                     or event.message.sender.id in TG_BOT_ADMINS])
+    except AttributeError:
+        return bool([i for i in admins
+                     if event.input_sender.user_id == i.id
+                     or event.input_sender.user_id in TG_BOT_ADMINS])
 
 
 async def get_user_info(event) -> dict:

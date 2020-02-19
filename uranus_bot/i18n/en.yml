@@ -68,7 +68,7 @@ archive_vendor: 'Vendor Archive'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: 'Search {codenames_names[device]} ({device}) Vendor downloads'
 twrp_message: "**Latest TWRP for {data['name']}:**\n**Updated:** {data['date']}"
-twrp_inline: 'Search {codenames_names[device]} ({device}) Vendor downloads'
+twrp_inline: 'Search {codenames_names[device]} ({device}) TWRP downloads'
 Status: Status
 Network: Network
 Weight: Weight
@@ -100,7 +100,7 @@ latest_help: 'Gets latest MIUI versions info'
 archive_help: 'Send all official available MIUI ROMs archive links for device'
 firmware_help: 'Gets available firmware for a device'
 vendor_help: 'Gets available firmware+vendor for a device'
-eu_help: 'Gets latest Xiaomi EU ROMs downloads for device'
+eu_help: 'Gets latest Xiaomi.eu ROMs downloads for device'
 twrp_help: 'Gets latest TWRP download link for device'
 of_help: 'Gets latest OrangeFox recovery download link for device'
 pb_help: 'Gets latest PitchBlack recovery download link for device'

@@ -12,7 +12,7 @@ async def vendor_message(device, codenames_names, locale):
     buttons = [
         [Button.url(LOCALIZE.get_text(locale, "latest_vendor"),
                     f"{XFU_WEBSITE}/vendor/{device}/"),
-         Button.url(LOCALIZE.get_text(locale, "vendor_archive"),
+         Button.url(LOCALIZE.get_text(locale, "archive_vendor"),
                     f"{XFU_WEBSITE}/archive/vendor/{device}/")],
         [Button.url(LOCALIZE.get_text(locale, "MIUIVendorUpdater"),
                     "https://t.me/MIUIVendorUpdater")]
