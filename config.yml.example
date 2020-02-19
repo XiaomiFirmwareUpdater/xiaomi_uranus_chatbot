@@ -8,3 +8,4 @@ tg_bot_extra: False
 discord_bot_token: ""
 discord_bot_db: ""
 discord_bot_admins: []
+sentry_sdk_key: ""
