@@ -13,7 +13,10 @@ async def welcome_message(locale):
                     url="https://t.me/joinchat/CRWESlKSb5yEqDwTLgWYnQ")],
         [Button.inline(LOCALIZE.get_text(locale, "read_help"), data="help"),
          Button.url(LOCALIZE.get_text(locale, "add_to_group"),
-                    url="https://t.me/XiaomiGeeksBot?startgroup=true")]
+                    url="https://t.me/XiaomiGeeksBot?startgroup=true")],
+        [Button.inline(LOCALIZE.get_text(locale, "bot_lang"), data="change_language"),
+         Button.inline(LOCALIZE.get_text(locale, "settings_message"),
+                       data="settings")]
     ]
     return message, buttons
 
