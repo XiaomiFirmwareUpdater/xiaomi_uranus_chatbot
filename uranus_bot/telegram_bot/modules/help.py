@@ -1,6 +1,7 @@
 """ Xiaomi Geeks Telegram Bot help module"""
 
 from telethon import events, Button
+from telethon.errors import MessageNotModifiedError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.help import help_main_message, miui_help_message, \
@@ -27,7 +28,10 @@ async def help_callback(event):
     """help buttons callback for back button"""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await help_main_message(locale)
-    await event.edit(message, buttons=buttons)
+    try:
+        await event.edit(message, buttons=buttons)
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='miui_help'))
@@ -43,9 +47,12 @@ async def miui_help(event):
 async def firmware_help(event):
     """firmware help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await firmware_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await firmware_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='vendor_help'))
@@ -70,9 +77,12 @@ async def eu_help(event):
 async def custom_recovery_help(event):
     """custom recovery help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await custom_recovery_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await custom_recovery_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='specs_help'))
