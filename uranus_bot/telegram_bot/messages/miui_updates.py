@@ -139,6 +139,9 @@ async def unsubscribed_message(sub_type, device, locale):
 async def subscriptions_message(subscriptions, locale):
     """ Generate subscriptions message"""
     message = f"**" + LOCALIZE.get_text(locale, "your_subscriptions") + ":**\n"
-    for subscription in subscriptions:
-        message += f"{subscription[1]} ({subscription[0]})"
+    if subscriptions:
+        for subscription in subscriptions:
+            message += f"{subscription[1]} ({subscription[0]})"
+    else:
+        message = f"**{LOCALIZE.get_text(locale, 'no_subscriptions')}**"
     return message

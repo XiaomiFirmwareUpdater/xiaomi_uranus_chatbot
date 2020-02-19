@@ -20,4 +20,4 @@ DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS subscriptions (
                                     id NUMERIC NOT NULL, chat_type text,
                                     sub_type text, device text); """)
 DATABASE.create_table(f"""CREATE TABLE IF NOT EXISTS i18n (
-                                    id NUMERIC NOT NULL, lang text); """)
+                                    id NUMERIC NOT NULL PRIMARY KEY, lang text); """)

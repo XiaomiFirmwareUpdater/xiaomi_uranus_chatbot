@@ -10,6 +10,7 @@ class Localize:
     def __init__(self):
         self.locales = self.get_available_locales()
         self.text = self.load_text()
+        self.all_locales = self.load_locales()
 
     @staticmethod
     def get_available_locales() -> list:
@@ -23,5 +24,13 @@ class Localize:
                 text.update({locale: yaml.load(yaml_file, Loader=yaml.FullLoader)})
         return text
 
+    @staticmethod
+    def load_locales():
+        with open(f"{WORK_DIR}/i18n/locales.yml", "r") as yaml_file:
+            return yaml.load(yaml_file, Loader=yaml.FullLoader)
+
     def get_text(self, locale, text):
-        return self.text[locale][text]
+        try:
+            return self.text[locale][text]
+        except KeyError:
+            return self.text['en'][text]

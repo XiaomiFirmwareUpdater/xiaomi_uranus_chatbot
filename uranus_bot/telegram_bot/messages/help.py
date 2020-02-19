@@ -94,7 +94,7 @@ async def info_help_message(locale):
            f"/whatis `codename`: {LOCALIZE.get_text(locale, 'whatis_help')}\n" \
            f"__{example}:__ `/whatis whyred`\n\n" \
            f"/codename `codename`: {LOCALIZE.get_text(locale, 'codename_help')}\n" \
-           f"__{example}:__ `/codename sagit`"
+           f"__{example}:__ `/codename mi 9t`"
 
 
 async def miscellaneous_help_message(locale):

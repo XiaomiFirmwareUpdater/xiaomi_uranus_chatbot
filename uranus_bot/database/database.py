@@ -114,6 +114,17 @@ class Database:
                                     {'chat_id': chat_id}).fetchone()
         return check[0] if check else 'en'
 
+    def set_locale(self, chat_id, lang):
+        """ Set the locale of a chat """
+        try:
+            self.cursor.execute(f"""INSERT OR REPLACE INTO i18n (id, lang)
+            VALUES(:chat_id, :lang)""", {'chat_id': chat_id, 'lang': lang})
+            return True
+        except Error as err:
+            print(err)
+        finally:
+            self.conn.commit()
+
     def __del__(self):
         """ close the connection """
         self.conn.close()

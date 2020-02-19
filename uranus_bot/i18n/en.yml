@@ -1,7 +1,7 @@
 welcome: "Hey! I'm Uranus, an all-in-one bot for Xiaomi users!\nI can get you latest Official ROMs, Firmware updates links, and many more things!\n\nCheck how to use me by clicking help button below.\nJoin [my channel](https://t.me/yshalsager_projects) to get all updates and announcements about the bot!"
 join_channel: 'Join my channel'
 join_group: 'Join support group'
-read_help: 'Read help'
+read_help: 'Read Help'
 add_to_group: 'Add to a group'
 error_message: 'Could not find {device} requested information!'
 available_firmware: 'Available firmware downloads for'
@@ -50,6 +50,7 @@ subscribed: 'Subscribed to {device} {sub_type} updates successfully!'
 already_subscribed: 'You are already subscribed to {device} {sub_type} updates!'
 unsubscribed: 'Unsubscribed from {device} {sub_type} updates successfully!'
 your_subscriptions: 'You''re subscribed to'
+no_subscriptions: 'Nothing yet'
 firmware_update: '**New Firmware update available for {codename} by** @XiaomiFirmwareUpdater'
 vendor_update: '**New Vendor update available for {codename} by** @MIUIVendorUpdater'
 orangefox_message: "**Latest {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n__Maintainer:__ {data['maintainer']}"
@@ -82,7 +83,7 @@ Sensors: Sensors
 Battery: Battery
 Charging: Charging
 specs_inline: 'Search {device} Specifications'
-help_message: "**How to use {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\nIt can get you latest Official ROMs, Firmware updates links, and many more things!\nThe full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nHere are all commands available:\n/start: Check if bot is running\n/help: Show this help message"
+help_message: "**How to use {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\nIt can get you latest Official ROMs, Firmware updates links, and many more things!\nThe full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nHere are all commands available:\n/start: Check if the bot is running\n/help: Show this help message"
 Subscriptions: Subscriptions
 miui_updates: 'MIUI Updates'
 Firmware: Firmware
@@ -96,7 +97,7 @@ Example: Example
 recovery_help: 'Gets latest recovery ROMs info and links'
 fastboot_help: 'Gets latest fastboot ROMs info and links'
 latest_help: 'Gets latest MIUI versions info'
-archive_help: 'Send all official available MIUI ROMs for device archive link'
+archive_help: 'Send all official available MIUI ROMs archive links for device'
 firmware_help: 'Gets available firmware for a device'
 vendor_help: 'Gets available firmware+vendor for a device'
 eu_help: 'Gets latest Xiaomi EU ROMs downloads for device'
@@ -114,3 +115,10 @@ arb_help: 'Anti-Rollback Protection information'
 subscribe_help: 'Subscribe to this device firmware/miui/vendor updates'
 unsubscribe_help: 'Unsubscribe from this device firmware/miui/vendor updates'
 subscription_help: 'List your current subscriptions'
+set_locale_message: 'Bot language has been changed to {lang} successfully!'
+wrong_locale_message: "Unfortunately {lang} language support is not available yet :(\nThe good news is that you can contribute to the bot and add it!\n[Check Here](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot Settings'
+bot_lang: 'Bot Language'
+available_languages: 'Available Languages'
+change_language: 'Change language'
+Back: Back
