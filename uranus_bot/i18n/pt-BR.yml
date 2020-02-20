@@ -2,10 +2,10 @@
 welcome: "Olá! Eu sou Uranus, um bot tudo em um para usuários Xiaomi!\nEu posso te ajudar com as ROMs Oficiais mais recentes, atualizações de Firmware e muito mais!\n\nVeja como me usar clicando no botão de ajuda abaixo.\nEntre [no meu canal](https://t.me/yshalsager_projects) para receber todas as atualizações e anúncios sobre o bot!"
 join_channel: 'Entre no meu canal'
 join_group: 'Entrar no grupo de suporte'
-read_help: 'Ajuda'
+read_help: 'Ler a Ajuda'
 add_to_group: 'Adicionar a um grupo'
-error_message: 'Não foi possível encontrar a informação requerida sobre {device}!'
-available_firmware: 'Downloads de Firmware disponíveis para'
+error_message: 'Não foi possível encontrar as informações solicitadas para {device}!'
+available_firmware: 'Downloads de firmware disponíveis para'
 latest_firmware: 'Firmware mais recente'
 archive_firmware: 'Arquivo de Firmwares'
 XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
@@ -123,3 +123,8 @@ bot_lang: 'Idioma do Bot'
 available_languages: 'Idiomas disponíveis'
 change_language: 'Alterar Idioma'
 Back: Voltar
+set_device_message: 'O dispositivo preferido para este chat foi definido como {codenames_names[device]} (`{device}`) com sucesso!'
+preferred_device: 'Dispositivo preferido'
+your_preferred_device: 'O seu dispositivo preferido é o'
+preferred_device_help: 'Defina o seu dispositivo preferido para ser usado como padrão em comandos que precisam de um codenome de dispositivo'
+change_preferred_device: 'Alterar dispositivo preferido'

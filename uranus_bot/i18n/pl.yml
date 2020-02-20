@@ -123,3 +123,8 @@ bot_lang: 'Język bota'
 available_languages: 'Dostępne języki'
 change_language: 'Zmień język'
 Back: Wstecz
+set_device_message: 'Pomyślnie ustawiono preferowane urządzenie: {codenames_names[device]} (`{device}`) dla tego czatu!'
+preferred_device: 'Preferowane urządzenie'
+your_preferred_device: 'Twoje preferowane urządzenie to'
+preferred_device_help: 'Ustawia Twoje preferowane urządzenie w celu używania go jako domyślnego dla komend, które wymagają nazwy kodowej urządzenia'
+change_preferred_device: 'Zmień preferowane urządzenie'

@@ -69,57 +69,62 @@ archive_vendor: 'Vendor 存档'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: '搜索 {codenames_name[device]} ({device}) 的 Vendor 下载'
 twrp_message: "**{data ['name']} 最新的 TWRP：**\n**更新日期：** {data['date']}"
-twrp_inline: 'Search {codenames_names[device]} ({device}) TWRP downloads'
-Status: Status
-Network: Network
-Weight: Weight
-Display: Display
-Chipset: Chipset
-Memory: Memory
-rear_camera: 'Rear Camera'
-front_camera: 'Front Camera'
-headphone_jack: '3.5mm jack'
+twrp_inline: '搜索 {codenames_name[device]} ({device}) 的 TWRP 下载'
+Status: 状态
+Network: 网络
+Weight: 重量
+Display: 显示
+Chipset: 芯片组
+Memory: 运行内存
+rear_camera: '后置摄像头'
+front_camera: '前置摄像头'
+headphone_jack: '3.5mm 耳机口'
 USB: USB
-Sensors: Sensors
-Battery: Battery
-Charging: Charging
-specs_inline: 'Search {device} Specifications'
-help_message: "**How to use {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\nIt can get you latest Official ROMs, Firmware updates links, and many more things!\nThe full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nHere are all commands available:\n/start: Check if the bot is running\n/help: Show this help message"
-Subscriptions: Subscriptions
-miui_updates: 'MIUI Updates'
+Sensors: 传感器
+Battery: 电池
+Charging: 充电
+specs_inline: '搜索 {device} 参数'
+help_message: "**如何使用 {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} 是一个适用于小米用户的一体化机器人！\n它可以让您获得最新的官方ROM、Firmware 更新链接和更多的东西！\n完整的使用指南在[此处]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\n这里有所有命令可用：\n/start: 检查机器人是否在运行\n/help: 显示此帮助信息"
+Subscriptions: 订阅
+miui_updates: 'MIUI 更新'
 Firmware: Firmware
 Vendor: Vendor
 xiaomi_eu: Xiaomi.eu
-custom_recovery: 'Custom Recovery'
-devices_specs: 'Devices specs'
-devices_info: 'Devices Information'
-Miscellaneous: Miscellaneous
-Example: Example
-recovery_help: 'Gets latest recovery ROMs info and links'
-fastboot_help: 'Gets latest fastboot ROMs info and links'
-latest_help: 'Gets latest MIUI versions info'
-archive_help: 'Send all official available MIUI ROMs archive links for device'
+custom_recovery: '第三方 Recovery'
+devices_specs: 'Devices 参数'
+devices_info: '设备信息'
+Miscellaneous: 杂项
+Example: 示例
+recovery_help: '获取最新的卡刷 ROM 信息和链接'
+fastboot_help: '获取最新的线刷 ROM 信息和链接'
+latest_help: '获取最新的 MIUI 版本信息'
+archive_help: '发送所有官方可用的 MIUI ROM 归档链接到设备'
 firmware_help: '获取设备的可用 Firmware'
 vendor_help: '获取设备的可用 Firmware + Vendor'
-eu_help: 'Gets latest Xiaomi.eu ROMs downloads for device'
+eu_help: '获取设备最新的 Xiaomi.eu ROM 下载'
 twrp_help: '获取设备最新的 TWRP 下载链接'
 of_help: '获取设备最新的 OrangeFox Recovery 下载链接'
 pb_help: '获取设备最新的 PitchBlack Recovery 下载链接'
 specs_help: '从 GSMARena 获取设备参数'
 models_help: '获取设备的所有可用的设备型号'
-whatis_help: 'Tells you which device''s codename is this'
-codename_help: 'Tells you what is the codename of this device'
-guides_help: 'Various useful guides for every Xiaomi user'
-unlockbl_help: 'Unlocking bootloader help and tools'
-tools_help: 'Various useful tools for every Xiaomi user'
-arb_help: 'Anti-Rollback Protection information'
-subscribe_help: 'Subscribe to this device firmware/miui/vendor updates'
-unsubscribe_help: 'Unsubscribe from this device firmware/miui/vendor updates'
-subscription_help: 'List your current subscriptions'
-set_locale_message: 'Bot language has been changed to {lang} successfully!'
-wrong_locale_message: "Unfortunately {lang} language support is not available yet :(\nThe good news is that you can contribute to the bot and add it!\n[Check Here](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
-settings_message: 'Bot Settings'
-bot_lang: 'Bot Language'
-available_languages: 'Available Languages'
-change_language: 'Change language'
-Back: Back
+whatis_help: '告诉您哪个设备的代号是这样的'
+codename_help: '告诉您此设备的代号'
+guides_help: '多份适用于小米用户的有用指南'
+unlockbl_help: 'Bootloader 解锁教程与工具'
+tools_help: '多份适用于小米用户的实用工具'
+arb_help: '防回刷机制信息'
+subscribe_help: '订阅此设备的 Firmware/MIUI/Vendor 更新'
+unsubscribe_help: '取消订阅此设备的 Firmware/MIUI/Vendor 更新'
+subscription_help: '列出您当前的订阅'
+set_locale_message: 'Bot 语言已成功切换为 {lang}！'
+wrong_locale_message: "很抱歉， {lang} 语言支持尚不可用 :(\n好消息是您可以为机器人贡献语言支持！\n[点击此处翻译](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot 设置'
+bot_lang: 'Bot 语言'
+available_languages: '可用语言'
+change_language: '更改语言'
+Back: 返回
+set_device_message: 'Preferred device for this chat has been set to {codenames_names[device]} (`{device}`) successfully!'
+preferred_device: 'Preferred device'
+your_preferred_device: 'Your preferred device is'
+preferred_device_help: 'Sets your preferred device in order to be used as default for commands that needs the codename of the device'
+change_preferred_device: 'Change Preferred device'

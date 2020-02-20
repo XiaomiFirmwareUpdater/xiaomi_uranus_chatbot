@@ -68,7 +68,7 @@ latest_vendor: 'أحدث ملفات Vendor'
 archive_vendor: 'أرشيف ملفات Vendor'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: 'البحث عن تحميلات ملفات Vendor لهاتف {codenames_names[device]} ({device})'
-twrp_message: "**آخر إصدار ريكفري TWRP المعدل لهاتف{data['name']}:**\n** تم التحديث في:** {data['date']}"
+twrp_message: "**آخر إصدار ريكفري TWRP المعدل لهاتف {data['name']}:**\n** تم التحديث في:** {data['date']}"
 twrp_inline: 'البحث عن تحميلات ريكفري TWRP المعدل لهاتف {codenames_names[device]} ({device})'
 Status: الحالة
 Network: الشبكة
@@ -123,3 +123,8 @@ bot_lang: 'لغة البوت'
 available_languages: 'اللغات المتوفرة'
 change_language: 'تغيير اللغة'
 Back: رجوع
+set_device_message: 'تم تغيير الجهاز المفضل لهذه الدردشة إلى {codenames_names[device]} (`{device}`) بنجاح!'
+preferred_device: 'جهازك المفضل'
+your_preferred_device: 'جهازك المفضل هو'
+preferred_device_help: 'تعيين جهازك المفضل حتى يتم استخدامه كالجهاز الافتراضي لكل اﻷوامر التي تحتاج إلى الاسم الرمزي للهاتف'
+change_preferred_device: 'تغيير جهازك المفضل'
