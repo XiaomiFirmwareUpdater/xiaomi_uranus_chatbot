@@ -1,5 +1,7 @@
 """ Xiaomi Geeks Bot Database class"""
+import logging
 from sqlite3 import connect, Row, Error
+DB_LOGGER = logging.getLogger(__name__)
 
 
 class Database:
@@ -15,7 +17,7 @@ class Database:
         try:
             self.cursor.execute(create_table_sql)
         except Error as err:
-            print(err)
+            DB_LOGGER.error(err)
         finally:
             self.conn.commit()
 
@@ -31,7 +33,7 @@ class Database:
                                  'name': sender_info["name"],
                                  'type': sender_info["type"]})
         except Error as err:
-            print(err)
+            DB_LOGGER.error(err)
         finally:
             self.conn.commit()
 
@@ -53,7 +55,7 @@ class Database:
                                  'device': device})
             return True
         except Error as err:
-            print(err)
+            DB_LOGGER.error(err)
         finally:
             self.conn.commit()
 
@@ -73,7 +75,7 @@ class Database:
                 AND device=:device""",
                          {'id': sender_info["id"], 'sub_type': sub_type, 'device': device})
         except Error as err:
-            print(err)
+            DB_LOGGER.error(err)
         finally:
             self.conn.commit()
 
@@ -121,7 +123,24 @@ class Database:
             VALUES(:chat_id, :lang)""", {'chat_id': chat_id, 'lang': lang})
             return True
         except Error as err:
-            print(err)
+            DB_LOGGER.error(err)
+        finally:
+            self.conn.commit()
+
+    def get_codename(self, chat_id):
+        """ Get preferred device of a chat """
+        check = self.cursor.execute("""SELECT device FROM devices WHERE id=:chat_id""",
+                                    {'chat_id': chat_id}).fetchone()
+        return check[0] if check else None
+
+    def set_codename(self, chat_id, device):
+        """ Set the preferred device of a chat """
+        try:
+            self.cursor.execute(f"""INSERT OR REPLACE INTO devices (id, device)
+            VALUES(:chat_id, :device)""", {'chat_id': chat_id, 'device': device})
+            return True
+        except Error as err:
+            DB_LOGGER.error(err)
         finally:
             self.conn.commit()
 

@@ -7,7 +7,7 @@ from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.help import help_main_message, miui_help_message, \
     miscellaneous_help_message, info_help_message, specs_help_message, \
     custom_recovery_help_message, vendor_help_message, firmware_help_message, \
-    eu_help_message, subscriptions_help_message, open_in_pm_message
+    eu_help_message, subscriptions_help_message, open_in_pm_message, preferred_device_help_message
 from uranus_bot.telegram_bot.tg_bot import BOT, LOCALIZE
 
 
@@ -118,5 +118,14 @@ async def subscriptions_help(event):
     """subscriptions help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
     await event.edit(await subscriptions_help_message(locale), buttons=[
+        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+    ])
+
+
+@BOT.on(events.CallbackQuery(data='preferred_device_help'))
+async def preferred_device_help(event):
+    """preferred device help callback handler"""
+    locale = DATABASE.get_locale(event.chat_id)
+    await event.edit(await preferred_device_help_message(locale), buttons=[
         [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
     ])

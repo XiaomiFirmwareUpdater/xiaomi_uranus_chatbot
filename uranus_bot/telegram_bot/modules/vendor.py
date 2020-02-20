@@ -7,10 +7,15 @@ from uranus_bot.telegram_bot.messages.vendor import vendor_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
-@BOT.on(events.NewMessage(pattern='/vendor (.+)'))
+@BOT.on(events.NewMessage(pattern='/vendor(?: )?(.+)?'))
 async def vendor(event):
     """Send a message when the command /vendor is sent."""
-    device = event.pattern_match.group(1)
+    try:
+        device = event.pattern_match.group(1).lower()
+    except (IndexError, AttributeError):
+        device = DATABASE.get_codename(event.chat_id)
+    if not device:
+        return
     locale = DATABASE.get_locale(event.chat_id)
     if device not in PROVIDER.vendor_codenames:
         await event.reply(await error_message(device, locale))

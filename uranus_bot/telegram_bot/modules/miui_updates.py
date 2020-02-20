@@ -8,12 +8,17 @@ from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
-@BOT.on(events.NewMessage(pattern='/recovery (.+)'))
-@BOT.on(events.NewMessage(pattern='/fastboot (.+)'))
+@BOT.on(events.NewMessage(pattern='/recovery(?: )?(.+)?'))
+@BOT.on(events.NewMessage(pattern='/fastboot(?: )?(.+)?'))
 async def miui(event):
     """Send a message when the command /recovery or /fastboot is sent."""
+    try:
+        device = event.pattern_match.group(1).lower()
+    except (IndexError, AttributeError):
+        device = DATABASE.get_codename(event.chat_id)
+    if not device:
+        return
     locale = DATABASE.get_locale(event.chat_id)
-    device = event.pattern_match.group(1)
     if device not in list(PROVIDER.miui_codenames):
         await event.reply(await error_message(device, locale))
         return
@@ -25,11 +30,16 @@ async def miui(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern='/archive (.+)'))
+@BOT.on(events.NewMessage(pattern='/archive(?: )?(.+)?'))
 async def firmware(event):
     """Send a message when the command /archive is sent."""
+    try:
+        device = event.pattern_match.group(1).lower()
+    except (IndexError, AttributeError):
+        device = DATABASE.get_codename(event.chat_id)
+    if not device:
+        return
     locale = DATABASE.get_locale(event.chat_id)
-    device = event.pattern_match.group(1)
     if device not in PROVIDER.miui_codenames:
         await event.reply(await error_message(device, locale))
         return
@@ -38,11 +48,16 @@ async def firmware(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern='/latest (.+)'))
+@BOT.on(events.NewMessage(pattern='/latest(?: )?(.+)?'))
 async def latest(event):
     """Send a message when the command /latest is sent."""
+    try:
+        device = event.pattern_match.group(1).lower()
+    except (IndexError, AttributeError):
+        device = DATABASE.get_codename(event.chat_id)
+    if not device:
+        return
     locale = DATABASE.get_locale(event.chat_id)
-    device = event.pattern_match.group(1)
     if device not in list(PROVIDER.miui_codenames):
         await event.reply(await error_message(device, locale))
         return

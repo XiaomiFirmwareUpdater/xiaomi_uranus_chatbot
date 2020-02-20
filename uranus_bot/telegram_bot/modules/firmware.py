@@ -8,10 +8,15 @@ from uranus_bot.telegram_bot.tg_bot import BOT
 from uranus_bot.telegram_bot.tg_bot import PROVIDER
 
 
-@BOT.on(events.NewMessage(pattern='/firmware (.+)'))
+@BOT.on(events.NewMessage(pattern=r'/firmware(?: )?(.+)?'))
 async def firmware(event):
     """Send a message when the command /firmware is sent."""
-    device = event.pattern_match.group(1).lower()
+    try:
+        device = event.pattern_match.group(1).lower()
+    except (IndexError, AttributeError):
+        device = DATABASE.get_codename(event.chat_id)
+    if not device:
+        return
     locale = DATABASE.get_locale(event.chat_id)
     if device not in PROVIDER.firmware_codenames:
         await event.reply(await error_message(device, locale))

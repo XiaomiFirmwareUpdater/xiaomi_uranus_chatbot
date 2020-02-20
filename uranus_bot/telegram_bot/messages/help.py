@@ -22,7 +22,9 @@ async def help_main_message(locale):
     ).replace("{XFU_WEBSITE}", XFU_WEBSITE)
     buttons = [
         [Button.inline(LOCALIZE.get_text(locale, "Subscriptions"),
-                       data="subscriptions_help")],
+                       data="subscriptions_help"),
+         Button.inline(LOCALIZE.get_text(locale, "preferred_device"),
+                       data="preferred_device_help")],
         [Button.inline(LOCALIZE.get_text(locale, "miui_updates"),
                        data="miui_help"),
          Button.inline(LOCALIZE.get_text(locale, "Firmware"),
@@ -120,3 +122,10 @@ async def subscriptions_help_message(locale):
            f"\n{LOCALIZE.get_text(locale, 'unsubscribe_help')}\n" \
            f"__{example}:__ `/subscribe firmware whyred`\n\n" \
            f"/subscription: {LOCALIZE.get_text(locale, 'subscription_help')}"
+
+
+async def preferred_device_help_message(locale):
+    """ Generate telegram message of preferred device help"""
+    example = LOCALIZE.get_text(locale, "Example")
+    return f"/set_codename `codename`: {LOCALIZE.get_text(locale, 'preferred_device_help')}\n" \
+           f"__{example}:__ `/set_codename whyred`"

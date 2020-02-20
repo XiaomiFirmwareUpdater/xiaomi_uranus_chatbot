@@ -122,3 +122,8 @@ bot_lang: 'Bot Language'
 available_languages: 'Available Languages'
 change_language: 'Change language'
 Back: Back
+set_device_message: 'Preferred device for this chat has been set to {codenames_names[device]} (`{device}`) successfully!'
+preferred_device: 'Preferred device'
+your_preferred_device: 'Your preferred device is'
+preferred_device_help: 'Sets your preferred device in order to be used as default for commands that needs the codename of the device'
+change_preferred_device: 'Change Preferred device'
