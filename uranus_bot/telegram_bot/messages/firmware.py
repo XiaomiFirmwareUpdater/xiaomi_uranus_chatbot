@@ -26,7 +26,7 @@ async def firmware_inline(event, device, codenames_names, locale):
     message, buttons = await firmware_message(device, codenames_names, locale)
     result = builder.article(
         LOCALIZE.get_text(locale, "firmware_inline").replace(
-            "{codenames_names[device]}", {codenames_names[device]}).replace("{device}", {device}),
+            "{codenames_names[device]}", codenames_names[device]).replace("{device}", device),
         text=message, buttons=buttons, link_preview=False
     )
     return result

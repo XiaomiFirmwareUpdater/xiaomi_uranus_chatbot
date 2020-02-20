@@ -33,6 +33,8 @@ async def specs_inline(event, device, specs_data, locale):
     """ Generate telegram result of specs inline query """
     builder = event.builder
     message = await specs_message(device, specs_data, locale)
+    if not message:
+        return
     result = builder.article(
         LOCALIZE.get_text(locale, "specs_inline").replace("{device}", device),
         text=message,

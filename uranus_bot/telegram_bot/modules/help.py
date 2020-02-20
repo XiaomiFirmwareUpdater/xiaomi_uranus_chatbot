@@ -16,7 +16,8 @@ async def show_help(event):
     """Send a message when the command /help is sent."""
     locale = DATABASE.get_locale(event.chat_id)
     if not event.is_private:
-        await event.reply(await open_in_pm_message(locale))
+        message, buttons = await open_in_pm_message(locale)
+        await event.reply(message, buttons=buttons)
     else:
         message, buttons = await help_main_message(locale)
         await event.reply(message, buttons=buttons)
