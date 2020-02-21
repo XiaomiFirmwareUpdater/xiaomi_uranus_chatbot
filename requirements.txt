@@ -1,6 +1,5 @@
 # Dependecies for web scraping
 bs4
-requests
 # Telethon Dependecies
 Telethon==1.10.10
 cryptg
