@@ -35,6 +35,10 @@ async def firmware_inline(event, device, codenames_names, locale):
 async def firmware_update_message(codename, update, locale):
     """ Generate telegram message of firmware update """
     message = LOCALIZE.get_text(locale, "firmware_update").replace("{codename}", codename)
-    buttons = [Button.url(f"{update}",
-                          f"{XFU_WEBSITE}/firmware/{codename}/")]
+    buttons = [
+        [Button.url(f"{update}",
+                    f"{XFU_WEBSITE}/firmware/{codename}/")],
+        [Button.url(LOCALIZE.get_text(locale, "XiaomiFirmwareUpdater"),
+                    "https://t.me/XiaomiFirmwareUpdater")]
+    ]
     return message, buttons

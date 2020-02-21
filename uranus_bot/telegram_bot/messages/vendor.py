@@ -35,7 +35,11 @@ async def vendor_inline(event, device, codenames_names, locale):
 
 async def vendor_update_message(codename, update, locale):
     """ Generate telegram message of vendor update """
-    message = LOCALIZE.get_text(locale, "firmware_update").replace("{codename}", codename)
-    buttons = [Button.url(f"{update}",
-                          f"{XFU_WEBSITE}/vendor/{codename}/")]
+    message = LOCALIZE.get_text(locale, "vendor_update").replace("{codename}", codename)
+    buttons = [
+        [Button.url(f"{update}",
+                    f"{XFU_WEBSITE}/vendor/{codename}/")],
+        [Button.url(LOCALIZE.get_text(locale, "MIUIVendorUpdater"),
+                    "https://t.me/MIUIVendorUpdater")]
+    ]
     return message, buttons
