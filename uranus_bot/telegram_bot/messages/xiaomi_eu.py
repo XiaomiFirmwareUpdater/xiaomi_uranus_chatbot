@@ -28,7 +28,7 @@ async def eu_inline(event, device, eu_data, devices, locale):
     name = devices[device][0]
     builder = event.builder
     result = builder.article(
-        LOCALIZE.get_text(locale, eu_inline).replace(
+        LOCALIZE.get_text(locale, "eu_inline").replace(
             "{name}", name).replace("{device}", device),
         text=message, buttons=buttons,
         link_preview=False
