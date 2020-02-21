@@ -1,10 +1,12 @@
 """ MIUI Updates Tracker provider """
+import logging
 
 import yaml
 from aiohttp import ClientSession
 
 from uranus_bot import GITHUB_ORG
 from uranus_bot.providers.utils.utils import fetch
+DIFF_LOGGER = logging.getLogger(__name__)
 
 
 async def load_fastboot_data():
@@ -94,6 +96,9 @@ async def diff_miui_updates(new, old):
                             or new_version_array[1] > old_version_array[1] \
                             or new_version_array[2] > old_version_array[2]:
                         is_new = True
+                        DIFF_LOGGER.info(f"MIUI changes: "
+                                         f"New version: {new_version_array} - "
+                                         f"Old version: {old_version_array}")
                 elif "V" not in item['version'] and "V" not in old_item['version']:
                     new_version_array = item['version'].split('.')
                     old_version_array = old_item['version'].split('.')
@@ -108,4 +113,5 @@ async def diff_miui_updates(new, old):
                     except KeyError:
                         # when a new device is added
                         changes.update({codename: [item]})
+    DIFF_LOGGER.info("MIUI changes: ", changes)
     return changes
