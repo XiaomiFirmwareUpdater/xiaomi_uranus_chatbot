@@ -1,5 +1,5 @@
 ---
-welcome: "Hey! Ben Uranüs, Xiaomi kullanıcıları için hepsi bir arada bot!\n Size güncel Resmi ROM'ları, Yazılım güncelleme bağlantılarını ve daha birçok şeyi verebilirim!\n\n Aşağıdaki yardım düğmesini tıklayarak beni nasıl kullanacağınızı öğrenin.\n Bot hakkındaki tüm güncellemeleri ve duyuruları almak için [kanalıma](https://t.me/yshalsager_projects) katılın!"
+welcome: "Hey! Ben Uranüs, Xiaomi kullanıcıları için hepsi bir arada botum!\n Size güncel Resmi ROM'ları, Yazılım güncelleme bağlantılarını ve daha birçok şeyi verebilirim!\n\n Aşağıdaki yardım düğmesini tıklayarak beni nasıl kullanacağınızı öğrenin.\n Bot hakkındaki tüm güncellemeleri ve duyuruları almak için [kanalıma](https://t.me/yshalsager_projects) katılın!"
 join_channel: 'Kanalıma katıl'
 join_group: 'Destek grubuna katıl'
 read_help: 'Yardım''ı Oku'
@@ -10,7 +10,7 @@ latest_firmware: 'Güncel Yazılım'
 archive_firmware: 'Yazılım Arşivi'
 XiaomiFirmwareUpdater: Xiaomi Yazılım Güncelleyici
 MIUIUpdatesTracker: MIUIUpdatesTracker
-firmware_inline: '{Codenames_names [device]} ({device}) için yazılım indirmelerini ara'
+firmware_inline: ' {codenames_names[device]} ({device}) için yazılım indirmelerini ara'
 open_in_pm: 'Bu mesajı ÖM''de aç'
 click_here: 'Buraya Tıkla'
 device_models: '{models_data [device] [''ad'']} ({device} - {models_data [device] [''dahili_name'']}) Modeller'
@@ -38,7 +38,7 @@ China: Çin
 Fastboot: Fastboot
 Recovery: Kurtarma Modu
 Size: Boyut
-miui_message: '{codenames_names [device]} ** (`{device}`) **için güncel MIUI resmi {rom_type} ROM''ları'
+miui_message: '**{codenames_names[device]}** (`{device}`) **için güncel MIUI resmi {rom_type} ROM''ları'
 roms_archive: 'ROM Arşivi'
 miui_inline: '{codenames_names[device]} ({device}) Resmi ROM''larını Ara'
 miui_archive: '**{codenames_names[device]}}** (`{device}`) **için MIUI ROM arşivi**'
@@ -69,7 +69,7 @@ archive_vendor: 'Vendor Arşivi'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: '{codenames_names[device]} ({device}) için Vendor indirmelerini ara'
 twrp_message: "** {data['name']} için en son TWRP: **\n ** Güncelleme tarihi: ** {data['date']}"
-twrp_inline: '{Codenames_names [device]} ({device}) için TWRP indirmelerini ara'
+twrp_inline: '{codenames_names[device]} ({device}) için TWRP indirmelerini ara'
 Status: Durum
 Network: Ağ
 Weight: Ağırlık

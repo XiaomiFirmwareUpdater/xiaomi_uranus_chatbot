@@ -1,0 +1,130 @@
+---
+welcome: "Hei! Saya Uranus, bot lengkap untuk pengguna Xiaomi!\nSaya bisa memberikan Anda ROM Resmi terbaru, tautan pembaruan Firmware, dan banyak hal lainnya!\n\nPeriksa cara menggunakan saya dengan mengklik tombol bantuan di bawah ini.\nBergabunglah dengan [saluran saya](https://t.me/yshalsager_projects) untuk mendapatkan semua pembaruan dan pengumuman tentang bot!"
+join_channel: 'Bergabunglah dengan saluran saya'
+join_group: 'Bergabunglah dengan grup pendukung'
+read_help: 'Baca Bantuan'
+add_to_group: 'Tambahkan ke grup'
+error_message: 'Tidak dapat menemukan {device} informasi yang diminta!'
+available_firmware: 'Unduhan firmware yang tersedia untuk'
+latest_firmware: 'Firmware terbaru'
+archive_firmware: 'Arsip Firmware'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUpdatesTracker
+firmware_inline: 'Cari {nama kode_nama[device]} ({device}) unduhan Firmware'
+open_in_pm: 'Buka pesan ini di PM'
+click_here: 'Klik di sini'
+device_models: '{data_model[device][''nama'']} ({device} - {data_model[device][''nama_internal'']}) Model'
+models_inline: 'Cari {device} model perangkat'
+whatis_message: '`{device}` adalah **{nama kode_nama[device]}**'
+whatis_inline: 'Cari {device} nama perangkat'
+too_much_codenames: '{device} terlalu umum! Tolong lebih spesifik.'
+codename_message: "**{name}** adalah `{codename}`\n"
+codename_inline: 'Cari {device} nama kode perangkat'
+unlock_bl: 'Panduan dan alat membuka bootloader'
+unlock_bl_inline: 'Panduan bagaimana caranya membuka bootloader'
+tools: 'Alat untuk perangkat Xiaomi'
+tools_inline: 'Alat yang berguna untuk perangkat Xiaomi'
+guides: 'Panduan untuk perangkat Xiaomi'
+guides_inline: 'Berbagai panduan untuk perangkat Xiaomi'
+Stable: Stabil
+Weekly: Mingguan
+Region: Wilayah
+EEA: EEA
+Indonesia: Indonesia
+India: India
+Russia: Russia
+Global: Global
+China: China
+Fastboot: Fastboot
+Recovery: Pemulihan
+Size: Ukuran
+miui_message: '{nama kode_nama[device]}** (`{device}`) **ROM MIUI Resmi {rom_type} terbaru'
+roms_archive: 'Arsip ROM'
+miui_inline: 'Cari {nama kode_nama[device]} ({device}) unduhan ROM Resmi'
+miui_archive: '**Arsip ROM MIUI untuk {nama kode_nama[device]}** (`{device}`)'
+archive_inline: 'Cari {nama kode_nama[device]} ({device}) arsip ROM Resmi'
+latest_message: '**Versi MIUI terbaru untuk {nama kode_nama[device]}** (`{device}`)'
+latest_inline: 'Cari {nama kode_nama[device]} ({device}) versi MIUI terbaru'
+miui_update: '**MIUI baru {rom_type} pembaruan tersedia untuk {nama kode_nama[device]}** (`{device}`)!'
+wrong_codename: 'Kode nama salah!'
+subscribed: 'Berlangganan untuk {device} {sub_type} pembaruan sukses!'
+already_subscribed: 'Anda sudah berlangganan pembaruan {device} {sub_type}!'
+unsubscribed: 'Berhenti berlangganan dari {device} {sub_type} pembaruan sukses!'
+your_subscriptions: 'Anda berlangganan'
+no_subscriptions: 'Belum ada apa-apa'
+firmware_update: '**Pembaruan Firmware baru tersedia untuk {codename} oleh** @XiaomiFirmwareUpdater'
+vendor_update: '**Pembaruan Vendor baru tersedia untuk {codename} oleh** @XiaomiVendorUpdater'
+orangefox_message: "**Terbaru {data['nama']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n__Pemelihara:__ {data['pemelihara']}"
+orangefox_inline: 'Cari {device} unduhan pemulihan OrangeFox'
+pitchblack_message: '**Build terbaru [PitchBlack](https://pbrp.ml) untuk **`{device}`'
+pitchblack_inline: 'Cari {device} unduhan PitchBlack'
+Devices: Perangkat
+Tag: Tanda
+oss_inline: 'Cari {device} OSS kernel'
+eu_message: '**{name} (**`{device}`**) ROM Xiaomi.eu terbaru:**'
+eu_inline: 'Cari {name} ({device}) unduhan Xiaomi.eu'
+vendor_message: '**Unduhan Vendor baru tersedia untuk {nama kode_nama[device]}** (`{device}`)'
+latest_vendor: 'Vendor terbaru'
+archive_vendor: 'Arsip vendor'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: 'Cari {nama kode_nama[device]} ({device}) unduhan Vendor'
+twrp_message: "**TWRP terbaru untuk {data['nama']}:**\n**Diperbarui:** {data['tanggal']}"
+twrp_inline: 'Cari {nama kode_nama[device]} ({device}) unduhan TWRP'
+Status: Status
+Network: Jaringan
+Weight: Berat
+Display: Tampilan
+Chipset: Chipset
+Memory: Penyimpanan
+rear_camera: 'Kamera Belakang'
+front_camera: 'Kamera Depan'
+headphone_jack: '3.5mm jack'
+USB: USB
+Sensors: Sensor
+Battery: Baterai
+Charging: Pengisian
+specs_inline: 'Cari {device} Spesifikasi'
+help_message: "**Cara menggunakan {BOT_INFO['nama']}**\n\n@{BOT_INFO['username']} adalah bot lengkap untuk pengguna Xiaomi!\nIni bisa memberi Anda ROM Resmi terbaru, tautan unduhan Firmware, dan masih banyak lagi!\nPanduan penggunaan lengkap tersedia [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nBerikut ini semua perintah yang tersedia:\n/start: Periksa apakah bot sedang berjalan\n/help: Tampilkan pesan bantuan"
+Subscriptions: Berlangganan
+miui_updates: 'Pembaruan MIUI'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Pemulihan Kustom'
+devices_specs: 'Spesifikasi Perangkat'
+devices_info: 'Informasi Perangkat'
+Miscellaneous: Lain-lain
+Example: Contoh
+recovery_help: 'Dapatkan info dan tautan ROM pemulihan terbaru'
+fastboot_help: 'Dapatkan info dan tautan ROM fastboot terbaru'
+latest_help: 'Dapatkan info versi MIUI terbaru'
+archive_help: 'Kirim semua tautan arsip ROM MIUI resmi yang tersedia untuk perangkat'
+firmware_help: 'Dapatkan firmware yang tersedia untuk perangkat'
+vendor_help: 'Dapatkan firmware+vendor yang tersedia untuk perangkat'
+eu_help: 'Dapatkan unduhan ROM Xiaomi.eu terbaru untuk perangkat'
+twrp_help: 'Dapatkan tautan unduhan TWRP terbaru untuk perangkat'
+of_help: 'Dapatkan tautan unduhan OrangeFox pemulihan terbaru untuk perangkat'
+pb_help: 'Dapatkan tautan unduhan PitchBlack pemulihan terbaru untuk perangkat'
+specs_help: 'Dapatkan spesifikasi perangkat dari GSMArena'
+models_help: 'Dapatkan semua model perangkat yang tersedia'
+whatis_help: 'Memberitahu Anda mana nama kode perangkat ini'
+codename_help: 'Memberitahu Anda apa nama kode perangkat ini'
+guides_help: 'Berbagai panduan yang berguna untuk setiap pengguna Xiaomi'
+unlockbl_help: 'Bantuan dan alat membuka bootloader'
+tools_help: 'Berbagai alat yang berguna untuk setiap pengguna Xiaomi'
+arb_help: 'Informasi Anti-Rollback Protection'
+subscribe_help: 'Berlangganan untuk perangkat ini pembaruan firmware/miui/vendor'
+unsubscribe_help: 'Berhenti berlangganan dari perangkat ini pembaruan firmware/miui/vendor'
+subscription_help: 'Daftar langganan Anda saat ini'
+set_locale_message: 'Bahasa bot telah berhasil diubah menjadi {lang}!'
+wrong_locale_message: "Sayangnya dukungan bahasa {lang} belum tersedia :(\nBerita baiknya adalah Anda dapat berkontribusi pada bot dan menambahkannya!\n[Cek disini](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Pengaturan bot'
+bot_lang: 'Bahasa bot'
+available_languages: 'Bahasa yang tersedia'
+change_language: 'Ubah bahasa'
+Back: Kembali
+set_device_message: 'Perangkat yang dipilih untuk obrolan ini telah disetel ke {nama kode_nama[device]} (`{device}`) berhasil!'
+preferred_device: 'Perangkat yang dipilih'
+your_preferred_device: 'Perangkat pilihan Anda adalah'
+preferred_device_help: 'Setel perangkat pilihan Anda agar dapat digunakan sebagai bawaan untuk perintah yang membutuhkan nama kode perangkat'
+change_preferred_device: 'Ubah perangkat yang dipilih'

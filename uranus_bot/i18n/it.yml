@@ -1,9 +1,9 @@
 ---
-welcome: "Hey! Sono Uranus, un bot ''all-in-one'' per gli utenti di Xiaomi!\nPosso fornire le ultime ROM ufficiali, gli aggiornamenti Firmware e molto altro!\n\nVedi come puoi utilizzarmi cliccando sul pulsante Aiuto qui sotto.\nUnisciti al [mio canale](https://t.me/yshalsager_projects) per restare sempre aggiornato e ricevere annunci sul bot!"
+welcome: "Hey! Sono Uranus, un bot ''all-in-one'' per gli utenti di Xiaomi!\nPosso fornire le ultime ROM ufficiali, gli aggiornamenti Firmware e molto altro!\n\nGuarda come puoi usarmi cliccando sul pulsante Aiuto qua sotto.\nUnisciti al [mio canale](https://t.me/yshalsager_projects) per restare sempre aggiornato e ricevere annunci sul bot!"
 join_channel: 'Unisciti al mio canale'
 join_group: 'Entra nel gruppo di supporto'
 read_help: 'Leggi la guida'
-add_to_group: 'Aggiungi al gruppo'
+add_to_group: 'Aggiungi a un gruppo'
 error_message: 'Non trovo le informazioni per {device}!'
 available_firmware: 'Download del firmware disponibili per'
 latest_firmware: 'L'' Ultimo Firmware'
@@ -92,7 +92,7 @@ Vendor: Vendor
 xiaomi_eu: Xiaomi.eu
 custom_recovery: 'Custom Recovery'
 devices_specs: 'Specifiche dei dispositivi'
-devices_info: 'Informazioni sul dispositivo'
+devices_info: 'Info sul dispositivo'
 Miscellaneous: Altro
 Example: Esempio
 recovery_help: 'Ottieni le ultime informazioni sulle ROM recovery e i link'
@@ -123,7 +123,7 @@ bot_lang: 'Lingua del Bot'
 available_languages: 'Lingue disponibili'
 change_language: 'Cambia lingua'
 Back: Indietro
-set_device_message: 'Il dispositivo preferito per questa chat è stato impostato correttamente su {codenames_names [device]} (`{device}`)!'
+set_device_message: 'Il dispositivo preferito per questa chat è stato impostato correttamente su {codenames_names[device]} (`{device}`)!'
 preferred_device: 'Dispositivo preferito'
 your_preferred_device: 'Il tuo dispositivo preferito è'
 preferred_device_help: 'Imposta il tuo dispositivo preferito in modo che venga utilizzato come predefinito per i comandi che richiedono il codename del dispositivo'

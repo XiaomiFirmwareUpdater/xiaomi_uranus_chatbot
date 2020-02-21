@@ -10,7 +10,7 @@ latest_firmware: 'Firmware mais recente'
 archive_firmware: 'Arquivo de Firmwares'
 XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
 MIUIUpdatesTracker: MIUIUpdatesTracker
-firmware_inline: 'Pesquisar Firmwares para {codenames_names[device]} ({device})'
+firmware_inline: 'Pesquisar downloads de Firmwares para {codenames_names[device]} ({device})'
 open_in_pm: 'Abrir mensagem no chat privado'
 click_here: 'Clique aqui'
 device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modelos'
@@ -18,7 +18,7 @@ models_inline: 'Pesquisar modelos do dispositivo {device}'
 whatis_message: '`{device}` é **{codenames_names[device]}**'
 whatis_inline: 'Pesquisar nome do dispositivo {device}'
 too_much_codenames: '{device} é muito abrangente! Por favor, seja mais específico.'
-codename_message: "**{name}** é `{codename}\n"
+codename_message: "**{name}** é `{codename}`\n"
 codename_inline: 'Pesquisar codinome do dispositivo {device}'
 unlock_bl: 'Tutorial e ferramenta para o desbloqueio do bootloader'
 unlock_bl_inline: 'Tutorial de desbloqueio do bootloader'
@@ -45,7 +45,7 @@ miui_archive: '**Arquivos de ROMs MIUI para {codenames_names[device]}** (`{devic
 archive_inline: 'Pesquisar Arquivo de ROMs Oficiais para {codenames_names[device]} ({device})'
 latest_message: '**Versões mais recentes da MIUI para {codenames_names[device]}** (`{device}`)'
 latest_inline: 'Pesquisar versões mais recentes da MIUI para {codenames_names[device]} ({device})'
-miui_update: 'Nova atualização da MIUI {rom_type} disponível para {codenames_names[device]}** (`{device}`)!'
+miui_update: '**Nova atualização da MIUI {rom_type} disponível para {codenames_names[device]}** (`{device}`)!'
 wrong_codename: 'Codinome incorreto!'
 subscribed: 'Inscrito para atualizações de {device} {sub_type} com sucesso!'
 already_subscribed: 'Você já se inscreveu nas atualizações para {device}{sub_type}!'
@@ -59,7 +59,7 @@ orangefox_inline: 'Pesquisar downloads do OrangeFox para {device}'
 pitchblack_message: '**Últimas versões de [PitchBlack](https://pbrp.ml) para **`{device}`'
 pitchblack_inline: 'Pesquisar downloads de PitchBlack para {device}'
 Devices: Dispositivos
-Tag: Tag
+Tag: Marcador
 oss_inline: 'Pesquisar kernel OSS para {device}'
 eu_message: '**ROMs mais recentes de Xiaomi.eu para {name} (**`{device}`**) **'
 eu_inline: 'Pesquisar downloads de Xiaomi.eu para {name} ({device})'
@@ -68,9 +68,9 @@ latest_vendor: 'Vendor mais recente'
 archive_vendor: 'Arquivo de Vendors'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: 'Pesquisar download de Vendors para {codenames_names[device]} ({device})'
-twrp_message: "**Versão mais recente do TWRP para {data['name']}:**\n**Atualização:** {data['date']}"
+twrp_message: "**Versão mais recente do TWRP para {data['name']}:**\n**Atualizado:** {data['date']}"
 twrp_inline: 'Pesquisar downloads do TWRP para {codenames_names[device]} ({device})'
-Status: Estado
+Status: Status
 Network: Rede
 Weight: Peso
 Display: Tela
@@ -82,7 +82,7 @@ headphone_jack: 'Conector de 3.5mm'
 USB: USB
 Sensors: Sensores
 Battery: Bateria
-Charging: Carga
+Charging: Carregando
 specs_inline: 'Pesquisar especificações de {device}'
 help_message: "**Como usar o {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} é um bot tudo em um para usuários Xiaomi!\nEle pode te ajudar com as ROMs Oficiais mais recentes, atualizações de Firmware e muito mais!\nO guia completo de uso está disponível [aqui]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nAqui estão os comandos disponíveis:\n/start: Verifique se o bot está em execução\n/help: Mostra esta mensagem de ajuda"
 Subscriptions: Inscrições
@@ -117,7 +117,7 @@ subscribe_help: 'Inscrever-se para atualizações de Firmware/MIUI/Vendor deste 
 unsubscribe_help: 'Cancelar inscrição para atualizações de Firmware/MIUI/Vendor deste dispositivo'
 subscription_help: 'Lista suas inscrições atuais'
 set_locale_message: 'O idioma do Bot foi alterado para {lang} com sucesso!'
-wrong_locale_message: "Infelizmente, o suporte ao idioma {lang} ainda não está disponível :(\nA boa notícia é que você pode contribuir com o bot e adicioná-lo!\n[Veja Aqui](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+wrong_locale_message: "Infelizmente, o suporte ao idioma {lang} ainda não está disponível :(\nA boa notícia é que você pode contribuir com o bot e adicionar o suporte!\n[Veja Aqui](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
 settings_message: 'Configuração do Bot'
 bot_lang: 'Idioma do Bot'
 available_languages: 'Idiomas disponíveis'
