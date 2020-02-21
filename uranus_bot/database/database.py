@@ -102,8 +102,11 @@ class Database:
                                        ).fetchone()[0]
         miui = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='miui'""").fetchone()[0]
         vendor = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='vendor'""").fetchone()[0]
+        preferred_devices = self.cursor.execute("""SELECT COUNT(id) FROM devices""").fetchone()[0]
+        preferred_languages = self.cursor.execute("""SELECT COUNT(id) FROM i18n""").fetchone()[0]
         return {"usage": {"groups": groups, "channels": channels, "users": users},
-                "subscriptions": {"firmware": firmware, "miui": miui, "vendor": vendor}}
+                "subscriptions": {"firmware": firmware, "miui": miui, "vendor": vendor},
+                "preferred_devices": preferred_devices, "preferred_languages": preferred_languages}
 
     def get_chats(self, chat_type):
         """ get chats list from  database """

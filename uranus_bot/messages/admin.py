@@ -9,5 +9,7 @@ async def stats_message(stats):
               f"and available in **{stats['usage']['groups']}** groups.\n\n" \
               f"There are **{stats['subscriptions']['firmware']}** firmware subscriptions, " \
               f"**{stats['subscriptions']['miui']}** miui subscriptions, and " \
-              f"**{stats['subscriptions']['vendor']}** vendor subscriptions."
+              f"**{stats['subscriptions']['vendor']}** vendor subscriptions.\n\n" \
+              f"**{stats['preferred_devices']}** chats have set a preferred device, " \
+              f"while **{stats['preferred_languages']}** have set a preferred language."
     return message
