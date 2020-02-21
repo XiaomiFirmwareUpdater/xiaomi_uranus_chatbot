@@ -1,6 +1,7 @@
 """ Xiaomi Geeks Telegram Bot settings module"""
 
 from telethon import events, Button
+from telethon.errors import MessageNotModifiedError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import subscriptions_message, wrong_codename_message
@@ -88,20 +89,26 @@ async def subscriptions_help(event):
     """subscriptions settings callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
     subscriptions = DATABASE.get_chat_subscriptions(event.chat_id)
-    await event.edit(await subscriptions_message(subscriptions, locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")],
-    ])
+    try:
+        await event.edit(await subscriptions_message(subscriptions, locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='lang_settings'))
 async def lang_help(event):
     """language help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await lang_settings_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "change_language"),
-                       data="change_language")],
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
-    ])
+    try:
+        await event.edit(await lang_settings_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "change_language"),
+                           data="change_language")],
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='device_settings'))
@@ -109,8 +116,11 @@ async def set_codename_help(event):
     """preferred device settings callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
     device = DATABASE.get_codename(event.chat_id)
-    await event.edit(await preferred_device_message(device, PROVIDER.codenames_names, locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "change_preferred_device"),
-                       data="preferred_device_help")],
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
-    ])
+    try:
+        await event.edit(await preferred_device_message(device, PROVIDER.codenames_names, locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "change_preferred_device"),
+                           data="preferred_device_help")],
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
+        ])
+    except MessageNotModifiedError:
+        pass

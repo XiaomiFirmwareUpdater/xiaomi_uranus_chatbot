@@ -24,7 +24,15 @@ async def broadcast_handler(event):
     message = event.pattern_match.group(2)
     chats = DATABASE.get_chats(chat_type)
     for chat in chats:
-        await BOT.send_message(chat[0], message)
+        try:
+            entity = await BOT.get_entity(chat[0])
+            await BOT.send_message(entity, message)
+        except ValueError:
+            if chat_type == 'channel':
+                entity = await BOT.get_entity(int('-100' + str(chat[0])))
+                await BOT.send_message(entity, message)
+            else:
+                TG_LOGGER.warning("failed sending message to", chat)
         await sleep(2)
     raise events.StopPropagation
 
@@ -32,12 +40,10 @@ async def broadcast_handler(event):
 async def backup_database():
     """ Send database backup to bot owners daily """
     while True:
-        for admin in TG_BOT_ADMINS:
-            now = str(datetime.today()).split('.')[0]
-            await BOT.send_message(admin, now,
-                                   file=f"{PARENT_DIR}/{TG_BOT_DB}")
-            TG_LOGGER.info(f"Sent database backup ({now}) to {admin}")
-            await sleep(2)
+        now = str(datetime.today()).split('.')[0]
+        await BOT.send_message(TG_BOT_ADMINS[0], now,
+                               file=f"{PARENT_DIR}/{TG_BOT_DB}")
+        TG_LOGGER.info(f"Sent database backup ({now}) to {TG_BOT_ADMINS[0]}")
         await sleep(60 * 60 * 24)
 
 

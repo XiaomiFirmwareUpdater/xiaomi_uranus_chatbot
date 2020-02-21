@@ -39,9 +39,12 @@ async def help_callback(event):
 async def miui_help(event):
     """miui help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await miui_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await miui_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='firmware_help'))
@@ -60,18 +63,24 @@ async def firmware_help(event):
 async def vendor_help(event):
     """vendor help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await vendor_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await vendor_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='eu_help'))
 async def eu_help(event):
     """eu help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await eu_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await eu_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='custom_recovery_help'))
@@ -90,42 +99,57 @@ async def custom_recovery_help(event):
 async def specs_help(event):
     """specs help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await specs_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await specs_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='info_help'))
 async def info_help(event):
     """info help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await info_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await info_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='misc_help'))
 async def misc_help(event):
     """misc help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await miscellaneous_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await miscellaneous_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='subscriptions_help'))
 async def subscriptions_help(event):
     """subscriptions help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await subscriptions_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await subscriptions_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='preferred_device_help'))
 async def preferred_device_help(event):
     """preferred device help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    await event.edit(await preferred_device_help_message(locale), buttons=[
-        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
-    ])
+    try:
+        await event.edit(await preferred_device_help_message(locale), buttons=[
+            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="help")],
+        ])
+    except MessageNotModifiedError:
+        pass

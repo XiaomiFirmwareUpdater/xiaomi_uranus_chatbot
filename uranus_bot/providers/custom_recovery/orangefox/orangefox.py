@@ -25,8 +25,11 @@ async def get_orangefox(device, orangefox_data):
         return
     url = f'https://files.orangefox.tech/OrangeFox'
     downloads = []
-    stable = info['stable_build']
-    downloads.append({f"{stable}": f"{url}-Stable/{device}/{stable}"})
+    try:
+        stable = info['stable_build']
+        downloads.append({f"{stable}": f"{url}-Stable/{device}/{stable}"})
+    except KeyError:
+        pass
     try:
         beta = info['beta_build']
         downloads.append({f"{beta}": f"{url}-Beta/{device}/{beta}"})
