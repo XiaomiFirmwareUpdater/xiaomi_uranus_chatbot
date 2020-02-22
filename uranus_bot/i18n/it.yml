@@ -1,9 +1,9 @@
 ---
 welcome: "Hey! Sono Uranus, un bot ''all-in-one'' per gli utenti di Xiaomi!\nPosso fornire le ultime ROM ufficiali, gli aggiornamenti Firmware e molto altro!\n\nGuarda come puoi usarmi cliccando sul pulsante Aiuto qua sotto.\nUnisciti al [mio canale](https://t.me/yshalsager_projects) per restare sempre aggiornato e ricevere annunci sul bot!"
 join_channel: 'Unisciti al mio canale'
-join_group: 'Entra nel gruppo di supporto'
+join_group: 'Gruppo di supporto'
 read_help: 'Leggi la guida'
-add_to_group: 'Aggiungi a un gruppo'
+add_to_group: 'Aggiungimi a un gruppo'
 error_message: 'Non trovo le informazioni per {device}!'
 available_firmware: 'Download del firmware disponibili per'
 latest_firmware: 'L'' Ultimo Firmware'

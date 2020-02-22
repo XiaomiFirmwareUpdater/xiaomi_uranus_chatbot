@@ -1,0 +1,130 @@
+---
+welcome: "Pershendetje! Une jam Uranus, nje te-gjitha-ne-nje bot per perdoruesit e Xiaomi!\nMund te te jap ROM-et Zyrtare te fundit, link-et e perditesimeve te Firmwareve, dhe shume me shume gjera!\n\nShiko si te me perdoresh duke klikuar butonin help poshte.\nBashkohu [kanalit tim](https://t.me/yshalsager_projects) per te marre te gjitha perditesimet dhe njoftimet rreth botit!"
+join_channel: 'Bashkohu kanalit tim'
+join_group: 'Bashkohu grupit te ndihmes'
+read_help: 'Lexo Ndihmen'
+add_to_group: 'Shto tek nje grup'
+error_message: 'Nuk mund te gjej informacionin e kerkuar per {device}!'
+available_firmware: 'Shkarkime te vlefshme te firmware per'
+latest_firmware: 'Firmware e fundit'
+archive_firmware: 'Arkivi i Firmware'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUpdatesTracker
+firmware_inline: 'Kerko {codenames_names[device]} ({device}) shkarkime Firmware'
+open_in_pm: 'Hape kete mesazh ne PM'
+click_here: 'Kliko ketu'
+device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modele'
+models_inline: 'Kerko {device} modele pajisje'
+whatis_message: '`{device}` eshte **{codenames_names[device]}**'
+whatis_inline: 'Kerko {device} emer pajisje'
+too_much_codenames: '{device} eshte shume i pergjithshem! Ju lutem jeni me shume specifik.'
+codename_message: "**{name}** eshte `{codename}`\n"
+codename_inline: 'Kerko {device} emri i koduar pajisje'
+unlock_bl: 'Guida dhe mjeti i hapjes se Bootloader'
+unlock_bl_inline: 'Guide si te hapni bootloaderin'
+tools: 'Mjete per pajisjet Xiaomi'
+tools_inline: 'Mjete te dobishme per pajisjet Xiaomi'
+guides: 'Guida per pajisjet Xiaomi'
+guides_inline: 'Guida te ndryshme per pajisjet Xiaomi'
+Stable: I Qëndrueshëm
+Weekly: Javore
+Region: Vendi
+EEA: EEA
+Indonesia: Indonezi
+India: Indi
+Russia: Rusi
+Global: Global
+China: Kinë
+Fastboot: Fastboot
+Recovery: Recovery
+Size: Madhësia
+miui_message: '**ROM-et MIUI Zyrtare {rom_type} te fundit per {codenames_names[device]}** (`{device}`)'
+roms_archive: 'Arkivi i ROMeve'
+miui_inline: 'Kerko {codenames_names[device]} ({device}) shkarkime ROMe Zyrtare'
+miui_archive: '**Arkivi i ROMeve MIUI per {codenames_names[device]}** (`{device}`)'
+archive_inline: 'Kerko {codenames_names[device]} ({device}) arkivi ROMeve Zyrtare'
+latest_message: '**Versionet e fundit e MIUI per {codenames_names[device]}** (`{device}`)'
+latest_inline: 'Kerko {codenames_names[device]} ({device}) versionet e fundit e MIUI'
+miui_update: '**Perditesim i ri i MIUI {rom_type} i disponueshem per {codenames_names[device]}** (`{device}`)!'
+wrong_codename: 'Codename i gabuar!'
+subscribed: 'Abonimi per perditesimet e {device} {sub_type} me sukses!'
+already_subscribed: 'Ju jeni i abonuar per perditesimet e {device} {sub_type}!'
+unsubscribed: 'Cabonimi per perditesimet e {device} {sub_type} me sukses!'
+your_subscriptions: 'Je i abonuar per'
+no_subscriptions: 'Asgje akoma'
+firmware_update: '**Perditesim i ri firmware i disponueshem per {codename} nga** @XiaomiFirmwareUpdater'
+vendor_update: '**Perditesim i ri Vendor i disponueshem per {codename} nga** @MIUIVendorUpdater'
+orangefox_message: "**Ndertimi i fundit per {data['name']} **(`{device}`) i [OrangeFox](https://wiki.orangefox.tech/en/home):\n__Mirembajtesi:__ {data['maintainer']}"
+orangefox_inline: 'Kerko {device} shkarkime te OrangeFox recovery'
+pitchblack_message: '**Ndertimi i fundit i [PitchBlack](https://pbrp.ml) per **`{device}`'
+pitchblack_inline: 'Kerko {device} shkarkime PitchBlack'
+Devices: Pajisjet
+Tag: Etiketa
+oss_inline: 'Kerko {device} OSS kernel'
+eu_message: '**ROMet e fundit Xiaomi.eu per {name} (**`{device}`**):**'
+eu_inline: 'Kerko {name} ({device}) shkarkime Xiaomi.eu'
+vendor_message: '**Shkarkime te vendor ne dispozicion per {codenames_names[device]}** (`{device}`)'
+latest_vendor: 'Vendor i fundit'
+archive_vendor: 'Arkivi i Vendor'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: 'Kerko {codenames_names[device]} ({device}) shkarkime Vendor'
+twrp_message: "**TWRP e fundit per {data['name']}:**\n**Perditesuar:** {data['date']}"
+twrp_inline: 'Kerko {codenames_names[device]} ({device}) shkarkime TWRP'
+Status: Statusi
+Network: Rrjeti
+Weight: Pesha
+Display: Ekrani
+Chipset: Cipi
+Memory: Memorja
+rear_camera: 'Kamera e pasme'
+front_camera: 'Kamera e perparme'
+headphone_jack: 'Porta 3.5mm'
+USB: USB
+Sensors: Sensorët
+Battery: Bateria
+Charging: Karikimi
+specs_inline: 'Kerko {device} specifikime'
+help_message: "**Si te perdoresh {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} eshte nje te-gjitha-ne-nje bot per perdoruesit e Xiaomi!\nAi mund te jape ROMet Zyrtare te fundit, linke e perditesimeve te Firmware, dhe shume gjera te tjera!\nGuida e plote e perdorimit eshte e disponushme [Ketu]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nKetu jane komandat e disponueshme:\n/start: Kontrollon nese boti eshte i ndezur\n/help: Nxjerr kete mesazh ndihme"
+Subscriptions: Abonimet
+miui_updates: 'Perditesimet e MIUI'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Custom Recovery'
+devices_specs: 'Specifikimet e pajisjeve'
+devices_info: 'Informacion i pajisjeve'
+Miscellaneous: Të ndryshme
+Example: Shembull
+recovery_help: 'Merr informacion dhe linke per ROMet recovery te fundit'
+fastboot_help: 'Merr informacion dhe linke per ROMet fastboot te fundit'
+latest_help: 'Merr informacion per versionet e fundit te MIUI'
+archive_help: 'Jep te gjitha linket e arkivuara te disponueshme e ROMeve MIUI zyrtare per pajisjen'
+firmware_help: 'Merr firmware e disponueshme per nje pajisje'
+vendor_help: 'Merr firmware+vendor te disponueshme per nje pajisje'
+eu_help: 'Merr shkarkimet e fundit te ROMeve Xiaomi.eu per pajisjen'
+twrp_help: 'Merr linkun e shkarkimit e fundit te TWRP per pajisjen'
+of_help: 'Merr linkun e shkarkimit e fundit te OrangeFox recovery per pajisjen'
+pb_help: 'Merr linkun e shkarkimit e fundit te PitchBlack recovery per pajisjen'
+specs_help: 'Merr specifikimet e pajisjes nga GSMArena'
+models_help: 'Merr te gjitha modelet e disponueshme per nje pajisje'
+whatis_help: 'Te tregon e kujt pajisje ky codename eshte'
+codename_help: 'Te tregon codename e pajisjes'
+guides_help: 'Guida te ndryshme te nevojshme per cdo perdorues Xiaomi'
+unlockbl_help: 'Ndihme dhe mjete per hapje te Bootloader'
+tools_help: 'Mjete te ndryshme te nevojshme per cdo perdorues Xiaomi'
+arb_help: 'Informacion rreth Mbrojtjes se Kunder-Kthimit(Anti-Rollback)'
+subscribe_help: 'Abonohu per perditesime te firmware/miui/vendor per kete pajisje'
+unsubscribe_help: 'Cabonohu nga perditesimet e firmware/miui/vendor per kete pajisje'
+subscription_help: 'Listo abonimet e tanishme te tua'
+set_locale_message: 'Gjuha e botit u ndryshua ne {lang} me sukses!'
+wrong_locale_message: "Fatekeqesisht suporti per gjuhen {lang} nuk eshte akoma ne dispozicion :(\nFatemiresisht ti mund te kontribuosh per botin dhe ta shtosh!\n[Shiko ketu](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Cilesimet e botit'
+bot_lang: 'Gjuha e botit'
+available_languages: 'Gjuhët e disponueshme'
+change_language: 'Ndrysho gjuhën'
+Back: Prapa
+set_device_message: 'Pajisja e preferuar per kete bisede u vendos ne {codenames_names[device]} (`{device}`) me sukses!'
+preferred_device: 'Pajisja e preferuar'
+your_preferred_device: 'Pajisja juaj e preferuar eshte'
+preferred_device_help: 'Vendos pajisjen tende te preferuar ne menyre qe te perdoret si e parazgjedhur per komandat qe i nevojitet codename e pajisjes'
+change_preferred_device: 'Ndrysho pajisjen e preferuar'

@@ -9,14 +9,14 @@ available_firmware: '可用 Firmware 下载'
 latest_firmware: '最新 Firmware'
 archive_firmware: 'Firmware 存档'
 XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
-MIUIUpdatesTracker: MIUIUUpdatesTracker
+MIUIUpdatesTracker: MIUIUpdatesTracker
 firmware_inline: '搜索 {codenames_name[device]} ({device}) 的 Firmware 下载'
 open_in_pm: '在对话中打开此消息'
 click_here: '点击此处'
 device_models: '{model_data[device][''name'']} ({device} - {model_data[device][''internal_name'']}) 型号'
 models_inline: '搜索 {device} 设备型号'
 whatis_message: '`{device}` 是 **{codenames_names[device]}**'
-whatis_inline: '搜索 {device} 商品名称'
+whatis_inline: '搜索 {device} 设备名称'
 too_much_codenames: '{device} 太笼统了！请更具体一些。'
 codename_message: "**{name}** 是 `{codename}`\n"
 codename_inline: '搜索 {device} 设备代号'
@@ -34,7 +34,7 @@ Indonesia: 印度尼西亚
 India: 印度
 Russia: 俄罗斯
 Global: 国际版
-China: 中国版
+China: 中国
 Fastboot: Fastboot
 Recovery: Recovery
 Size: 大小
@@ -42,7 +42,7 @@ miui_message: '最新的 {codenames_names[device]}** (`{device}`) **MIUI 官方 
 roms_archive: 'ROM 存档'
 miui_inline: '搜索 {codenames_names[device]} ({device}) 的官方 ROM 下载'
 miui_archive: '**{codenames_names[device]} 的 MIUI ROM 归档** (`{device}`)'
-archive_inline: '搜索 {codenames_names[device]} ({device}) 官方 ROM 归档'
+archive_inline: '搜索 {codenames_names[device]} ({device}) 官方 ROM 存档'
 latest_message: '**{codenames_names[device]} 的最新 MIUI 版本** (`{device}`)'
 latest_inline: '搜索 {codenames_names[device]} ({device}) 的最新 MIUI 版本'
 miui_update: '**{codenames_name[device]}** (`{device}`) 现有新的 MIUI {rom_type} 更新！'
@@ -78,7 +78,7 @@ Chipset: 芯片组
 Memory: 运行内存
 rear_camera: '后置摄像头'
 front_camera: '前置摄像头'
-headphone_jack: '3.5mm 耳机口'
+headphone_jack: '3.5mm 耳机接口'
 USB: USB
 Sensors: 传感器
 Battery: 电池
@@ -90,10 +90,10 @@ miui_updates: 'MIUI 更新'
 Firmware: Firmware
 Vendor: Vendor
 xiaomi_eu: Xiaomi.eu
-custom_recovery: '第三方 Recovery'
-devices_specs: 'Devices 参数'
+custom_recovery: '自定义 Recovery'
+devices_specs: 'Devices 规格'
 devices_info: '设备信息'
-Miscellaneous: 杂项
+Miscellaneous: 其他
 Example: 示例
 recovery_help: '获取最新的卡刷 ROM 信息和链接'
 fastboot_help: '获取最新的线刷 ROM 信息和链接'
@@ -106,11 +106,11 @@ twrp_help: '获取设备最新的 TWRP 下载链接'
 of_help: '获取设备最新的 OrangeFox Recovery 下载链接'
 pb_help: '获取设备最新的 PitchBlack Recovery 下载链接'
 specs_help: '从 GSMARena 获取设备参数'
-models_help: '获取设备的所有可用的设备型号'
-whatis_help: '告诉您哪个设备的代号是这样的'
-codename_help: '告诉您此设备的代号'
+models_help: '获取设备的所有可用的型号'
+whatis_help: '告诉您这是哪个设备的代号'
+codename_help: '告诉您该设备的代号是什么'
 guides_help: '多份适用于小米用户的有用指南'
-unlockbl_help: 'Bootloader 解锁教程与工具'
+unlockbl_help: 'Bootloader 解锁帮助与工具'
 tools_help: '多份适用于小米用户的实用工具'
 arb_help: '防回刷机制信息'
 subscribe_help: '订阅此设备的 Firmware/MIUI/Vendor 更新'
