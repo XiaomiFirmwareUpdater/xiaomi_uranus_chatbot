@@ -120,7 +120,7 @@ async def subscriptions_help_message(locale):
            f"__{example}:__ `/subscribe firmware whyred`\n\n" \
            f"/unsubscribe `firmware`|`miui`|`vendor` `codename`: " \
            f"\n{LOCALIZE.get_text(locale, 'unsubscribe_help')}\n" \
-           f"__{example}:__ `/subscribe firmware whyred`\n\n" \
+           f"__{example}:__ `/unsubscribe firmware whyred`\n\n" \
            f"/subscription: {LOCALIZE.get_text(locale, 'subscription_help')}"
 
 

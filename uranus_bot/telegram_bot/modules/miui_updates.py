@@ -8,14 +8,18 @@ from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
-@BOT.on(events.NewMessage(pattern='/recovery(?: )?(.+)?'))
-@BOT.on(events.NewMessage(pattern='/fastboot(?: )?(.+)?'))
+@BOT.on(events.NewMessage(pattern=r'/recovery(?: )?(\w+)?'))
+@BOT.on(events.NewMessage(pattern=r'/fastboot(?: )?(\w+)?'))
 async def miui(event):
     """Send a message when the command /recovery or /fastboot is sent."""
     try:
         device = event.pattern_match.group(1).lower()
     except (IndexError, AttributeError):
-        device = DATABASE.get_codename(event.chat_id)
+        if event.message.message.endswith('/recovery')\
+                or event.message.message.endswith('/fastboot'):
+            device = DATABASE.get_codename(event.chat_id)
+        else:
+            return
     if not device:
         return
     locale = DATABASE.get_locale(event.chat_id)
@@ -30,13 +34,16 @@ async def miui(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern='/archive(?: )?(.+)?'))
+@BOT.on(events.NewMessage(pattern=r'/archive(?: )?(\w+)?'))
 async def firmware(event):
     """Send a message when the command /archive is sent."""
     try:
         device = event.pattern_match.group(1).lower()
     except (IndexError, AttributeError):
-        device = DATABASE.get_codename(event.chat_id)
+        if event.message.message.endswith('/archive'):
+            device = DATABASE.get_codename(event.chat_id)
+        else:
+            return
     if not device:
         return
     locale = DATABASE.get_locale(event.chat_id)
@@ -48,13 +55,16 @@ async def firmware(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern='/latest(?: )?(.+)?'))
+@BOT.on(events.NewMessage(pattern=r'/latest(?: )?(\w+)?'))
 async def latest(event):
     """Send a message when the command /latest is sent."""
     try:
         device = event.pattern_match.group(1).lower()
     except (IndexError, AttributeError):
-        device = DATABASE.get_codename(event.chat_id)
+        if event.message.message.endswith('/latest'):
+            device = DATABASE.get_codename(event.chat_id)
+        else:
+            return
     if not device:
         return
     locale = DATABASE.get_locale(event.chat_id)

@@ -8,7 +8,7 @@ from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.firmware import firmware_update_message
 from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message, \
-    wrong_codename_message, subscribed_message, already_subscribed_message, subscriptions_message
+    wrong_codename_message, subscribed_message, already_subscribed_message, subscriptions_message, unsubscribed_message
 from uranus_bot.telegram_bot.messages.vendor import vendor_update_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin
@@ -49,7 +49,7 @@ async def unsubscribe(event):
         await event.reply(await wrong_codename_message(locale))
         return
     DATABASE.remove_subscription(await get_user_info(event), sub_type, device)
-    message = await subscribed_message(sub_type, device, locale)
+    message = await unsubscribed_message(sub_type, device, locale)
     await event.reply(message)
     raise events.StopPropagation
 
