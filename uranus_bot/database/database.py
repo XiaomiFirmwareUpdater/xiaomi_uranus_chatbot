@@ -81,6 +81,8 @@ class Database:
 
     def get_chat_subscriptions(self, chat_id):
         """ Get all subscriptions of a chat """
+        if str(chat_id).startswith('-100'):
+            chat_id = int(str(chat_id).replace('-100', ''))
         check = self.cursor \
             .execute("""SELECT sub_type, device FROM subscriptions WHERE id=:chat_id""",
                      {'chat_id': chat_id})
@@ -89,7 +91,7 @@ class Database:
     def get_subscriptions(self, sub_type, device):
         """ Get subscriptions list of a user """
         check = self.cursor \
-            .execute("""SELECT id FROM subscriptions WHERE sub_type=:sub_type AND device=:device""",
+            .execute("""SELECT id, chat_type FROM subscriptions WHERE sub_type=:sub_type AND device=:device""",
                      {'sub_type': sub_type, 'device': device})
         return check.fetchall()
 

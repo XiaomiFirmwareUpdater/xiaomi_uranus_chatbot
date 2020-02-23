@@ -6,6 +6,7 @@ from aiohttp import ClientSession
 
 from uranus_bot import GITHUB_ORG
 from uranus_bot.providers.utils.utils import fetch
+
 DIFF_LOGGER = logging.getLogger(__name__)
 
 
@@ -88,23 +89,25 @@ async def diff_miui_updates(new, old):
         for old_item in old:
             if old_item['codename'] == item['codename'] and item['version'] != old_item['version']:
                 is_new = None
-                if "V" in item['version'] and "V" in old_item['version']:
+                if "V" in item['version'] and "V" in old_item['version']:  # miui stable
                     new_version_array = item['version'].split('.')
                     old_version_array = old_item['version'].split('.')
-                    if new_version_array[-1][0] > old_version_array[-1][0] \
-                            or new_version_array[0][1:] > old_version_array[0][1:] \
-                            or new_version_array[1] > old_version_array[1] \
-                            or new_version_array[2] > old_version_array[2]:
+                    if new_version_array[-1][0] > old_version_array[-1][0]:
+                        is_new = True  # new android version
+                    elif int(new_version_array[0][1:]) > int(old_version_array[0][1:]):
+                        is_new = True  # new miui version
+                    elif int(new_version_array[1]) > int(old_version_array[1]):
+                        is_new = True  # new miui sub-version
+                    elif int(new_version_array[2]) > int(old_version_array[2]):
+                        is_new = True  # new miui minor version
+                elif "V" not in item['version'] and "V" not in old_item['version']:  # miui weekly
+                    new_version_array = item['version'].split('.')
+                    old_version_array = old_item['version'].split('.')
+                    if int(new_version_array[0]) > int(old_version_array[0]):
                         is_new = True
-                        DIFF_LOGGER.info(f"MIUI changes: "
-                                         f"New version: {new_version_array} - "
-                                         f"Old version: {old_version_array}")
-                elif "V" not in item['version'] and "V" not in old_item['version']:
-                    new_version_array = item['version'].split('.')
-                    old_version_array = old_item['version'].split('.')
-                    if new_version_array[0] > old_version_array[0] \
-                            or new_version_array[1] > old_version_array[1] \
-                            or new_version_array[2] > old_version_array[2]:
+                    elif int(new_version_array[1]) > int(old_version_array[1]):
+                        is_new = True
+                    elif int(new_version_array[2]) > int(old_version_array[2]):
                         is_new = True
                 if is_new:
                     try:
@@ -113,5 +116,6 @@ async def diff_miui_updates(new, old):
                     except KeyError:
                         # when a new device is added
                         changes.update({codename: [item]})
-    DIFF_LOGGER.info("MIUI changes: ", changes)
+    if changes:
+        DIFF_LOGGER.info("MIUI changes:\n", changes)
     return changes

@@ -81,7 +81,10 @@ async def settings_callback(event):
     """settings buttons callback for back button"""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await settings_main_message(locale)
-    await event.edit(message, buttons=buttons)
+    try:
+        await event.edit(message, buttons=buttons)
+    except MessageNotModifiedError:
+        pass
 
 
 @BOT.on(events.CallbackQuery(data='subscriptions_settings'))

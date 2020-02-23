@@ -92,8 +92,12 @@ async def post_firmware_updates():
                 for subscription in subscriptions:
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
-                        await BOT.send_message(subscription[0],
-                                               await firmware_update_message(codename, update, locale))
+                        message = await firmware_update_message(codename, update, locale)
+                        if subscription[1] == 'channel':
+                            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+                            await BOT.send_message(entity, message)
+                        else:
+                            await BOT.send_message(subscription[0], message)
                         await sleep(2)
         await sleep(65 * 60)
 
@@ -117,7 +121,11 @@ async def post_miui_updates():
                         for update in updates:
                             locale = DATABASE.get_locale(subscription[0])
                             message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
-                            await BOT.send_message(subscription[0], message, buttons=buttons)
+                            if subscription[1] == 'channel':
+                                entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+                                await BOT.send_message(entity, message, buttons=buttons)
+                            else:
+                                await BOT.send_message(subscription[0], message, buttons=buttons)
                             await sleep(2)
             await sleep(65 * 60)
 
@@ -138,8 +146,12 @@ async def post_vendor_updates():
                 for subscription in subscriptions:
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
-                        await BOT.send_message(subscription[0],
-                                               await vendor_update_message(codename, update, locale))
+                        message = await vendor_update_message(codename, update, locale)
+                        if subscription[1] == 'channel':
+                            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+                            await BOT.send_message(entity, message)
+                        else:
+                            await BOT.send_message(subscription[0], message)
                         await sleep(2)
         await sleep(65 * 60)
 
