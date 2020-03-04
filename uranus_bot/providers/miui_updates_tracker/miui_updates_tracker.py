@@ -100,7 +100,8 @@ async def diff_miui_updates(new, old):
                         is_new = True  # new miui sub-version
                     elif int(new_version_array[2]) > int(old_version_array[2]):
                         is_new = True  # new miui minor version
-                elif "V" not in item['version'] and "V" not in old_item['version']:  # miui weekly
+                elif "V" not in item['version'] and "V" not in old_item['version']\
+                        and item['version'][0].isdigit():  # miui weekly
                     new_version_array = item['version'].split('.')
                     old_version_array = old_item['version'].split('.')
                     if int(new_version_array[0]) > int(old_version_array[0]):
