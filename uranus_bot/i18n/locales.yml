@@ -434,6 +434,9 @@ st:
 es-ES:
   name: "Spanish"
   nativeName: "español"
+es-MX:
+  name: "Spanish (Mexico)"
+  nativeName: "español"
 su:
   name: Sundanese
   nativeName: "Basa Sunda"

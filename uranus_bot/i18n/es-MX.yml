@@ -1,0 +1,130 @@
+---
+welcome: "Hola! soy Urano, un bot todo en uno para usuarios de Xiaomi!\nPuedo tener las últimas ROMs oficiales, actualizaciones de firmware y muchas cosas más!\n\nAprende a cómo usarme pulsando en el botón de abajo.\nÚnete a mi canal: (https://t.me/yshalsager_projects)\nPara tener las últimas actualizaciones y novedades del bot!"
+join_channel: 'Únete a mi canal'
+join_group: 'Únete al grupo de apoyo'
+read_help: 'Leer para ayudar'
+add_to_group: 'Añadir a un grupo'
+error_message: 'No se pudo encontrar la información requerida para {device}!'
+available_firmware: 'Descargas de firmware disponibles para'
+latest_firmware: 'Firmware más reciente'
+archive_firmware: 'Repositorio de firmware'
+XiaomiFirmwareUpdater: Actualizador Firmware Xiaomi
+MIUIUpdatesTracker: Rastreador de actualizaciones de MIUI
+firmware_inline: 'Buscar {codenames_names[device]} ({device}) firmware descargables'
+open_in_pm: 'Abra este mensaje en PM'
+click_here: 'Pulse aquí'
+device_models: "{models_data[device]['name']} ({device} - \n{models_data[device]['internal_name']}) Modelos"
+models_inline: 'Buscar modelos de dispositivos {device}'
+whatis_message: '{device} es **{codenames_names[device]}**'
+whatis_inline: 'Buscar nombre del dispositivo {device}'
+too_much_codenames: '{device} Es demasiado general! Por favor se más específico.'
+codename_message: "**{name}** Es `{codename}`\n"
+codename_inline: 'Buscar nombre clave del dispositivo {device}'
+unlock_bl: 'Guía y herramienta para desbloquear el bootloader'
+unlock_bl_inline: 'Guía para desbloquear el bootloader'
+tools: 'Herramientas para los dispositivos Xiaomi'
+tools_inline: 'Herramientas útiles para los dispositivos Xiaomi'
+guides: 'Guías para los dispositivos Xiaomi'
+guides_inline: 'Varias guías para los dispositivos Xiaomi'
+Stable: Estable
+Weekly: Semanalmente
+Region: Región
+EEA: EEA
+Indonesia: Indonesia
+India: India
+Russia: Rusia
+Global: Global
+China: China
+Fastboot: Fastboot
+Recovery: Recovery
+Size: Tamaño
+miui_message: 'Últimas ROMs MIUI {rom_type} oficiales para {codenames_names[device]}** (`{device}`)'
+roms_archive: 'Repositorio de ROMs'
+miui_inline: 'Buscar descargas de ROMs oficiales para {codenames_names[device]} ({device})'
+miui_archive: '**Repositorio de ROMs MIUI para {codenames_names[device]}** (`{device}`)'
+archive_inline: 'Buscar repositorio de ROMs oficiales para {codenames_names[device]} ({device})'
+latest_message: '**Versiones más recientes de MIUI para {codenames_names[device]}** (`{device}`)'
+latest_inline: 'Buscar las versiones más recientes de MIUI para {codenames_names[device]} ({device})'
+miui_update: '**Nueva actualización de MIUI {rom_type} disponible para {codenames_names[device]}** (`{device}`)!'
+wrong_codename: 'Nombre clave incorrecto!'
+subscribed: '¡Suscrito a las actualizaciones de {device} {sub_type} exitosamente!'
+already_subscribed: '¡Ya estás suscrito a las actualizaciones de {device} {sub_type}!'
+unsubscribed: '¡Suscripción a las actualizaciones de {device} {sub_type} cancelada exitosamente!'
+your_subscriptions: 'Estás suscrito a'
+no_subscriptions: 'Nada aún'
+firmware_update: '**Nueva actualización de firmware disponible para {codename} por** @XiaomiFirmwareUpdater'
+vendor_update: '**nueva actualización del vendor disponible para {codename} por @MIUIVendorUpdater'
+orangefox_message: "Última versión {data['name']} **(`{device}`) [OrangeFox] (https://wiki.orangefox.tech/en/home) construcciones: _Mantenedor:_{data['manteiner']}"
+orangefox_inline: 'Buscar {device} OrangeFox recovery descargas'
+pitchblack_message: '**última [PitchBlack] (https://pbrp.ml) construido por **`{device}`'
+pitchblack_inline: 'Buscar {device} PitchBlack descargas'
+Devices: Dispositivos
+Tag: Etiqueta
+oss_inline: 'Buscar {device} OSS kernel'
+eu_message: '**ROMs Xiaomi.eu más recientes para {name} (**`{device}`**):**'
+eu_inline: 'Buscar {name} ({device}) Xiaomi.eu descargas'
+vendor_message: '**vendor descargas disponible para {codenames_names[device]}** (`{device}`)'
+latest_vendor: 'Último vendor'
+archive_vendor: 'Archivo Vendor'
+MIUIVendorUpdater: MIUIVendoeUpdater
+vendor_inline: 'Buscar {codenames_names[device]} ({device}) Descargas de Vendor'
+twrp_message: "**TWRP más reciente para {data['name']}:**\n**Actualizado en:** {data['date']}"
+twrp_inline: 'Buscar descargas de TWRP para {codenames_names[device]} ({device})'
+Status: Estado
+Network: Red
+Weight: Peso
+Display: Pantalla
+Chipset: Chipset
+Memory: Memoria
+rear_camera: 'Cámara trasera'
+front_camera: 'Cámara frontal'
+headphone_jack: 'Jack 3,5mm'
+USB: USB
+Sensors: Sensores
+Battery: Batería
+Charging: Cargando
+specs_inline: 'Buscar especificaciones de {device}'
+help_message: "**Cómo usar {BOT_INFO['name']}**\n\n¡@{BOT_INFO['username']} es un bot \"todo en uno\" para los usuarios de Xiaomi!\n¡Puede obtener las últimas ROMs oficiales, actualizaciones del firmware, y muchas cosas más!\nLa guía de uso completa está disponible [AQUÍ]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nAquí están todos los comandos disponibles:\n/start: Comprueba si el bot se está ejecutando\n/help: Muestra este mensaje de ayuda"
+Subscriptions: Suscripciones
+miui_updates: 'Actualizaciones de MIUI'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Recovery Personalizado'
+devices_specs: 'Especificaciones de dispositivos'
+devices_info: 'Información de dispositivos'
+Miscellaneous: Otros
+Example: Ejemplo
+recovery_help: 'Tener último recovery ROM''s information y links'
+fastboot_help: 'Obtener última ROM fastboot, Información y links'
+latest_help: 'Obtener la última versión de MIUI info'
+archive_help: 'Obtén todos los enlaces del repositorio de las ROMs MIUI oficiales disponibles para el dispositivo'
+firmware_help: 'Obtener firmware para un dispositivo'
+vendor_help: 'Obtén los firmware+vendor disponibles para un dispositivo'
+eu_help: 'Obtener última ROM Xiaomi.eu descargas para el dispositivo'
+twrp_help: 'Obtener el último TWRP link de descarga para el dispositivo'
+of_help: 'Obtén el último enlace de descarga del recovery OrangeFox para el dispositivo'
+pb_help: 'Obtener el último PitchBlack recovery link de descarga para el dispositivo'
+specs_help: 'Obtén las especificaciones del dispositivo desde GSMArena'
+models_help: 'Obnñtenee todos los modelos disponibles de un dispositivo'
+whatis_help: 'Indica que codename del dispositivo es este'
+codename_help: 'Te dice el nombre en clave de un modelo del dispositivo'
+guides_help: 'Varias guías útiles para todo usuario de Xiaomi'
+unlockbl_help: 'Desbloqueo de bootloader, ayuda y herramientas'
+tools_help: 'Varias herramientas útiles para todo usuario de Xiaomi'
+arb_help: 'Anti-Rollback información de protección'
+subscribe_help: 'Suscríbete a las actualizaciones de firmware/miui/vendor de este dispositivo'
+unsubscribe_help: 'Suscríbete a las actualizaciones de firmware/miui/vendor de este dispositivo'
+subscription_help: 'Tu lista de suscriptores actuales'
+set_locale_message: 'Lenguaje del bot ha Sido cambiado a {lang} exitosamente!'
+wrong_locale_message: "Desafortunadamente, el soporte para el idioma {lang} no está disponible todavía :(\n¡La buena noticia es que puedes contribuir al bot y añadirlo!\n[Revisa aquí](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Configuración del bot'
+bot_lang: 'Lenguaje del bot'
+available_languages: 'Languages disponibles'
+change_language: 'Cambio de lenguaje'
+Back: Regresad
+set_device_message: 'El dispositivo preferido para este chat se configuró a {codenames_names[device]} (`{device}`) exitosamente!'
+preferred_device: 'Dispositivo preferido'
+your_preferred_device: 'Tu dispositivo preferido es'
+preferred_device_help: 'Define tu dispositivo preferido para que se use como predeterminado para los comandos que necesitan el nombre clave del dispositivo'
+change_preferred_device: 'Cambiar dispositivo preferido'

@@ -1,0 +1,130 @@
+---
+welcome: "Ahoj! Já jsem Uranus, all-in-one bot pro nadšence telefonů Xiaomi! Dokážu ti najít poslední aktualizaci systému, firmware a spousty dalších věcí!\n\nZjisti, jak mě používat kliknutím na tlačítko Pomoc níže. Můžeš se také připojit k [mému kanálu](https://t.me/yshalsager_projects), abys měl informace o všech mých novinkách a aktualizacích!"
+join_channel: 'Připoj se k mému kanálu'
+join_group: 'Připoj se k podpůrné skupině'
+read_help: 'Přečti si nápovědu'
+add_to_group: 'Přidej do skupiny'
+error_message: 'Nemůžu najít žádné záznamy týkající se {device}!'
+available_firmware: 'Dostupné odkazy na firmware pro'
+latest_firmware: 'Poslední firmware'
+archive_firmware: 'Archiv firmware'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUpdatesTracker
+firmware_inline: 'Hledej firmware pro {codenames_names[device]} ({device})'
+open_in_pm: 'Otevři tuto zprávu v soukromém chatu'
+click_here: 'Zde klikni'
+device_models: 'Modely zařízení {models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']})'
+models_inline: 'Hledej modely zařízení {device}'
+whatis_message: '`{device}` je **{codenames_names[device]}**'
+whatis_inline: 'Hledej název zařízení {device}'
+too_much_codenames: '{device} je příliš obecný! Prosím, buď konkrétnější.'
+codename_message: "**{name}** je `{codename}`\n"
+codename_inline: 'Hledej kódový název zařízení {device}'
+unlock_bl: 'Návod na odemknutí bootloaderu'
+unlock_bl_inline: 'Návod, jak odemknout bootloader'
+tools: 'Nástroje pro zařízení Xiaomi'
+tools_inline: 'Užitečné nástroje pro zařízení Xiaomi'
+guides: 'Návody pro zařízení od Xiaomi'
+guides_inline: 'Různé návody pro zařízení od Xiaomi'
+Stable: Stabilní
+Weekly: Týdenní
+Region: Region
+EEA: Evropa
+Indonesia: Indonésie
+India: Indie
+Russia: Rusko
+Global: Globální
+China: Čína
+Fastboot: Fastboot
+Recovery: Recovery
+Size: Velikost
+miui_message: 'Nejnovější oficiální MIUI ROMky pro {codenames_names[device]}** (`{device}`) **, typ {rom_type}'
+roms_archive: 'Archiv ROMek'
+miui_inline: 'Hledej oficiální ROMku pro {codenames_names[device]} ({device})'
+miui_archive: '**Archiv ROMek MIUI pro {codenames_names[device]}** (`{device}`)'
+archive_inline: 'Hledej oficiální ROMku pro {codenames_names[device]} ({device}) v archivu'
+latest_message: '**Nejnovější verze MIUI pro {codenames_names[device]}** (`{device}`)'
+latest_inline: 'Hledej nejnovější verze MIUI pro {codenames_names[device]} ({device})'
+miui_update: '**Nová aktualizace MIUI, typu {rom_type}, je k dispozici pro {codenames_names[device]}** (`{device}`)!'
+wrong_codename: 'Nesprávný kódový název!'
+subscribed: 'Úspěšně přihlášeno k odběru aktualizací {sub_type} pro {device}!'
+already_subscribed: 'Již jsi přihlášen k odběru aktualizací {sub_type} pro {device}!'
+unsubscribed: 'Odběr {sub_type} aktualizací pro {device} byl úspěšně odhlášen!'
+your_subscriptions: 'Jsi přihlášen k odběru'
+no_subscriptions: 'Zatím ničeho'
+firmware_update: '**Nová aktualizace firmwaru je k dispozici pro {codename} od** @XiaomiFirmwareUpdater'
+vendor_update: '**Nová aktualizace vendoru je k dispozici pro {codename} od** @XiaomiFirmwareUpdater'
+orangefox_message: "**Nejnovější {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Sestavení:\n__Údržbář:__ {data['maintainer']}"
+orangefox_inline: 'Hledej OrangeFox recovery pro {device}'
+pitchblack_message: '**Nejnovější sestavení [PitchBlack](https://pbrp.ml) pro **`{device}`'
+pitchblack_inline: 'Hledej PitchBlack pro {device}'
+Devices: Zařízení
+Tag: Tag
+oss_inline: 'Hledej open source kernel pro {device}'
+eu_message: '**{name} (**`{device}`**) latest Xiaomi.eu ROMs:**'
+eu_inline: 'Search {name} ({device}) Xiaomi.eu downloads'
+vendor_message: '**Available vendor downloads for {codenames_names[device]}** (`{device}`)'
+latest_vendor: 'Nejnovější Vendor image'
+archive_vendor: 'Archiv Vendor image'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: 'Hledej vendor image pro {codenames_names[device]} ({device})'
+twrp_message: "**Nejnovější TWRP pro {data['name']}:**\n**Aktualizováno:** {data['date']}"
+twrp_inline: 'Hledej TWRP pro {codenames_names[device]} ({device})'
+Status: Stav
+Network: Síť
+Weight: Hmotnost
+Display: Displej
+Chipset: Chipset
+Memory: Paměť
+rear_camera: 'Zadní Kamera'
+front_camera: 'Přední Kamera'
+headphone_jack: '3.5mm jack'
+USB: USB
+Sensors: Senzory
+Battery: Baterie
+Charging: Nabíjení
+specs_inline: 'Hledej specifikace pro {device}'
+help_message: "**Jak používat {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} je all-in-one bot pro uživatele Xiaomi telefonů!\nMůže ti sehnat poslední oficiální ROMku, aktualizaci firmware a spoustu dalších věcí!\nCelou příručku můžeš najít [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nPříkazy:\n/start: Zkontroluje, jestli bot funguje\n/help: Zobrazí tuto hlášku"
+Subscriptions: Odběry
+miui_updates: 'Aktualizace MIUI'
+Firmware: Firmware
+Vendor: Vendor
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Custom recovery'
+devices_specs: 'Specifikace zařízení'
+devices_info: 'Informace o zařízení'
+Miscellaneous: Ostatní
+Example: Příklad
+recovery_help: 'Získá nejnovější informace o ROMkách s instalací v recovery a odkazy na jejich stažení'
+fastboot_help: 'Získá nejnovější informace o ROMkách s instalací ve fastboot a odkazy na jejich stažení'
+latest_help: 'Získá informace o nejnovější verzi MIUI'
+archive_help: 'Pošli všechny oficiální dostupné odkazy na archiv MIUI ROMek pro zařízení'
+firmware_help: 'Získá dostupný firmware pro zařízení'
+vendor_help: 'Získá dostupný firmware+vendor image pro zařízení'
+eu_help: 'Sežene odkazy na nejnovější MIUI od Xiaomi.eu'
+twrp_help: 'Sežene odkaz ke stažení nejnovějšího TWRP pro zařízení'
+of_help: 'Sežene odkaz pro stažení nejnovějšího recovery OrangeFox pro zařízení'
+pb_help: 'Sežene odkaz pro stažení nejnovějšího recovery PitchBlack pro zařízení'
+specs_help: 'Zobrazí specifikace zařízení z GSMArena'
+models_help: 'Získá všechny dostupné modely zařízení'
+whatis_help: 'Řekne ti, které kódové jméno má toto zařízení'
+codename_help: 'Tells you what is the codename of this device'
+guides_help: 'Various useful guides for every Xiaomi user'
+unlockbl_help: 'Unlocking bootloader help and tools'
+tools_help: 'Various useful tools for every Xiaomi user'
+arb_help: 'Anti-Rollback Protection information'
+subscribe_help: 'Subscribe to this device firmware/miui/vendor updates'
+unsubscribe_help: 'Unsubscribe from this device firmware/miui/vendor updates'
+subscription_help: 'List your current subscriptions'
+set_locale_message: 'Bot language has been changed to {lang} successfully!'
+wrong_locale_message: "Unfortunately {lang} language support is not available yet :(\nThe good news is that you can contribute to the bot and add it!\n[Check Here](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot Settings'
+bot_lang: 'Bot Language'
+available_languages: 'Available Languages'
+change_language: 'Change language'
+Back: Back
+set_device_message: 'Preferred device for this chat has been set to {codenames_names[device]} (`{device}`) successfully!'
+preferred_device: 'Preferred device'
+your_preferred_device: 'Your preferred device is'
+preferred_device_help: 'Sets your preferred device in order to be used as default for commands that needs the codename of the device'
+change_preferred_device: 'Change Preferred device'

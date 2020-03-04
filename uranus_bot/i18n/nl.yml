@@ -1,0 +1,130 @@
+---
+welcome: "Hey! Ik ben Uranus, een alles-in-één bot voor Xiaomi gebruikers!\nIk kan u de nieuwste officiële ROMs, Firmware updates links en nog veel meer geven!\n\nControleer hoe u mij kunt gebruiken door hieronder op de help-knop te klikken.\nSluit je aan bij [mijn kanaal](https://t.me/yshalsager_projects) om alle updates en aankondigingen over de bot te krijgen!"
+join_channel: 'Deelnemen aan mijn kanaal'
+join_group: 'Deelnemen aan ondersteuningsgroep'
+read_help: 'Lees hulp'
+add_to_group: 'Toevoegen aan een groep'
+error_message: 'Kan de {device} opgevraagde informatie niet vinden!'
+available_firmware: 'Beschikbare firmware downloads voor'
+latest_firmware: 'Laatste Firmware'
+archive_firmware: 'Firmware Archief'
+XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
+MIUIUpdatesTracker: MIUIUpdatesTracker
+firmware_inline: 'Zoek {codenames_names[device]} ({device}) Firmware downloads'
+open_in_pm: 'Open dit bericht in PM'
+click_here: 'Klik hier'
+device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modellen'
+models_inline: 'Zoek {device} apparaat-modellen'
+whatis_message: '`{device}` is **{codenames_names[device]}**'
+whatis_inline: 'Zoek {device} apparaatnaam'
+too_much_codenames: '{device} is te algemeen! Wees alsjeblieft specifieker.'
+codename_message: "**{name}** is `{codename}`\n"
+codename_inline: '{device} apparaat codenaam doorzoeken'
+unlock_bl: 'Bootloader gids en functie ontgrendelen'
+unlock_bl_inline: 'Hoe de bootloader gids te ontgrendelen'
+tools: 'Hulpmiddelen voor Xiaomi apparaten'
+tools_inline: 'Handige hulpmiddelen voor Xiaomi apparaten'
+guides: 'Handleidingen voor Xiaomi apparaten'
+guides_inline: 'Diverse handleidingen voor Xiaomi apparaten'
+Stable: Stabiel
+Weekly: Wekelijks
+Region: Regio
+EEA: EEA
+Indonesia: Indonesië
+India: India
+Russia: Rusland
+Global: Wereldwijd
+China: China
+Fastboot: Fastboot
+Recovery: Herstellen
+Size: Grootte
+miui_message: 'Laatste {codenames_names[device]}** (`{device}`) **MIUI Officiële {rom_type} ROMs'
+roms_archive: 'ROM''s archief'
+miui_inline: 'Zoek {codenames_names[device]} ({device}) Officiële ROMs Downloads'
+miui_archive: '**MIUI ROMs archief voor {codenames_names[device]}** (`{device}`)'
+archive_inline: 'Zoek {codenames_names[device]} ({device}) Officiële ROMs archief'
+latest_message: '**Laatste MIUI versies voor {codenames_names[device]}** (`{device}`)'
+latest_inline: 'Zoek {codenames_names[device]} ({device}) laatste MIUI-versies'
+miui_update: '**Nieuwe MIUI {rom_type} Update beschikbaar voor {codenames_names[device]}** (`{device}`)!'
+wrong_codename: 'Verkeerde Codenaam!'
+subscribed: 'Succesvol geabonneerd op {device} {sub_type} updates!'
+already_subscribed: 'Je bent al geabonneerd op {device} {sub_type} updates!'
+unsubscribed: 'Succesful afgemeld voor updates van {device} {sub_type}!'
+your_subscriptions: 'Je bent geabonneerd op'
+no_subscriptions: 'Nog niks'
+firmware_update: '**Nieuwe Firmware update beschikbaar voor {codename} door** @XiaomiFirmwareUpdater'
+vendor_update: '**Nieuwe Leverancier-update beschikbaar voor {codename} door** @MIUIVendorUpdater'
+orangefox_message: "**Laatste {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) Builds:\n__Maintainer:__ {data['maintainer']}"
+orangefox_inline: 'Zoek {device} OrangeFox herstel downloads'
+pitchblack_message: '**Laatste [PitchBlack](https://pbrp.ml) Build voor **`{device}`'
+pitchblack_inline: 'Zoek {device} PitchBlack downloads'
+Devices: Apparaten
+Tag: Tag
+oss_inline: 'Zoek {device} OSS-kernel'
+eu_message: '**{name} (**`{device}`**) nieuwste Xiaomi.eu ROMs:**'
+eu_inline: 'Zoek {name} ({device}) Xiaomi.eu downloads'
+vendor_message: '**Beschikbare leverancier downloads voor {codenames_names[device]}** (`{device}`)'
+latest_vendor: 'Laatste Leverancier'
+archive_vendor: 'Leverancier archief'
+MIUIVendorUpdater: MIUIVendorUpdater
+vendor_inline: 'Zoek {codenames_names[device]} ({device}) Leverancier downloads'
+twrp_message: "**Laatste TWRP voor {data['name']}:**\n**Bijgewerkt:** {data['date']}"
+twrp_inline: 'Zoek {codenames_names[device]} ({device}) TWRP downloads'
+Status: Status
+Network: Netwerk
+Weight: Gewicht
+Display: Scherm weergeven
+Chipset: Chipset
+Memory: Geheugen
+rear_camera: 'Camera aan achterzijde'
+front_camera: 'Voorkant camera'
+headphone_jack: '3.5mm aansluiting'
+USB: USB
+Sensors: Sensoren
+Battery: Batterij
+Charging: Opladen
+specs_inline: 'Zoek {device} specificaties'
+help_message: "** Hoe {BOT_INFO ['name']} ** te gebruiken\n\n @ {BOT_INFO ['gebruikersnaam']} is een alles-in-één-bot voor Xiaomi-gebruikers!\nHet kan u de nieuwste officiële ROM's, links naar firmware-updates krijgen en nog veel meer!\n De volledige gebruikershandleiding is [hier] beschikbaar ({XFU_WEBSITE} / projects / uranus-chatbot / # use)\n\n Hier zijn alle beschikbare commando's:\n / start: controleer of de bot draait\n / help: toon dit helpbericht"
+Subscriptions: Abonnementen
+miui_updates: 'MIUI updates'
+Firmware: Firmware
+Vendor: Leverancier
+xiaomi_eu: Xiaomi.eu
+custom_recovery: 'Aangepast herstel'
+devices_specs: 'Apparaten specificaties'
+devices_info: 'Apparaatgegevens'
+Miscellaneous: Overige
+Example: Voorbeeld
+recovery_help: 'Haalt laatste herstel ROM''s informatie en links op'
+fastboot_help: 'Haalt de laatste fastboot ROMs informatie en links op'
+latest_help: 'Haalt de laatste MIUI versies informatie op'
+archive_help: 'Stuur alle officiële MIUI ROMs archief links voor apparaat'
+firmware_help: 'Haalt de beschikbare firmware op voor een apparaat'
+vendor_help: 'Haal beschikbare firmware+leverancier op voor een apparaat'
+eu_help: 'Laatste Xiaomi.eu ROMs downloads voor apparaat ophalen'
+twrp_help: 'Haal de nieuwste TWRP download link op voor apparaat'
+of_help: 'Haalt de laatste OrangeFox recovery download link op voor apparaat'
+pb_help: 'Haalt de laatste PitchBlack recovery download link op voor het apparaat'
+specs_help: 'Haal specificaties van GSMArena op'
+models_help: 'Haalt alle beschikbare modellen van een apparaat op'
+whatis_help: 'Geeft aan welk codenaam dit apparaat is'
+codename_help: 'Vertelt u wat de codenaam van dit apparaat is'
+guides_help: 'Diverse handige handleidingen voor elke Xiaomi gebruiker'
+unlockbl_help: 'Functies en hulpprogramma''s voor bootloader ontgrendelen'
+tools_help: 'Diverse handige hulpmiddelen voor elke Xiaomi gebruiker'
+arb_help: 'Informatie over bescherming tegen Anti-Rollback'
+subscribe_help: 'Abonneer u op dit apparaat voor firmware / miui / leveranciersupdates'
+unsubscribe_help: 'Meld u af voor dit apparaat firmware/miui/leverancier updates'
+subscription_help: 'Geef je huidige abonnementen weer'
+set_locale_message: 'Bot taal is succesvol veranderd naar {lang}!'
+wrong_locale_message: "Helaas is {lang} taalondersteuning nog niet beschikbaar :(\nHet goede nieuws is dat je kan bijdragen aan de bot en het kan toevoegen!\n[Bekijk hier](https://crowdin. om/project/xiaomi-geeks-chatbot/)"
+settings_message: 'Bot instellingen'
+bot_lang: 'Bot taal'
+available_languages: 'Beschikbare Talen'
+change_language: 'Taal wijzigen'
+Back: Terug
+set_device_message: 'Aanbevolen apparaat voor deze chat is succesvol ingesteld op {codenames_names[device]} (`{device}`)!'
+preferred_device: 'Voorkeur apparaat'
+your_preferred_device: 'Uw voorkeursapparaat is'
+preferred_device_help: 'Stelt uw voorkeursapparaat in om te worden gebruikt als standaard voor opdrachten die de codenaam van het apparaat nodig hebben'
+change_preferred_device: 'Voorkeur apparaat wijzigen'

@@ -29,11 +29,11 @@ guides_inline: '多份小米设备指南'
 Stable: 稳定版
 Weekly: 开发版
 Region: 地区
-EEA: EEA
+EEA: 欧盟
 Indonesia: 印度尼西亚
 India: 印度
 Russia: 俄罗斯
-Global: 国际版
+Global: 全球
 China: 中国
 Fastboot: Fastboot
 Recovery: Recovery
@@ -75,7 +75,7 @@ Network: 网络
 Weight: 重量
 Display: 显示
 Chipset: 芯片组
-Memory: 运行内存
+Memory: 内存
 rear_camera: '后置摄像头'
 front_camera: '前置摄像头'
 headphone_jack: '3.5mm 耳机接口'
