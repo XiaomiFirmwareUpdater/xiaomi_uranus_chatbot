@@ -85,7 +85,6 @@ async def diff_miui_updates(new, old):
     if not old:
         return changes
     for item in new:
-        codename = item['codename'].split('_')[0]
         for old_item in old:
             if old_item['codename'] == item['codename'] and item['version'] != old_item['version']:
                 is_new = None
@@ -101,7 +100,7 @@ async def diff_miui_updates(new, old):
                     elif int(new_version_array[2]) > int(old_version_array[2]):
                         is_new = True  # new miui minor version
                 elif "V" not in item['version'] and "V" not in old_item['version']\
-                        and item['version'][0].isdigit():  # miui weekly
+                        and item['version'][0].isdigit() and old_item['version'][0].isdigit():  # miui weekly
                     new_version_array = item['version'].split('.')
                     old_version_array = old_item['version'].split('.')
                     if int(new_version_array[0]) > int(old_version_array[0]):
@@ -111,6 +110,7 @@ async def diff_miui_updates(new, old):
                     elif int(new_version_array[2]) > int(old_version_array[2]):
                         is_new = True
                 if is_new:
+                    codename = item['codename'].split('_')[0]
                     try:
                         if changes[codename]:
                             changes.update({codename: changes[codename] + [item]})
@@ -118,5 +118,5 @@ async def diff_miui_updates(new, old):
                         # when a new device is added
                         changes.update({codename: [item]})
     if changes:
-        DIFF_LOGGER.info("MIUI changes:\n", changes)
+        DIFF_LOGGER.info(f"MIUI changes:\n{str(changes)}")
     return changes

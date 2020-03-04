@@ -1,8 +1,7 @@
 """ subscribe command handler """
 from asyncio import sleep
-from telethon import events, Button
+from telethon import events
 
-from uranus_bot import XFU_WEBSITE
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
 from uranus_bot.telegram_bot import DATABASE
@@ -92,12 +91,12 @@ async def post_firmware_updates():
                 for subscription in subscriptions:
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
-                        message = await firmware_update_message(codename, update, locale)
+                        message, buttons = await firmware_update_message(codename, update, locale)
                         if subscription[1] == 'channel':
                             entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-                            await BOT.send_message(entity, message)
+                            await BOT.send_message(entity, message, buttons=buttons)
                         else:
-                            await BOT.send_message(subscription[0], message)
+                            await BOT.send_message(subscription[0], message, buttons=buttons)
                         await sleep(2)
         await sleep(65 * 60)
 
@@ -146,12 +145,12 @@ async def post_vendor_updates():
                 for subscription in subscriptions:
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
-                        message = await vendor_update_message(codename, update, locale)
+                        message, buttons = await vendor_update_message(codename, update, locale)
                         if subscription[1] == 'channel':
                             entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-                            await BOT.send_message(entity, message)
+                            await BOT.send_message(entity, message, buttons=buttons)
                         else:
-                            await BOT.send_message(subscription[0], message)
+                            await BOT.send_message(subscription[0], message, buttons=buttons)
                         await sleep(2)
         await sleep(65 * 60)
 
