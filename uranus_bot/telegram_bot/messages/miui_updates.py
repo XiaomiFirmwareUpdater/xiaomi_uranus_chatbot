@@ -102,8 +102,9 @@ async def miui_update_message(data, codenames_names, locale):
     """ Generate telegram message of miui update """
     rom_type = LOCALIZE.get_text(locale, await get_type(str(data)))
     device = data['codename'].split('_')[0]
+    filename = data['download'].split('/')[-1]
     region = LOCALIZE.get_text(locale,
-                               await get_region(data['filename'], device, data['version']))
+                               await get_region(filename, device, data['version']))
     message = LOCALIZE.get_text(locale, "miui_update").replace(
         "{device}", device).replace(
         "{codenames_names[device]}", codenames_names[device]).replace(

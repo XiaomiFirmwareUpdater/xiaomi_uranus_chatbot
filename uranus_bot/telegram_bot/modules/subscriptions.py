@@ -1,6 +1,7 @@
 """ subscribe command handler """
 from asyncio import sleep
 from telethon import events
+from telethon.errors import UserIsBlockedError
 
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
@@ -92,11 +93,7 @@ async def post_firmware_updates():
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
                         message, buttons = await firmware_update_message(codename, update, locale)
-                        if subscription[1] == 'channel':
-                            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-                            await BOT.send_message(entity, message, buttons=buttons)
-                        else:
-                            await BOT.send_message(subscription[0], message, buttons=buttons)
+                        await post_update(subscription, message, buttons)
                         await sleep(2)
         await sleep(65 * 60)
 
@@ -120,11 +117,7 @@ async def post_miui_updates():
                         for update in updates:
                             locale = DATABASE.get_locale(subscription[0])
                             message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
-                            if subscription[1] == 'channel':
-                                entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-                                await BOT.send_message(entity, message, buttons=buttons)
-                            else:
-                                await BOT.send_message(subscription[0], message, buttons=buttons)
+                            await post_update(subscription, message, buttons)
                             await sleep(2)
             await sleep(65 * 60)
 
@@ -146,13 +139,24 @@ async def post_vendor_updates():
                     for update in updates:
                         locale = DATABASE.get_locale(subscription[0])
                         message, buttons = await vendor_update_message(codename, update, locale)
-                        if subscription[1] == 'channel':
-                            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-                            await BOT.send_message(entity, message, buttons=buttons)
-                        else:
-                            await BOT.send_message(subscription[0], message, buttons=buttons)
+                        await post_update(subscription, message, buttons)
                         await sleep(2)
         await sleep(65 * 60)
 
 
 BOT.loop.create_task(post_vendor_updates())
+
+
+async def post_update(subscription, message, buttons):
+    """Send update to subscribed chat"""
+    if subscription[1] == 'channel':
+        entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+        try:
+            await BOT.send_message(entity, message, buttons=buttons)
+        except UserIsBlockedError:
+            pass
+    else:
+        try:
+            await BOT.send_message(subscription[0], message, buttons=buttons)
+        except UserIsBlockedError:
+            pass
