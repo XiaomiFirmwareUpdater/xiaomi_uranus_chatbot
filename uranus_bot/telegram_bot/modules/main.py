@@ -1,7 +1,7 @@
 """ Xiaomi Geeks Telegram Bot main module"""
 from base64 import b64decode
 
-from telethon import events, Button
+from telethon import events
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.welcome import welcome_message, welcome_in_pm_message
@@ -11,7 +11,7 @@ from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 from uranus_bot.telegram_bot.utils.chat import get_user_info
 
 
-@BOT.on(events.NewMessage(pattern='/start'))
+@BOT.on(events.NewMessage(pattern=f"/start$|/start@{BOT_INFO['username']}"))
 async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
