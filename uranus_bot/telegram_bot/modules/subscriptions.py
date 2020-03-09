@@ -158,5 +158,8 @@ async def post_update(subscription, message, buttons):
     else:
         try:
             await BOT.send_message(subscription[0], message, buttons=buttons)
+        except ValueError:
+            entity = await BOT.get_entity(subscription[0])
+            await BOT.send_message(entity, message, buttons=buttons)
         except UserIsBlockedError:
             pass
