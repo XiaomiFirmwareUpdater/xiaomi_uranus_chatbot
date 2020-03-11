@@ -39,7 +39,7 @@ async def set_lang_keyboard(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(pattern=r'[a-z]{2}(?:-[A-Z]{2})? - \S* \(\S*\)'))
+@BOT.on(events.NewMessage(pattern=r'[a-z]{2}(?:-[A-Z]{2})? - \S* \(\S*(?:\s\S*)?\)'))
 async def set_lang_handler(event):
     """ Set the language based on the user selection"""
     lang = event.message.message.split(' ')[0]
