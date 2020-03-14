@@ -41,8 +41,7 @@ async def handler(event):
         if query_request in list(PROVIDER.twrp_data.keys()):
             result = await twrp_inline(event, query_request, PROVIDER.twrp_data, locale)
     if query == 'of':
-        if query_request in list(PROVIDER.orangefox_data.keys()):
-            result = await orangefox_inline(event, query_request, PROVIDER.orangefox_data, locale)
+        result = await orangefox_inline(event, query_request, locale)
     if query == 'pb':
         if query_request in str(PROVIDER.pitchblack_data):
             result = await pitchblack_inline(event, query_request, PROVIDER.pitchblack_data, locale)
