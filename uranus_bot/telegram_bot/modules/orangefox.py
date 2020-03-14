@@ -20,9 +20,9 @@ async def orangefox(event):
     if not device:
         return
     locale = DATABASE.get_locale(event.chat_id)
-    if device not in list(PROVIDER.orangefox_data.keys()):
+    try:
+        message, buttons = await orangefox_message(device, locale)
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except TypeError:
         await event.reply(await error_message(device, locale))
-        return
-    message, buttons = await orangefox_message(device, PROVIDER.orangefox_data, locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation

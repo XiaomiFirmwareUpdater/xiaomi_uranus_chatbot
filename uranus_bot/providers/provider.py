@@ -2,7 +2,6 @@
 import asyncio
 
 from uranus_bot import LOGGER
-from uranus_bot.providers.custom_recovery.orangefox.orangefox import load_orangefox_data
 from uranus_bot.providers.custom_recovery.pitchblack.pitchblack import load_pitchblack_data
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
@@ -43,7 +42,6 @@ class Provider:
         self.specs_data = []
         self.arb = ""
         self.loop.create_task(self.twrp_data_loop())
-        self.loop.create_task(self.orangefox_data_loop())
         self.loop.create_task(self.pitchblack_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
         self.loop.create_task(self.firmware_data_loop())
@@ -66,15 +64,6 @@ class Provider:
         while True:
             LOGGER.info("Refreshing twrp data")
             self.twrp_data = await load_twrp_data()
-            await asyncio.sleep(60 * 60 * 6)
-
-    async def orangefox_data_loop(self):
-        """
-        fetch devices' orangefox_data info every six hours
-        """
-        while True:
-            LOGGER.info("Refreshing orangefox data")
-            self.orangefox_data = await load_orangefox_data()
             await asyncio.sleep(60 * 60 * 6)
 
     async def pitchblack_data_loop(self):

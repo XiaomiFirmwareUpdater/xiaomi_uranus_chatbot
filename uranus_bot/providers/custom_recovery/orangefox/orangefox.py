@@ -1,4 +1,4 @@
-"""orangefox custom recovery downloads scraper"""
+"""orangefox custom recovery api wrapper"""
 import json
 
 from aiohttp import ClientSession
@@ -6,33 +6,27 @@ from aiohttp import ClientSession
 from uranus_bot.providers.utils.utils import fetch
 
 
-async def load_orangefox_data():
-    """
-    load orangefox devices info
-    """
-    async with ClientSession() as session:
-        raw = await fetch(session, 'https://files.orangefox.tech/Other/update_v2.json')
-        return json.loads(raw)
-
-
-async def get_orangefox(device, orangefox_data):
+async def get_orangefox(device):
     """
     fetch latest orangefox links for a device
     """
-    try:
-        info = orangefox_data[device]
-    except KeyError:
-        return
-    url = f'https://files.orangefox.tech/OrangeFox'
-    downloads = []
-    try:
-        stable = info['stable_build']
-        downloads.append({f"{stable}": f"{url}-Stable/{device}/{stable}"})
-    except KeyError:
-        pass
-    try:
-        beta = info['beta_build']
-        downloads.append({f"{beta}": f"{url}-Beta/{device}/{beta}"})
-    except KeyError:
-        pass
-    return {'name': info['fullname'], 'maintainer': info['maintainer'], 'downloads': downloads}
+    api_url = "https://api.orangefox.tech"
+    host = "https://files.orangefox.tech"
+    async with ClientSession() as session:
+        devices = json.loads(await fetch(session, f'{api_url}/all_codenames/'))
+        if device not in devices:
+            return
+        downloads = []
+        try:
+            stable = json.loads(await fetch(session, f'{api_url}/last_stable_release/{device}'))
+            downloads.append({f"{stable['file_name']}": f"{host}/" + "/".join(stable['file_path'].split('/')[5:])})
+        except json.decoder.JSONDecodeError:
+            pass
+        try:
+            beta = json.loads(await fetch(session, f'{api_url}/last_beta_release/{device}'))
+            downloads.append({f"{beta['file_name']}": f"{host}/" + "/".join(beta['file_path'].split('/')[5:])})
+        except json.decoder.JSONDecodeError:
+            pass
+        if downloads:
+            info = json.loads(await fetch(session, f'{api_url}/details/{device}'))
+            return {'name': info['fullname'], 'maintainer': info['maintainer'], 'downloads': downloads}

@@ -4,9 +4,11 @@ from discord import Embed
 from uranus_bot.providers.custom_recovery.orangefox.orangefox import get_orangefox
 
 
-async def orangefox_message(device, orangefox_data):
+async def orangefox_message(device):
     """ Generate discord message of orangefox command """
-    data = await get_orangefox(device, orangefox_data)
+    data = await get_orangefox(device)
+    if not data:
+        return
     embed = Embed(title=f'**Latest {data["name"]} (**`{device}`) **OrangeFox Builds**',
                   description=f'__Maintainer:__ {data["maintainer"]}')
     for item in data["downloads"]:

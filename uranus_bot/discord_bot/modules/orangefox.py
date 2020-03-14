@@ -8,7 +8,5 @@ from uranus_bot.messages.error_message import error_message
 @BOT.command(name='of')
 async def orangefox(ctx, device):
     """Send latest orangefox recovery downloads for a device Example: !of whyred"""
-    if device not in list(PROVIDER.orangefox_data.keys()):
-        await ctx.send(await error_message(device))
-        return
-    await ctx.send(None, embed=await orangefox_message(device, PROVIDER.orangefox_data))
+    embed = await orangefox_message(device)
+    await ctx.send(None, embed=embed) if embed else await ctx.send(await error_message(device))
