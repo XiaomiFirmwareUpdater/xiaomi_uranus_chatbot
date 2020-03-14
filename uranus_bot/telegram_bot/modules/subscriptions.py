@@ -1,7 +1,7 @@
 """ subscribe command handler """
 from asyncio import sleep
 from telethon import events
-from telethon.errors import UserIsBlockedError
+from telethon.errors import UserIsBlockedError, InputUserDeactivatedError
 
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
@@ -162,4 +162,6 @@ async def post_update(subscription, message, buttons):
             entity = await BOT.get_entity(subscription[0])
             await BOT.send_message(entity, message, buttons=buttons)
         except UserIsBlockedError:
+            pass
+        except InputUserDeactivatedError:
             pass

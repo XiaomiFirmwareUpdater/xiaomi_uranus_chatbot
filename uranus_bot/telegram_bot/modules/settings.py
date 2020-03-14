@@ -1,7 +1,7 @@
 """ Xiaomi Geeks Telegram Bot settings module"""
 
 from telethon import events, Button
-from telethon.errors import MessageNotModifiedError
+from telethon.errors import MessageNotModifiedError, ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import subscriptions_message, wrong_codename_message
@@ -72,7 +72,10 @@ async def show_settings(event):
     if not await subscription_allowed(event):
         return
     message, buttons = await settings_main_message(locale)
-    await event.respond(message, buttons=buttons)
+    try:
+        await event.respond(message, buttons=buttons)
+    except ChatWriteForbiddenError:
+        pass
     raise events.StopPropagation
 
 

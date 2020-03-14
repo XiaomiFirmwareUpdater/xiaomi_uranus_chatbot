@@ -1,5 +1,6 @@
 """ MIUI Updates commands handlers """
 from telethon import events
+from telethon.errors import ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import miui_message, \
@@ -30,7 +31,10 @@ async def miui(event):
         else PROVIDER.miui_fastboot_updates
     message, buttons = await miui_message(device, updates,
                                           PROVIDER.codenames_names, locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
+    try:
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except ChatWriteForbiddenError:
+        pass
     raise events.StopPropagation
 
 

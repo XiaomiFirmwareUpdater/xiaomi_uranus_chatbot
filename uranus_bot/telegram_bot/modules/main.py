@@ -2,6 +2,7 @@
 from base64 import b64decode
 
 from telethon import events
+from telethon.errors import ChatWriteForbiddenError, UserIsBlockedError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.welcome import welcome_message, welcome_in_pm_message
@@ -19,7 +20,10 @@ async def start(event):
     locale = DATABASE.get_locale(event.chat_id)
     if not event.is_private:
         message, buttons = await welcome_in_pm_message(locale)
-        await event.reply(message, buttons=buttons)
+        try:
+            await event.reply(message, buttons=buttons)
+        except ChatWriteForbiddenError:
+            pass
         return
     try:
         key = event.message.message.split('/start ')[1]
@@ -28,13 +32,19 @@ async def start(event):
     if event.message.message.endswith('help'):
         await show_help(event)
     elif key and key != 'start':
-        decoded = b64decode(key).decode()
-        if "/subscribe" in decoded:
-            event.message.message = decoded
-            await subscribe(event)
+        try:
+            decoded = b64decode(key).decode()
+            if "/subscribe" in decoded:
+                event.message.message = decoded
+                await subscribe(event)
+        except UnicodeDecodeError:
+            pass
     else:
         message, buttons = await welcome_message(locale)
-        await event.reply(message, buttons=buttons, link_preview=False)
+        try:
+            await event.reply(message, buttons=buttons, link_preview=False)
+        except UserIsBlockedError:
+            pass
     raise events.StopPropagation  # Other handlers won't have an event to work with
 
 

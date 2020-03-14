@@ -1,7 +1,7 @@
 """ Xiaomi Geeks Telegram Bot help module"""
 
 from telethon import events, Button
-from telethon.errors import MessageNotModifiedError
+from telethon.errors import MessageNotModifiedError, ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.help import help_main_message, miui_help_message, \
@@ -17,10 +17,16 @@ async def show_help(event):
     locale = DATABASE.get_locale(event.chat_id)
     if not event.is_private:
         message, buttons = await open_in_pm_message(locale)
-        await event.reply(message, buttons=buttons)
+        try:
+            await event.reply(message, buttons=buttons)
+        except ChatWriteForbiddenError:
+            pass
     else:
         message, buttons = await help_main_message(locale)
-        await event.reply(message, buttons=buttons)
+        try:
+            await event.reply(message, buttons=buttons)
+        except ChatWriteForbiddenError:
+            pass
     raise events.StopPropagation
 
 

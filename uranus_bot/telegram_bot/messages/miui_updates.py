@@ -108,8 +108,7 @@ async def miui_update_message(data, codenames_names, locale):
     message = LOCALIZE.get_text(locale, "miui_update").replace(
         "{device}", device).replace(
         "{codenames_names[device]}", codenames_names[device]).replace(
-        "{rom_type}", rom_type) + f"\n**{LOCALIZE.get_text(locale, 'Region')}:** {region}\n" \
-                                  f"**{LOCALIZE.get_text(locale, 'Size')}**: {data['size']}\n"
+        "{rom_type}", rom_type) + f"\n**{LOCALIZE.get_text(locale, 'Region')}:** {region}\n"
     buttons = [Button.url(f"{data['version']} | {data['android']}", url=data['download']),
                Button.url(LOCALIZE.get_text(locale, "MIUIUpdatesTracker"),
                           url="https://t.me/MIUIUpdatesTracker")]
