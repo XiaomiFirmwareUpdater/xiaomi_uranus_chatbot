@@ -1,7 +1,7 @@
 """ subscribe command handler """
 from asyncio import sleep
 from telethon import events
-from telethon.errors import UserIsBlockedError, InputUserDeactivatedError
+from telethon.errors import UserIsBlockedError, InputUserDeactivatedError, ChannelPrivateError
 
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
@@ -150,10 +150,10 @@ BOT.loop.create_task(post_vendor_updates())
 async def post_update(subscription, message, buttons):
     """Send update to subscribed chat"""
     if subscription[1] == 'channel':
-        entity = await BOT.get_entity(int('-100' + str(subscription[0])))
         try:
+            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
             await BOT.send_message(entity, message, buttons=buttons)
-        except UserIsBlockedError:
+        except (ChannelPrivateError, UserIsBlockedError):
             pass
     else:
         try:

@@ -1,7 +1,7 @@
 """ Xiaomi Geeks Telegram Bot settings module"""
 
 from telethon import events, Button
-from telethon.errors import MessageNotModifiedError, ChatWriteForbiddenError
+from telethon.errors import MessageNotModifiedError, ChatWriteForbiddenError, ChannelPrivateError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import subscriptions_message, wrong_codename_message
@@ -61,7 +61,10 @@ async def set_codename_handler(event):
         await event.reply(await wrong_codename_message(locale))
         return
     if DATABASE.set_codename(event.chat_id, device):
-        await event.reply(await set_codename_message(device, PROVIDER.codenames_names, locale))
+        try:
+            await event.reply(await set_codename_message(device, PROVIDER.codenames_names, locale))
+        except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
+            pass
     raise events.StopPropagation
 
 
@@ -74,7 +77,7 @@ async def show_settings(event):
     message, buttons = await settings_main_message(locale)
     try:
         await event.respond(message, buttons=buttons)
-    except ChatWriteForbiddenError:
+    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
         pass
     raise events.StopPropagation
 
@@ -86,7 +89,7 @@ async def settings_callback(event):
     message, buttons = await settings_main_message(locale)
     try:
         await event.edit(message, buttons=buttons)
-    except MessageNotModifiedError:
+    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
         pass
 
 
@@ -99,7 +102,7 @@ async def subscriptions_help(event):
         await event.edit(await subscriptions_message(subscriptions, locale), buttons=[
             [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")],
         ])
-    except MessageNotModifiedError:
+    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
         pass
 
 
@@ -113,7 +116,7 @@ async def lang_help(event):
                            data="change_language")],
             [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
         ])
-    except MessageNotModifiedError:
+    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
         pass
 
 
@@ -128,5 +131,5 @@ async def set_codename_help(event):
                            data="preferred_device_help")],
             [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
         ])
-    except MessageNotModifiedError:
+    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
         pass
