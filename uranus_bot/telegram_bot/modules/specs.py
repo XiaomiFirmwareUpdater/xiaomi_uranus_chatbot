@@ -1,5 +1,6 @@
 """ Specs command handler """
 from telethon import events
+from telethon.errors import ChannelPrivateError, ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
@@ -14,7 +15,10 @@ async def specs(event):
     locale = DATABASE.get_locale(event.chat_id)
     message = await specs_message(device, PROVIDER.specs_data, locale)
     if message:
-        await event.reply(message)
+        try:
+            await event.reply(message)
+        except (ChannelPrivateError, ChatWriteForbiddenError):
+            pass
     else:
         await event.reply(await error_message(device, locale))
     raise events.StopPropagation

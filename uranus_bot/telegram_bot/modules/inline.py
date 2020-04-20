@@ -37,51 +37,51 @@ async def handler(event):
     except IndexError:
         query_request = None
     locale = DATABASE.get_locale(event.chat_id)
-    if query == 'twrp':
+    if query == 'twrp' and query_request is not None:
         if query_request in list(PROVIDER.twrp_data.keys()):
             result = await twrp_inline(event, query_request, PROVIDER.twrp_data, locale)
-    if query == 'of':
+    if query == 'of' and query_request is not None:
         result = await orangefox_inline(event, query_request, locale)
-    if query == 'pb':
+    if query == 'pb' and query_request is not None:
         if query_request in str(PROVIDER.pitchblack_data):
             result = await pitchblack_inline(event, query_request, PROVIDER.pitchblack_data, locale)
-    if query == 'firmware':
+    if query == 'firmware' and query_request is not None:
         if query_request in PROVIDER.firmware_codenames:
             result = await firmware_inline(event, query_request, PROVIDER.codenames_names, locale)
-    if query == 'vendor':
+    if query == 'vendor' and query_request is not None:
         if query_request in PROVIDER.vendor_codenames:
             result = await vendor_inline(event, query_request, PROVIDER.codenames_names, locale)
-    if query == 'models':
+    if query == 'models' and query_request is not None:
         if query_request in list(PROVIDER.models_data.keys()):
             result = await models_inline(event, query_request, PROVIDER.models_data, locale)
-    if query == 'whatis':
+    if query == 'whatis' and query_request is not None:
         if query_request in list(PROVIDER.codenames_names.keys()):
             result = await whatis_inline(event, query_request, PROVIDER.codenames_names, locale)
     if query == 'codename':
         query_request = ' '.join(query_args[1:])
         if await get_codename(query_request, PROVIDER.names_codenames):
             result = await codename_inline(event, query_request, PROVIDER.names_codenames, locale)
-    if query == 'recovery':
+    if query == 'recovery' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
             result = await miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
                                        PROVIDER.codenames_names, locale)
-    if query == 'fastboot':
+    if query == 'fastboot' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
             result = await miui_inline(event, query_request, PROVIDER.miui_fastboot_updates,
                                        PROVIDER.codenames_names, locale)
-    if query == 'latest':
+    if query == 'latest' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
             result = await latest_miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
                                               PROVIDER.codenames_names, locale)
-    if query == 'archive':
+    if query == 'archive' and query_request is not None:
         if query_request in PROVIDER.miui_codenames:
             result = await archive_inline(event, query_request, PROVIDER.codenames_names, locale)
-    if query == 'eu':
+    if query == 'eu' and query_request is not None:
         if query_request in list(PROVIDER.eu_codenames.keys()):
             result = await eu_inline(event, query_request, PROVIDER.eu_data, PROVIDER.eu_codenames, locale)
-    if query == 'specs':
+    if query == 'specs' and query_request is not None:
         result = await specs_inline(event, query_request, PROVIDER.specs_data, locale)
-    if query == 'oss':
+    if query == 'oss' and query_request is not None:
         result = await oss_inline(event, query_request, locale)
     if query == 'unlockbl':
         result = await unlockbl_inline(event, locale)

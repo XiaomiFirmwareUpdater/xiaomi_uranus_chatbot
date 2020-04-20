@@ -23,7 +23,7 @@ async def orangefox_message(device, locale):
 async def orangefox_inline(event, device, locale):
     """ Generate telegram result of orangefox inline query """
     builder = event.builder
-    message, buttons = await orangefox_message(device, orangefox_data, locale)
+    message, buttons = await orangefox_message(device, locale)
     result = builder.article(
         LOCALIZE.get_text(locale, "orangefox_inline").replace("{device}", device),
         text=message,

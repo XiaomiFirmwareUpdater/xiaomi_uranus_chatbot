@@ -13,6 +13,7 @@ async def get_orangefox(device):
     api_url = "https://api.orangefox.tech"
     host = "https://files.orangefox.tech"
     async with ClientSession() as session:
+        devices = None
         try:
             devices = json.loads(await fetch(session, f'{api_url}/all_codenames/'))
         except json.decoder.JSONDecodeError:

@@ -1,5 +1,6 @@
 """ TWRP command handler """
 from telethon import events
+from telethon.errors import ChannelPrivateError, ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
@@ -24,5 +25,8 @@ async def twrp(event):
         await event.reply(await error_message(device, locale))
         return
     message, buttons = await twrp_message(device, PROVIDER.twrp_data, locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
+    try:
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except (ChannelPrivateError, ChatWriteForbiddenError):
+        pass
     raise events.StopPropagation
