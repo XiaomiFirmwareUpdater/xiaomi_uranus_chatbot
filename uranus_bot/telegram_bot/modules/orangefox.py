@@ -1,5 +1,6 @@
 """ OrangeFox command handler """
 from telethon import events
+from telethon.errors import ChatWriteForbiddenError, ChannelPrivateError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
@@ -23,6 +24,6 @@ async def orangefox(event):
     try:
         message, buttons = await orangefox_message(device, locale)
         await event.reply(message, buttons=buttons, link_preview=False)
-    except TypeError:
+    except (ChannelPrivateError, ChatWriteForbiddenError, TypeError):
         await event.reply(await error_message(device, locale))
     raise events.StopPropagation

@@ -93,6 +93,8 @@ async def post_firmware_updates():
                     for update in updates:
                         chat = BOT.get_user(subscription[0]) \
                             if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        if not chat:
+                            continue
                         await chat.send(
                             None, embed=Embed(title=
                                               f"**New Firmware update available for {codename}**",
@@ -122,6 +124,8 @@ async def post_miui_updates():
                             embed = await miui_update_message(update, PROVIDER.codenames_names)
                             chat = BOT.get_user(subscription[0]) \
                                 if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                            if not chat:
+                                continue
                             await chat.send(None, embed=embed)
                             await sleep(2)
             await sleep(65 * 60)
