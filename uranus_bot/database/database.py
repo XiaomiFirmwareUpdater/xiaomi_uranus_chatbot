@@ -33,7 +33,7 @@ class Database:
                                  'name': sender_info["name"],
                                  'type': sender_info["type"]})
         except Error as err:
-            DB_LOGGER.error(err)
+            DB_LOGGER.error(f"DB Error while adding a chat to the database:\n{err}\n{sender_info}")
         finally:
             self.conn.commit()
 
@@ -55,7 +55,7 @@ class Database:
                                  'device': device})
             return True
         except Error as err:
-            DB_LOGGER.error(err)
+            DB_LOGGER.error(f"DB Error while adding a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
         finally:
             self.conn.commit()
 
@@ -75,7 +75,7 @@ class Database:
                 AND device=:device""",
                          {'id': sender_info["id"], 'sub_type': sub_type, 'device': device})
         except Error as err:
-            DB_LOGGER.error(err)
+            DB_LOGGER.error(f"DB Error while removing a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
         finally:
             self.conn.commit()
 
@@ -128,7 +128,7 @@ class Database:
             VALUES(:chat_id, :lang)""", {'chat_id': chat_id, 'lang': lang})
             return True
         except Error as err:
-            DB_LOGGER.error(err)
+            DB_LOGGER.error(f"DB Error while setting locale ({lang}) for a chat ({chat_id}):\n{err}")
         finally:
             self.conn.commit()
 
@@ -145,7 +145,7 @@ class Database:
             VALUES(:chat_id, :device)""", {'chat_id': chat_id, 'device': device})
             return True
         except Error as err:
-            DB_LOGGER.error(err)
+            DB_LOGGER.error(f"DB Error while setting codename ({device}) for a chat ({chat_id}):\n{err}")
         finally:
             self.conn.commit()
 
