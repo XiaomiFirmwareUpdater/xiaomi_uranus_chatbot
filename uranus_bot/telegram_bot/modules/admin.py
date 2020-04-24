@@ -1,12 +1,16 @@
 """Xiaomi Geeks Telegram Bot - admin module"""
+import pickle
 from asyncio import sleep
 from datetime import datetime
+from os import execl
+from sys import executable
 
 from telethon import events
 
 from uranus_bot import TG_BOT_ADMINS, PARENT_DIR, TG_BOT_DB
 from uranus_bot.messages.admin import stats_message
 from uranus_bot.telegram_bot import DATABASE, TG_LOGGER
+from uranus_bot.telegram_bot import __package__ as main_package
 from uranus_bot.telegram_bot.tg_bot import BOT
 
 
@@ -48,3 +52,12 @@ async def backup_database():
 
 
 BOT.loop.create_task(backup_database())
+
+
+@BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern='/restart'))
+async def restart_handler(event):
+    message = await event.respond("Restarting")
+    chat_info = {'chat': message.chat_id, 'message': message.id}
+    with open(f"restart.pickle", "wb") as out:
+        pickle.dump(chat_info, out)
+    execl(executable, executable, "-m", main_package)

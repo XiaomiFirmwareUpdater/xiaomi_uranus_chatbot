@@ -1,6 +1,9 @@
 #!/usr/bin/env python3.7
 """ Xiaomi Geeks Telegram Bot"""
 import asyncio
+import pickle
+
+from os import path, remove
 
 from telethon.sync import TelegramClient
 
@@ -35,5 +38,11 @@ async def run():
     if WITH_EXTRA:
         from uranus_bot.telegram_bot.bot_private.private import load_private_modules
         await load_private_modules()
+    # Check if the bot is restarting
+    if path.exists('restart.pickle'):
+        with open('restart.pickle', 'rb') as status:
+            restart_message = pickle.load(status)
+        await BOT.edit_message(restart_message['chat'], restart_message['message'], 'Restarted Successfully!')
+        remove('restart.pickle')
     async with BOT:
         await BOT.run_until_disconnected()
