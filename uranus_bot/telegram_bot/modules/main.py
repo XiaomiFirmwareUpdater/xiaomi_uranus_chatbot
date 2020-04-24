@@ -12,7 +12,7 @@ from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 from uranus_bot.telegram_bot.utils.chat import get_user_info
 
 
-@BOT.on(events.NewMessage(pattern=f"/start$|/start@{BOT_INFO['username']}"))
+@BOT.on(events.NewMessage(pattern=f"/start(?: )?(?:@{BOT_INFO['username']})?(?: )?(\\S+)?"))
 async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
@@ -63,7 +63,6 @@ async def on_new_message(event):
     # print(event.message.text)
     if not DATABASE.is_known_chat(event.chat_id):
         DATABASE.add_chat_to_db(await get_user_info(event))
-
 
 # Add new chats to database
 # @BOT.on(events.chataction.ChatAction)
