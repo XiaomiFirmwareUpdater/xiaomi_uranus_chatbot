@@ -1,5 +1,6 @@
 """Xiaomi.eu downloads scraper"""
 import json
+import re
 import xml.etree.ElementTree as eT
 
 from aiohttp import ClientSession
@@ -39,13 +40,13 @@ async def get_eu(codename, eu_data, devices):
     weekly_link = ""
     device = devices[codename][1]
     try:
-        stable_link = [i for i in eu_data if device == i.split('/')[-2].split('_')[2]
-                       and i.split('/')[-2].split('_')[-2].startswith('V')][0]
+        stable_link = [i for i in eu_data if re.search(device, i)
+                       and re.search(f'{device}_V', i)][0]
     except IndexError:
         pass
     try:
-        weekly_link = [i for i in eu_data if device == i.split('/')[-2].split('_')[2]
-                       and not i.split('/')[-2].split('_')[-2].startswith('V')][0]
+        weekly_link = [i for i in eu_data if re.search(device, i)
+                       and not re.search(f'{device}_V', i)][0]
     except IndexError:
         pass
     links = [stable_link, weekly_link]
