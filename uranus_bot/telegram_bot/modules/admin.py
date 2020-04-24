@@ -1,6 +1,7 @@
 """Xiaomi Geeks Telegram Bot - admin module"""
 import pickle
-from asyncio import sleep
+from asyncio import sleep, create_subprocess_shell
+from asyncio.subprocess import PIPE
 from datetime import datetime
 from os import execl
 from sys import executable
@@ -54,10 +55,27 @@ async def backup_database():
 BOT.loop.create_task(backup_database())
 
 
+@BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern='/update'))
+async def update_handler(event):
+    message = await event.respond("Updating...")
+    process = await create_subprocess_shell("git pull origin master", stdin=PIPE, stdout=PIPE)
+    output = await process.stdout.read()
+    output = output.decode().strip()
+    await process.wait()
+    await message.edit(output)
+    await sleep(2)
+    await message.edit("Restarting...")
+    await restart(message)
+
+
 @BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern='/restart'))
 async def restart_handler(event):
-    message = await event.respond("Restarting")
-    chat_info = {'chat': message.chat_id, 'message': message.id}
+    restart_message = await event.respond("Restarting...")
+    await restart(restart_message)
+
+
+async def restart(restart_message):
+    chat_info = {'chat': restart_message.chat_id, 'message': restart_message.id}
     with open(f"restart.pickle", "wb") as out:
         pickle.dump(chat_info, out)
     execl(executable, executable, "-m", main_package)
