@@ -1,5 +1,6 @@
 """ Miscellaneous commands handler """
 from telethon import events
+from telethon.errors import ChannelPrivateError, ChatWriteForbiddenError, UserIsBlockedError
 from telethon.extensions import html
 
 from uranus_bot.telegram_bot import DATABASE
@@ -12,7 +13,10 @@ from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 async def arb(event):
     """Send a message when the command /arb is sent."""
     caption = await arb_message()
-    await event.reply(caption, file=PROVIDER.arb, parse_mode=html)
+    try:
+        await event.reply(caption, file=PROVIDER.arb, parse_mode=html)
+    except (ChannelPrivateError, ChatWriteForbiddenError, UserIsBlockedError):
+        pass
     raise events.StopPropagation
 
 
@@ -21,7 +25,10 @@ async def unlockbl(event):
     """Send a message when the command /unlockbl is sent."""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await unlockbl_message(locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
+    try:
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except (ChannelPrivateError, ChatWriteForbiddenError, UserIsBlockedError):
+        pass
     raise events.StopPropagation
 
 
@@ -30,7 +37,10 @@ async def tools(event):
     """Send a message when the command /tools is sent."""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await tools_message(locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
+    try:
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except (ChannelPrivateError, ChatWriteForbiddenError, UserIsBlockedError):
+        pass
     raise events.StopPropagation
 
 
@@ -39,5 +49,8 @@ async def guides(event):
     """Send a message when the command /guides is sent."""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await guides_message(locale)
-    await event.reply(message, buttons=buttons, link_preview=False)
+    try:
+        await event.reply(message, buttons=buttons, link_preview=False)
+    except (ChannelPrivateError, ChatWriteForbiddenError, UserIsBlockedError):
+        pass
     raise events.StopPropagation
