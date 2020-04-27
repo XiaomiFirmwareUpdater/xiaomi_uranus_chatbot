@@ -62,7 +62,8 @@ async def update_handler(event):
     output = await process.stdout.read()
     output = output.decode().strip()
     await process.wait()
-    await message.edit(output)
+    if output:
+        await message.edit(output)
     await sleep(2)
     await message.edit("Restarting...")
     await restart(message)
