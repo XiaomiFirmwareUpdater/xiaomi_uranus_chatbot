@@ -26,7 +26,7 @@ class Database:
         if self.is_known_chat(sender_info["id"]):
             return
         try:
-            self.cursor.execute(f"""INSERT INTO chats (id, username, name, type)
+            self.cursor.execute(f"""INSERT OR REPLACE INTO chats (id, username, name, type)
             VALUES(:id, :username, :name, :type)""",
                                 {'id': sender_info["id"],
                                  'username': sender_info["username"],
