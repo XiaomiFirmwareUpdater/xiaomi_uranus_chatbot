@@ -59,7 +59,7 @@ async def load_recovery_data():
                                 Loader=yaml.FullLoader)
         weekly_roms = yaml.load(await fetch(
             session, f'{GITHUB_ORG}/xiaomifirmwareupdater.github.io/master/'
-                     f'data/devices/miui11.yml'),
+                     f'data/devices/miui12.yml'),
                                 Loader=yaml.FullLoader)
         weekly_roms = await filter_recovery_weekly(weekly_roms)
         eol_stable_roms = yaml.load(await fetch(
