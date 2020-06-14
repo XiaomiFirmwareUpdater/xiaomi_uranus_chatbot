@@ -23,12 +23,12 @@ async def get_orangefox(device):
         downloads = []
         try:
             stable = json.loads(await fetch(session, f'{api_url}/device/{device}/releases/stable/last'))
-            downloads.append({f"{stable['file_name']}": f"{host}/" + "/".join(stable['file_path'].split('/')[5:])})
+            downloads.append({f"{stable['file_name']}": stable['url']})
         except json.decoder.JSONDecodeError:
             pass
         try:
             beta = json.loads(await fetch(session, f'{api_url}/device/{device}/releases/beta/last'))
-            downloads.append({f"{beta['file_name']}": f"{host}/" + "/".join(beta['file_path'].split('/')[5:])})
+            downloads.append({f"{beta['file_name']}": beta['url']})
         except json.decoder.JSONDecodeError:
             pass
         if downloads:
