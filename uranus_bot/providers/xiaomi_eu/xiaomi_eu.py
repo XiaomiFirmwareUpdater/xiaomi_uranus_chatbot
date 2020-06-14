@@ -40,12 +40,12 @@ async def get_eu(codename, eu_data, devices):
     weekly_link = ""
     device = devices[codename][1]
     try:
-        stable_link = [i for i in eu_data if re.search(device, i)
+        stable_link = [i for i in eu_data if re.search(f"{device}_", i)
                        and re.search(f'{device}_V', i)][0]
     except IndexError:
         pass
     try:
-        weekly_link = [i for i in eu_data if re.search(device, i)
+        weekly_link = [i for i in eu_data if re.search(f"{device}_", i)
                        and not re.search(f'{device}_V', i)][0]
     except IndexError:
         pass
