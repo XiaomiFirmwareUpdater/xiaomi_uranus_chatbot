@@ -10,73 +10,32 @@ from uranus_bot.providers.utils.utils import fetch
 DIFF_LOGGER = logging.getLogger(__name__)
 
 
-async def load_fastboot_data():
+# async def filter_recovery_weekly(weekly_roms: list) -> list:
+#     """ Filter weekly recovery roms data to get latest only """
+#     codenames = [i['codename'] for i in weekly_roms]
+#     updates = []
+#     for item in weekly_roms:
+#         for codename in codenames:
+#             if item['codename'] == codename and codename not in str(updates):
+#                 updates.append(item)
+#     return updates
+
+
+async def load_roms_data():
     """
-    load latest fasboot ROMs data form MIUI tracker yaml files
-    :returns data - a list with merged stable, weekly, current, and EOL data
-    """
-    async with ClientSession() as session:
-        stable_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'stable_fastboot/stable_fastboot.yml'),
-                                Loader=yaml.FullLoader)
-        weekly_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'weekly_fastboot/weekly_fastboot.yml'),
-                                Loader=yaml.FullLoader)
-        eol_stable_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'EOL/stable_fastboot/stable_fastboot.yml'),
-                                    Loader=yaml.FullLoader)
-        eol_weekly_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'EOL/weekly_fastboot/weekly_fastboot.yml'),
-                                    Loader=yaml.FullLoader)
-        data = [*stable_roms, *weekly_roms, *eol_stable_roms, *eol_weekly_roms]
-        return data
-
-
-async def filter_recovery_weekly(weekly_roms: list) -> list:
-    """ Filter weekly recovery roms data to get latest only """
-    codenames = [i['codename'] for i in weekly_roms]
-    updates = []
-    for item in weekly_roms:
-        for codename in codenames:
-            if item['codename'] == codename and codename not in str(updates):
-                updates.append(item)
-    return updates
-
-
-async def load_recovery_data():
-    """
-    load latest recovery ROMs data form MIUI tracker yaml files
-    :returns data - a list with merged stable, weekly, current, and EOL data
+    load recovery ROMs data form MIUI tracker yaml file
+    :returns data - a list with latest updates
     """
     async with ClientSession() as session:
-        stable_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'stable_recovery/stable_recovery.yml'),
-                                Loader=yaml.FullLoader)
-        weekly_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/xiaomifirmwareupdater.github.io/master/'
-                     f'data/devices/miui12.yml'),
-                                Loader=yaml.FullLoader)
-        weekly_roms = await filter_recovery_weekly(weekly_roms)
-        eol_stable_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'EOL/stable_recovery/stable_recovery.yml'),
-                                    Loader=yaml.FullLoader)
-        eol_weekly_roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/master/'
-                     f'EOL/weekly_recovery/weekly_recovery.yml'),
-                                    Loader=yaml.FullLoader)
-        data = [*stable_roms, *weekly_roms, *eol_stable_roms, *eol_weekly_roms]
-        return data
+        roms = yaml.load(await fetch(
+            session, f'{GITHUB_ORG}/miui-updates-tracker/V3/data/latest.yml'),
+                         Loader=yaml.FullLoader)
+        return roms
 
 
-async def get_miui(device, updates):
+async def get_miui(device, method, updates):
     """ Get miui from for a device """
-    return [i for i in updates if device == i['codename'].split('_')[0]]
+    return [i for i in updates if i['codename'].split('_')[0] == device and i['method'] == method]
 
 
 async def diff_miui_updates(new, old):
@@ -99,7 +58,7 @@ async def diff_miui_updates(new, old):
                         is_new = True  # new miui sub-version
                     elif int(new_version_array[2]) > int(old_version_array[2]):
                         is_new = True  # new miui minor version
-                elif "V" not in item['version'] and "V" not in old_item['version']\
+                elif "V" not in item['version'] and "V" not in old_item['version'] \
                         and item['version'][0].isdigit() and old_item['version'][0].isdigit():  # miui weekly
                     new_version_array = item['version'].split('.')
                     old_version_array = old_item['version'].split('.')

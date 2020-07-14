@@ -110,25 +110,23 @@ BOT.loop.create_task(post_firmware_updates())
 async def post_miui_updates():
     """ Send miui updates to subscribers every 65 minutes """
     while True:
-        recovery_updates = await diff_miui_updates(PROVIDER.miui_recovery_updates, PROVIDER.bak_miui_recovery_updates)
-        fastboot_updates = await diff_miui_updates(PROVIDER.miui_fastboot_updates, PROVIDER.bak_miui_fastboot_updates)
-        for new_updates in [recovery_updates, fastboot_updates]:
-            if not new_updates:
-                await sleep(65 * 60)
-                continue
-            for codename, updates in new_updates.items():
-                subscriptions = DATABASE.get_subscriptions('miui', codename)
-                if subscriptions:
-                    for subscription in subscriptions:
-                        for update in updates:
-                            embed = await miui_update_message(update, PROVIDER.codenames_names)
-                            chat = BOT.get_user(subscription[0]) \
-                                if subscription[1] == "user" else BOT.get_channel(subscription[0])
-                            if not chat:
-                                continue
-                            await chat.send(None, embed=embed)
-                            await sleep(2)
+        new_updates = await diff_miui_updates(PROVIDER.miui_updates, PROVIDER.bak_miui_updates)
+        if not new_updates:
             await sleep(65 * 60)
+            continue
+        for codename, updates in new_updates.items():
+            subscriptions = DATABASE.get_subscriptions('miui', codename)
+            if subscriptions:
+                for subscription in subscriptions:
+                    for update in updates:
+                        embed = await miui_update_message(update, PROVIDER.codenames_names)
+                        chat = BOT.get_user(subscription[0]) \
+                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        if not chat:
+                            continue
+                        await chat.send(None, embed=embed)
+                        await sleep(2)
+        await sleep(65 * 60)
 
 
 BOT.loop.create_task(post_miui_updates())

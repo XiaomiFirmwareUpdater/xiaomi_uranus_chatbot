@@ -12,9 +12,8 @@ async def miui_updates(ctx, device):
     if device not in PROVIDER.miui_codenames:
         await ctx.send(await error_message(device))
         return
-    updates = PROVIDER.miui_recovery_updates if ctx.invoked_with == "recovery" \
-        else PROVIDER.miui_fastboot_updates
-    await ctx.send(None, embed=await miui_message(device, updates,
+    method = "Recovery" if ctx.invoked_with == "recovery" else "Fastboot"
+    await ctx.send(None, embed=await miui_message(device, method, PROVIDER.miui_updates,
                                                   PROVIDER.codenames_names))
 
 
@@ -34,4 +33,4 @@ async def latest(ctx, device):
         await ctx.send(await error_message(device))
         return
     await ctx.send(None, embed=await latest_miui_message(
-        device, PROVIDER.miui_recovery_updates, PROVIDER.codenames_names))
+        device, PROVIDER.miui_updates, PROVIDER.codenames_names))

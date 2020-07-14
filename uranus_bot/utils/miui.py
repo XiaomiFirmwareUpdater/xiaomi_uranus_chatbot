@@ -20,6 +20,8 @@ async def get_region(filename, codename, version):
         region = 'India'
     elif 'ru_global' in filename or 'ru_global' in codename or 'RU' in version:
         region = 'Russia'
+    elif 'tr_global' in filename or 'tr_global' in codename or 'TR' in version:
+        region = 'Turkey'
     elif 'global' in filename or 'global' in codename or 'MI' in version:
         region = 'Global'
     else:

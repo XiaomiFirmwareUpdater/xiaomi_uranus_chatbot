@@ -20,7 +20,6 @@ from uranus_bot.telegram_bot.messages.xiaomi_oss import oss_inline
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 
 
-
 @BOT.on(events.InlineQuery)
 async def handler(event):
     """Handle inline queries"""
@@ -63,15 +62,15 @@ async def handler(event):
             result = await codename_inline(event, query_request, PROVIDER.names_codenames, locale)
     if query == 'recovery' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
-            result = await miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
+            result = await miui_inline(event, query_request, "Recovery", PROVIDER.miui_updates,
                                        PROVIDER.codenames_names, locale)
     if query == 'fastboot' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
-            result = await miui_inline(event, query_request, PROVIDER.miui_fastboot_updates,
+            result = await miui_inline(event, query_request, "Fastboot", PROVIDER.miui_updates,
                                        PROVIDER.codenames_names, locale)
     if query == 'latest' and query_request is not None:
         if query_request in list(PROVIDER.miui_codenames):
-            result = await latest_miui_inline(event, query_request, PROVIDER.miui_recovery_updates,
+            result = await latest_miui_inline(event, query_request, PROVIDER.miui_updates,
                                               PROVIDER.codenames_names, locale)
     if query == 'archive' and query_request is not None:
         if query_request in PROVIDER.miui_codenames:

@@ -16,7 +16,7 @@ async def miui(event):
     try:
         device = event.pattern_match.group(1).lower()
     except (IndexError, AttributeError):
-        if event.message.message.endswith('/recovery')\
+        if event.message.message.endswith('/recovery') \
                 or event.message.message.endswith('/fastboot'):
             device = DATABASE.get_codename(event.chat_id)
         else:
@@ -27,9 +27,8 @@ async def miui(event):
     if device not in list(PROVIDER.miui_codenames):
         await event.reply(await error_message(device, locale))
         return
-    updates = PROVIDER.miui_recovery_updates if "recovery" in event.pattern_match.string \
-        else PROVIDER.miui_fastboot_updates
-    message, buttons = await miui_message(device, updates,
+    method = "Recovery" if "recovery" in event.pattern_match.string else "Fastboot"
+    message, buttons = await miui_message(device, method, PROVIDER.miui_updates,
                                           PROVIDER.codenames_names, locale)
     try:
         await event.reply(message, buttons=buttons, link_preview=False)
@@ -75,7 +74,7 @@ async def latest(event):
     if device not in list(PROVIDER.miui_codenames):
         await event.reply(await error_message(device, locale))
         return
-    message = await latest_miui_message(device, PROVIDER.miui_recovery_updates,
+    message = await latest_miui_message(device, PROVIDER.miui_updates,
                                         PROVIDER.codenames_names, locale)
     await event.reply(message)
     raise events.StopPropagation
