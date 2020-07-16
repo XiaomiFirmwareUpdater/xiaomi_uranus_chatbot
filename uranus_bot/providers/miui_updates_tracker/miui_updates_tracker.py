@@ -28,7 +28,7 @@ async def load_roms_data():
     """
     async with ClientSession() as session:
         roms = yaml.load(await fetch(
-            session, f'{GITHUB_ORG}/miui-updates-tracker/V3/data/latest.yml'),
+            session, f'{GITHUB_ORG}/miui-updates-tracker/master/data/latest.yml'),
                          Loader=yaml.FullLoader)
         return roms
 
