@@ -144,7 +144,7 @@ class Provider:
             LOGGER.info("Refreshing miui data")
             self.bak_miui_updates = self.miui_updates
             self.miui_updates = await load_roms_data()
-            await asyncio.sleep(60 * 60)
+            await asyncio.sleep(60 * 30)
 
     async def eu_codenames_loop(self):
         """
