@@ -2,7 +2,7 @@
 from telethon import Button
 
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import get_miui
-from uranus_bot.utils.miui import get_region, get_type, get_branch
+from uranus_bot.utils.miui import get_region, get_type
 from uranus_bot.telegram_bot.tg_bot import LOCALIZE
 from uranus_bot import XFU_WEBSITE
 
@@ -77,8 +77,7 @@ async def latest_miui_message(device, updates, codenames_names, locale):
         "{device}", device) + ":\n"
     for i in data:
         version = i['version']
-        branch = LOCALIZE.get_text(locale, await get_branch(version))
-        message += f"{i['name']} {branch}: `{version}`\n"
+        message += f"{i['name']} {i['branch']}: `{version}`\n"
     return message
 
 

@@ -2,7 +2,7 @@
 from discord import Embed
 
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import get_miui
-from uranus_bot.utils.miui import get_region, get_type, get_branch
+from uranus_bot.utils.miui import get_region, get_type
 from uranus_bot import XFU_WEBSITE
 
 
@@ -36,8 +36,7 @@ async def latest_miui_message(device, updates, codenames_names):
     description = ""
     for i in data:
         version = i['version']
-        branch = await get_branch(version)
-        description += f"{i['name']} {branch}: `{version}`\n"
+        description += f"{i['name']} {i['branch']}: `{version}`\n"
     embed = Embed(title=f"**Latest MIUI Versions for {codenames_names[device]}** (`{device}`)",
                   description=description)
     return embed
@@ -50,7 +49,7 @@ async def miui_update_message(data, codenames_names):
     region = await get_region(data['filename'], device, data['version'])
     description = f"**Region:** {region} \n" \
                   f"**Size**: {data['size']}"
-    embed = Embed(title=f"**New MIUI {rom_type} Update Available for " \
-                        f"{codenames_names[device]}** (`{device}`)!", description=description)
+    embed = Embed(title=f"**New MIUI {rom_type} Update Available for {codenames_names[device]}** (`{device}`)!",
+                  description=description)
     embed.add_field(name=f"{data['version']} | {data['android']}", value=f"[Download]({data['link']})")
     return embed
