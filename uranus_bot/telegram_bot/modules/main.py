@@ -12,13 +12,13 @@ from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 from uranus_bot.telegram_bot.utils.chat import get_user_info
 
 
-@BOT.on(events.NewMessage(pattern=f"/start(?: )?(?:@{BOT_INFO['username']})?(?: )?(\\S+)?"))
+@BOT.on(events.NewMessage(pattern=r"/start(?: )?(@{})?(?:\s+)?".format(BOT_INFO['username'])))
 async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
     # DATABASE.add_chat_to_db(sender_info)
     locale = DATABASE.get_locale(event.chat_id)
-    if not event.is_private:
+    if event.is_group and event.pattern_match.group(1):
         message, buttons = await welcome_in_pm_message(locale)
         try:
             await event.reply(message, buttons=buttons)
@@ -39,7 +39,7 @@ async def start(event):
                 await subscribe(event)
         except UnicodeDecodeError:
             pass
-    else:
+    elif event.is_private:
         message, buttons = await welcome_message(locale)
         try:
             await event.reply(message, buttons=buttons, link_preview=False)
