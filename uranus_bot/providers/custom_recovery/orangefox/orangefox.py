@@ -1,36 +1,29 @@
-"""orangefox custom recovery api wrapper"""
-import json
+"""orangefox custom recovery"""
+from typing import Optional
 
-from aiohttp import ClientSession
-
-from uranus_bot.providers.utils.utils import fetch
+from orangefoxapi import ReleaseType
+from orangefoxapi.models import Devices, Releases, Release, Device
+from orangefoxapi.asynchronous import OrangeFoxAsyncAPI
 
 
 async def get_orangefox(device):
     """
     fetch latest orangefox links for a device
     """
-    api_url = "https://api.orangefox.download/v2"
-    host = "https://files.orangefox.tech"
-    async with ClientSession() as session:
-        devices = None
-        try:
-            devices = json.loads(await fetch(session, f'{api_url}/device'))
-        except json.decoder.JSONDecodeError:
-            device = None
-        if device not in [i['codename'] for i in devices]:
-            return
-        downloads = []
-        try:
-            stable = json.loads(await fetch(session, f'{api_url}/device/{device}/releases/stable/last'))
-            downloads.append({f"{stable['file_name']}": stable['url']})
-        except json.decoder.JSONDecodeError:
-            pass
-        try:
-            beta = json.loads(await fetch(session, f'{api_url}/device/{device}/releases/beta/last'))
-            downloads.append({f"{beta['file_name']}": beta['url']})
-        except json.decoder.JSONDecodeError:
-            pass
-        if downloads:
-            info = json.loads(await fetch(session, f'{api_url}/device/{device}'))
-            return {'name': info['fullname'], 'maintainer': info['maintainer']['name'], 'downloads': downloads}
+    api = OrangeFoxAsyncAPI()
+    devices: Devices = await api.devices(oem_name='Xiaomi')
+    if device not in [i.codename for i in devices.data]:
+        return
+    device: Optional[Device] = await api.device(codename=device)
+    if not device:
+        return
+    downloads = []
+    for releases_type in [ReleaseType.stable, ReleaseType.beta]:
+        releases: Releases = await api.releases(limit=1, type=releases_type)
+        if releases.data:
+            release: Optional[Release] = await api.release(id=releases.data[0].id)
+            if release:
+                downloads.append({f"{release.filename}": release.url})
+    await api.close()
+    if downloads:
+        return {'name': device.full_name, 'maintainer': device.maintainer.name, 'downloads': downloads}
