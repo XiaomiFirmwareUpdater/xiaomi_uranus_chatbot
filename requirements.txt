@@ -9,7 +9,7 @@ PyYAML
 # aiohttp
 aiohttp[speedups]
 # sentry logging
-sentry-sdk==0.20.2
+sentry-sdk==0.20.3
 aiocontextvars
 # discord bot
 discord.py
