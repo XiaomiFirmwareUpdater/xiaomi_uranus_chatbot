@@ -19,7 +19,7 @@ async def get_orangefox(device):
         return
     downloads = []
     for releases_type in [ReleaseType.stable, ReleaseType.beta]:
-        releases: Releases = await api.releases(limit=1, type=releases_type)
+        releases: Releases = await api.releases(device_id=device.id, limit=1, type=releases_type)
         if releases.data:
             release: Optional[Release] = await api.release(id=releases.data[0].id)
             if release:
