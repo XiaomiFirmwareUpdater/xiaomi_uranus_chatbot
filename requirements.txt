@@ -1,7 +1,7 @@
 # Dependecies for web scraping
 bs4
 # Telethon Dependecies
-Telethon==1.21
+Telethon==1.21.1
 cryptg
 pillow
 # YAML
