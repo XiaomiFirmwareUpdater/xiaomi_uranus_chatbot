@@ -45,12 +45,20 @@ This chat bot aims to provide easy access for all the stuff that Xiaomi users ne
 
 ### Running this bot on your own:
 
-- Make sure you have python3.7+ installed.
+- Make sure you have python3.8+ installed.
 
 - Install the required libs.
   
+  * Using poetry:
+ 
   ```
-  pip3 install -r requirements.txt
+  poetry install
+  ```
+  
+  * using pip:
+
+  ```
+  pip3 install .
   ```
 
 - Copy the bot config file and rename it to config.yml, then fill the required placeholders.
