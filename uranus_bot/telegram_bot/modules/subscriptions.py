@@ -1,10 +1,8 @@
 """ subscribe command handler """
 from asyncio import sleep
 from telethon import events
-from telethon.errors import UserIsBlockedError, InputUserDeactivatedError, ChannelPrivateError, ChatWriteForbiddenError
 
 from uranus_bot.providers.firmware.firmware import diff_updates
-from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.firmware import firmware_update_message
 from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message, \
@@ -12,6 +10,7 @@ from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message, \
 from uranus_bot.telegram_bot.messages.vendor import vendor_update_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
 from uranus_bot.telegram_bot.utils.chat import get_user_info, is_group_admin
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern=r'/subscribe (firmware|miui|vendor) (\w+)'))
@@ -100,6 +99,7 @@ async def post_firmware_updates():
 
 BOT.loop.create_task(post_firmware_updates())
 
+
 #
 # async def post_miui_updates():
 #     """ Send miui updates to subscribers every 65 minutes """
@@ -145,14 +145,12 @@ async def post_vendor_updates():
 BOT.loop.create_task(post_vendor_updates())
 
 
+@exception_handler
 async def post_update(subscription, message, buttons):
     """Send update to subscribed chat"""
     if subscription[1] == 'channel':
-        try:
-            entity = await BOT.get_entity(int('-100' + str(subscription[0])))
-            await BOT.send_message(entity, message, buttons=buttons)
-        except (ChannelPrivateError, UserIsBlockedError, ChatWriteForbiddenError):
-            pass
+        entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+        await BOT.send_message(entity, message, buttons=buttons)
     else:
         try:
             await BOT.send_message(subscription[0], message, buttons=buttons)
@@ -162,7 +160,3 @@ async def post_update(subscription, message, buttons):
                 await BOT.send_message(entity, message, buttons=buttons)
             except ValueError:
                 pass
-        except UserIsBlockedError:
-            pass
-        except InputUserDeactivatedError:
-            pass

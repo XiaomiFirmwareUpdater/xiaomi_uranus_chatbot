@@ -1,14 +1,15 @@
 """ TWRP command handler """
 from telethon import events
-from telethon.errors import ChannelPrivateError, ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.messages.twrp import twrp_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern=r'/twrp(?: )?(\w+)?'))
+@exception_handler
 async def twrp(event):
     """Send a message when the command /twrp is sent."""
     try:
@@ -25,8 +26,5 @@ async def twrp(event):
         await event.reply(await error_message(device, locale))
         return
     message, buttons = await twrp_message(device, PROVIDER.twrp_data, locale)
-    try:
-        await event.reply(message, buttons=buttons, link_preview=False)
-    except (ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation

@@ -7,7 +7,7 @@ from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
 from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
 from uranus_bot.providers.firmware.firmware import load_firmware_data
-from uranus_bot.providers.misc.arb import get_arb_table
+# from uranus_bot.providers.misc.arb import get_arb_table
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import load_roms_data
 from uranus_bot.providers.specs.specs import load_specs_data
 from uranus_bot.providers.vendor.vendor import load_vendor_data
@@ -37,7 +37,7 @@ class Provider:
         self.eu_codenames = {}
         self.eu_data = []
         self.specs_data = []
-        self.arb = ""
+        # self.arb = ""
         self.loop.create_task(self.twrp_data_loop())
         self.loop.create_task(self.pitchblack_data_loop())
         self.loop.create_task(self.firmware_codenames_loop())
@@ -51,7 +51,7 @@ class Provider:
         self.loop.create_task(self.eu_codenames_loop())
         self.loop.create_task(self.eu_data_loop())
         self.loop.create_task(self.specs_data_loop())
-        self.loop.create_task(self.arb_loop())
+        # self.loop.create_task(self.arb_loop())
 
     async def twrp_data_loop(self):
         """
@@ -173,11 +173,11 @@ class Provider:
             self.specs_data = await load_specs_data()
             await asyncio.sleep(60 * 60 * 6)
 
-    async def arb_loop(self):
-        """
-        fetch arb data every 12 hours
-        """
-        while True:
-            LOGGER.info("Refreshing ARB data")
-            self.arb = await get_arb_table()
-            await asyncio.sleep(60 * 60 * 12)
+    # async def arb_loop(self):
+    #     """
+    #     fetch arb data every 12 hours
+    #     """
+    #     while True:
+    #         LOGGER.info("Refreshing ARB data")
+    #         self.arb = await get_arb_table()
+    #         await asyncio.sleep(60 * 60 * 12)

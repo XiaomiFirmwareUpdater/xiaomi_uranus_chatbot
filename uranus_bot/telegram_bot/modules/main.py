@@ -2,7 +2,6 @@
 from base64 import b64decode
 
 from telethon import events
-from telethon.errors import ChatWriteForbiddenError, UserIsBlockedError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.welcome import welcome_message, welcome_in_pm_message
@@ -10,9 +9,11 @@ from uranus_bot.telegram_bot.modules.help import show_help
 from uranus_bot.telegram_bot.modules.subscriptions import subscribe
 from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO
 from uranus_bot.telegram_bot.utils.chat import get_user_info
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern=r"/start(?: )?(@{})?(?:\s+)?".format(BOT_INFO['username'])))
+@exception_handler
 async def start(event):
     """Send a message when the command /start is sent."""
     # sender_info = await get_user_info(event)
@@ -20,10 +21,7 @@ async def start(event):
     locale = DATABASE.get_locale(event.chat_id)
     if event.is_group and event.pattern_match.group(1):
         message, buttons = await welcome_in_pm_message(locale)
-        try:
-            await event.reply(message, buttons=buttons)
-        except ChatWriteForbiddenError:
-            pass
+        await event.reply(message, buttons=buttons)
         return
     try:
         key = event.message.message.split('/start ')[1]
@@ -41,10 +39,7 @@ async def start(event):
             pass
     elif event.is_private:
         message, buttons = await welcome_message(locale)
-        try:
-            await event.reply(message, buttons=buttons, link_preview=False)
-        except UserIsBlockedError:
-            pass
+        await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation  # Other handlers won't have an event to work with
 
 

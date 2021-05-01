@@ -1,16 +1,17 @@
 """ MIUI Updates commands handlers """
 from telethon import events
-from telethon.errors import ChatWriteForbiddenError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import miui_message, \
     archive_message, latest_miui_message
 from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern=r'/recovery(?: )?(\w+)?'))
 @BOT.on(events.NewMessage(pattern=r'/fastboot(?: )?(\w+)?'))
+@exception_handler
 async def miui(event):
     """Send a message when the command /recovery or /fastboot is sent."""
     try:
@@ -30,10 +31,7 @@ async def miui(event):
     method = "Recovery" if "recovery" in event.pattern_match.string else "Fastboot"
     message, buttons = await miui_message(device, method, PROVIDER.miui_updates,
                                           PROVIDER.codenames_names, locale)
-    try:
-        await event.reply(message, buttons=buttons, link_preview=False)
-    except ChatWriteForbiddenError:
-        pass
+    await event.reply(message, buttons=buttons, link_preview=False)
     raise events.StopPropagation
 
 

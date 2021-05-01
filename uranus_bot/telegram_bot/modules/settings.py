@@ -1,7 +1,6 @@
 """ Xiaomi Geeks Telegram Bot settings module"""
 
 from telethon import events, Button
-from telethon.errors import MessageNotModifiedError, ChatWriteForbiddenError, ChannelPrivateError
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.miui_updates import subscriptions_message, wrong_codename_message
@@ -10,9 +9,11 @@ from uranus_bot.telegram_bot.messages.settings import set_locale_message, \
     set_codename_message, preferred_device_message
 from uranus_bot.telegram_bot.modules.subscriptions import subscription_allowed
 from uranus_bot.telegram_bot.tg_bot import BOT, LOCALIZE, PROVIDER
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 # @BOT.on(events.NewMessage(pattern='/set_lang (.+)'))
+# @exception_handler
 # async def set_lang_handler(event):
 #     """Send a message when the command /set_lang is sent."""
 #     locale = DATABASE.get_locale(event.chat_id)
@@ -29,6 +30,7 @@ from uranus_bot.telegram_bot.tg_bot import BOT, LOCALIZE, PROVIDER
 
 @BOT.on(events.CallbackQuery(data='change_language'))
 @BOT.on(events.NewMessage(pattern='/set_lang'))
+@exception_handler
 async def set_lang_keyboard(event):
     """Send a message when the command /set_lang is sent"""
     locale = DATABASE.get_locale(event.chat_id)
@@ -40,6 +42,7 @@ async def set_lang_keyboard(event):
 
 
 @BOT.on(events.NewMessage(pattern=r'[a-z]{2}(?:-[A-Z]{2})? - \S* \(\S*(?:\s\S*)?\)'))
+@exception_handler
 async def set_lang_handler(event):
     """ Set the language based on the user selection"""
     lang = event.message.message.split(' ')[0]
@@ -51,6 +54,7 @@ async def set_lang_handler(event):
 
 
 @BOT.on(events.NewMessage(pattern='/set_codename (.+)'))
+@exception_handler
 async def set_codename_handler(event):
     """Send a message when the command /set_codename is sent"""
     locale = DATABASE.get_locale(event.chat_id)
@@ -61,75 +65,62 @@ async def set_codename_handler(event):
         await event.reply(await wrong_codename_message(locale))
         return
     if DATABASE.set_codename(event.chat_id, device):
-        try:
-            await event.reply(await set_codename_message(device, PROVIDER.codenames_names, locale))
-        except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-            pass
+        await event.reply(await set_codename_message(device, PROVIDER.codenames_names, locale))
     raise events.StopPropagation
 
 
 @BOT.on(events.NewMessage(pattern='/settings'))
+@exception_handler
 async def show_settings(event):
     """Send a message when the command /settings is sent."""
     locale = DATABASE.get_locale(event.chat_id)
     if not await subscription_allowed(event):
         return
     message, buttons = await settings_main_message(locale)
-    try:
-        await event.respond(message, buttons=buttons)
-    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.respond(message, buttons=buttons)
     raise events.StopPropagation
 
 
 @BOT.on(events.CallbackQuery(data='settings'))
+@exception_handler
 async def settings_callback(event):
     """settings buttons callback for back button"""
     locale = DATABASE.get_locale(event.chat_id)
     message, buttons = await settings_main_message(locale)
-    try:
-        await event.edit(message, buttons=buttons)
-    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.edit(message, buttons=buttons)
 
 
 @BOT.on(events.CallbackQuery(data='subscriptions_settings'))
+@exception_handler
 async def subscriptions_help(event):
     """subscriptions settings callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
     subscriptions = DATABASE.get_chat_subscriptions(event.chat_id)
-    try:
-        await event.edit(await subscriptions_message(subscriptions, locale), buttons=[
-            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")],
-        ])
-    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.edit(await subscriptions_message(subscriptions, locale), buttons=[
+        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")],
+    ])
 
 
 @BOT.on(events.CallbackQuery(data='lang_settings'))
+@exception_handler
 async def lang_help(event):
     """language help callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
-    try:
-        await event.edit(await lang_settings_message(locale), buttons=[
-            [Button.inline(LOCALIZE.get_text(locale, "change_language"),
-                           data="change_language")],
-            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
-        ])
-    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.edit(await lang_settings_message(locale), buttons=[
+        [Button.inline(LOCALIZE.get_text(locale, "change_language"),
+                       data="change_language")],
+        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
+    ])
 
 
 @BOT.on(events.CallbackQuery(data='device_settings'))
+@exception_handler
 async def set_codename_help(event):
     """preferred device settings callback handler"""
     locale = DATABASE.get_locale(event.chat_id)
     device = DATABASE.get_codename(event.chat_id)
-    try:
-        await event.edit(await preferred_device_message(device, PROVIDER.codenames_names, locale), buttons=[
-            [Button.inline(LOCALIZE.get_text(locale, "change_preferred_device"),
-                           data="preferred_device_help")],
-            [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
-        ])
-    except (MessageNotModifiedError, ChannelPrivateError, ChatWriteForbiddenError):
-        pass
+    await event.edit(await preferred_device_message(device, PROVIDER.codenames_names, locale), buttons=[
+        [Button.inline(LOCALIZE.get_text(locale, "change_preferred_device"),
+                       data="preferred_device_help")],
+        [Button.inline(LOCALIZE.get_text(locale, "Back"), data="settings")]
+    ])

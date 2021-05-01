@@ -1,14 +1,14 @@
 """ OrangeFox command handler """
 from telethon import events
-from telethon.errors import ChatWriteForbiddenError, ChannelPrivateError
-
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.messages.orangefox import orangefox_message
-from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
+from uranus_bot.telegram_bot.tg_bot import BOT
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern=r'/of(?: )?(\w+)?'))
+@exception_handler
 async def orangefox(event):
     """Send a message when the command /of is sent."""
     try:
@@ -24,6 +24,6 @@ async def orangefox(event):
     try:
         message, buttons = await orangefox_message(device, locale)
         await event.reply(message, buttons=buttons, link_preview=False)
-    except (ChannelPrivateError, ChatWriteForbiddenError, TypeError):
+    except TypeError:
         await event.reply(await error_message(device, locale))
     raise events.StopPropagation
