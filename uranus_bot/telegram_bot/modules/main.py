@@ -1,5 +1,6 @@
 """ Xiaomi Geeks Telegram Bot main module"""
 from base64 import b64decode
+from binascii import Error
 
 from telethon import events
 
@@ -35,7 +36,7 @@ async def start(event):
             if "/subscribe" in decoded:
                 event.message.message = decoded
                 await subscribe(event)
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, Error, ValueError):
             pass
     elif event.is_private:
         message, buttons = await welcome_message(locale)
