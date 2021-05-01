@@ -2,6 +2,7 @@
 import re
 
 from telethon import events
+from telethon.errors import QueryIdInvalidError
 
 from uranus_bot.providers.devices_info.info import get_codename
 from uranus_bot.telegram_bot import DATABASE
@@ -91,4 +92,7 @@ async def handler(event):
     else:
         pass
     if result:
-        await event.answer([result])
+        try:
+            await event.answer([result])
+        except QueryIdInvalidError:
+            pass
