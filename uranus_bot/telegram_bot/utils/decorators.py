@@ -8,6 +8,7 @@ from telethon.errors import (
     InterdcCallErrorError,
     MessageNotModifiedError,
     InputUserDeactivatedError,
+    MessageIdInvalidError,
     SlowModeWaitError,
     FloodWaitError
 )
@@ -20,7 +21,8 @@ def exception_handler(func):
             return await func(*args, **kwargs)
         except (ChannelPrivateError, ChatWriteForbiddenError,
                 UserIsBlockedError, InterdcCallErrorError,
-                MessageNotModifiedError, InputUserDeactivatedError):
+                MessageNotModifiedError, InputUserDeactivatedError,
+                MessageIdInvalidError):
             pass
         except SlowModeWaitError as error:
             await sleep(error.seconds)
