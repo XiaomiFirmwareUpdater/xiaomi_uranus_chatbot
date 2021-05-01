@@ -15,8 +15,8 @@ async def is_group_admin(event) -> bool:
                      or event.message.sender.id in TG_BOT_ADMINS])
     except AttributeError:
         return bool([i for i in admins
-                     if event.input_sender.user_id == i.id
-                     or event.input_sender.user_id in TG_BOT_ADMINS])
+                     if i and (event.input_sender.user_id == i.id
+                               or event.input_sender.user_id in TG_BOT_ADMINS)])
 
 
 async def get_user_info(event) -> dict:
