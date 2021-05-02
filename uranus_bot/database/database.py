@@ -1,154 +1,169 @@
-""" Xiaomi Geeks Bot Database class"""
 import logging
-from sqlite3 import connect, Row, Error
-DB_LOGGER = logging.getLogger(__name__)
+from sys import path
+from typing import Optional
+
+from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.sql.functions import count
+
+from . import Base
+from .models.chat import Chat
+from .models.devices import Device
+from .models.i18n import I18n
+from .models.subscription import Subscription
+
+path.append("..")
+from uranus_bot import PARENT_DIR, TG_BOT_DB
+
+logger = logging.getLogger(__name__)
+
+tg_engine = create_engine(f"sqlite+pysqlite:///{PARENT_DIR}/{TG_BOT_DB}",
+                          connect_args={'check_same_thread': False})
+
+Base.metadata.create_all(bind=tg_engine)
+
+TGSession = scoped_session(sessionmaker(bind=tg_engine))
+tg_session = TGSession()
 
 
 class Database:
-    """Database connection class"""
+    def __init__(self, session):
+        self.session: Session = session
 
-    def __init__(self, db):
-        self.conn = connect(db)
-        self.cursor = self.conn.cursor()
-        self.conn.row_factory = Row  # to return dictionaries from sqlite3 queries
-
-    def create_table(self, create_table_sql):
-        """ create a table from the create_table_sql statement """
-        try:
-            self.cursor.execute(create_table_sql)
-        except Error as err:
-            DB_LOGGER.error(err)
-        finally:
-            self.conn.commit()
+    def is_known_chat(self, sender_id):
+        """ Check if user is already in database """
+        return bool(self.session.query(Chat).filter(Chat.id == sender_id).first())
 
     def add_chat_to_db(self, sender_info):
         """ Add new row to the table"""
         if self.is_known_chat(sender_info["id"]):
             return
         try:
-            self.cursor.execute(f"""INSERT OR REPLACE INTO chats (id, username, name, type)
-            VALUES(:id, :username, :name, :type)""",
-                                {'id': sender_info["id"],
-                                 'username': sender_info["username"],
-                                 'name': sender_info["name"],
-                                 'type': sender_info["type"]})
-        except Error as err:
-            DB_LOGGER.error(f"DB Error while adding a chat to the database:\n{err}\n{sender_info}")
+            chat = Chat(id=sender_info["id"], username=sender_info["username"],
+                        name=sender_info["name"], type=sender_info["type"])
+            self.session.add(chat)
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while adding a chat to the database:\n{err}\n{sender_info}")
+            self.session.rollback()
         finally:
-            self.conn.commit()
+            self.session.commit()
 
-    def is_known_chat(self, sender_id):
-        """ Check if user is already in database """
-        check = self.cursor.execute(f"""SELECT id FROM chats WHERE id=:id""", {'id': sender_id})
-        return bool(check.fetchone())
+    def get_chats(self, chat_type):
+        """ get chats list from  database """
+        return self.session.query(Chat).filter(Chat.type == chat_type).all()
+
+    def is_subscribed(self, sender_id, sub_type, device):
+        """ Check if user is already subscribed """
+        return bool(
+            self.session.query(
+                Subscription).filter(Subscription.id == sender_id).filter(
+                Subscription.sub_type == sub_type).filter(Subscription.device == device).first()
+        )
 
     def add_subscription(self, sender_info, sub_type, device):
         """ Add new subscription"""
         if self.is_subscribed(sender_info["id"], sub_type, device):
             return False
         try:
-            self.cursor.execute(f"""INSERT INTO subscriptions (id, chat_type, sub_type, device)
-            VALUES(:id, :chat_type, :sub_type, :device)""",
-                                {'id': sender_info["id"],
-                                 'chat_type': sender_info["type"],
-                                 'sub_type': sub_type,
-                                 'device': device})
-            return True
-        except Error as err:
-            DB_LOGGER.error(f"DB Error while adding a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
+            subscription = Subscription(id=sender_info["id"],
+                                        chat_type=sender_info["type"],
+                                        sub_type=sub_type,
+                                        device=device)
+            self.session.add(subscription)
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while adding a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
+            self.session.rollback()
         finally:
-            self.conn.commit()
-
-    def is_subscribed(self, sender_id, sub_type, device):
-        """ Check if user is already subscribed """
-        check = self.cursor \
-            .execute("""SELECT * FROM subscriptions WHERE id=:id 
-            AND sub_type=:sub_type AND device=:device""",
-                     {'id': sender_id, 'sub_type': sub_type, 'device': device})
-        return bool(check.fetchone())
+            self.session.commit()
+            return True
 
     def remove_subscription(self, sender_info, sub_type, device):
         """ Remove user subscription """
         try:
-            self.cursor \
-                .execute("""DELETE FROM subscriptions WHERE id=:id AND sub_type=:sub_type 
-                AND device=:device""",
-                         {'id': sender_info["id"], 'sub_type': sub_type, 'device': device})
-        except Error as err:
-            DB_LOGGER.error(f"DB Error while removing a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
+            self.session.query(Subscription).filter(
+                Subscription.id == sender_info["id"]).filter(Subscription.sub_type == sub_type).filter(
+                Subscription.device == device).delete()
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while removing a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
+            self.session.rollback()
         finally:
-            self.conn.commit()
+            self.session.commit()
 
     def get_chat_subscriptions(self, chat_id):
         """ Get all subscriptions of a chat """
         if str(chat_id).startswith('-100'):
             chat_id = int(str(chat_id).replace('-100', ''))
-        check = self.cursor \
-            .execute("""SELECT sub_type, device FROM subscriptions WHERE id=:chat_id""",
-                     {'chat_id': chat_id})
-        return check.fetchall()
+        return self.session.query(Subscription).filter(Subscription.id == chat_id).all()
 
     def get_subscriptions(self, sub_type, device):
         """ Get subscriptions list of a user """
-        check = self.cursor \
-            .execute("""SELECT id, chat_type FROM subscriptions WHERE sub_type=:sub_type AND device=:device""",
-                     {'sub_type': sub_type, 'device': device})
-        return check.fetchall()
-
-    def get_stats(self):
-        """ Get stats of the bot """
-        groups = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='group'""").fetchone()[0]
-        channels = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='channel'""").fetchone()[0]
-        users = self.cursor.execute("""SELECT COUNT(id) FROM chats WHERE type='user'""").fetchone()[0]
-        firmware = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='firmware'"""
-                                       ).fetchone()[0]
-        miui = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='miui'""").fetchone()[0]
-        vendor = self.cursor.execute("""SELECT COUNT(id) FROM subscriptions WHERE sub_type='vendor'""").fetchone()[0]
-        preferred_devices = self.cursor.execute("""SELECT COUNT(id) FROM devices""").fetchone()[0]
-        preferred_languages = self.cursor.execute("""SELECT COUNT(id) FROM i18n""").fetchone()[0]
-        return {"usage": {"groups": groups, "channels": channels, "users": users},
-                "subscriptions": {"firmware": firmware, "miui": miui, "vendor": vendor},
-                "preferred_devices": preferred_devices, "preferred_languages": preferred_languages}
-
-    def get_chats(self, chat_type):
-        """ get chats list from  database """
-        check = self.cursor.execute(f"""SELECT id FROM chats WHERE type=:chat_type""", {'chat_type': chat_type})
-        return check.fetchall()
+        return self.session.query(Subscription).filter(Subscription.sub_type == sub_type).filter(
+            Subscription.device == device).all()
 
     def get_locale(self, chat_id):
         """ Get locale of a chat """
-        check = self.cursor.execute("""SELECT lang FROM i18n WHERE id=:chat_id""",
-                                    {'chat_id': chat_id}).fetchone()
-        return check[0] if check else 'en'
+        locale: Optional[I18n] = self.session.query(I18n).filter(I18n.id == chat_id).first()
+        return locale.lang if locale else 'en'
 
     def set_locale(self, chat_id, lang):
         """ Set the locale of a chat """
         try:
-            self.cursor.execute(f"""INSERT OR REPLACE INTO i18n (id, lang)
-            VALUES(:chat_id, :lang)""", {'chat_id': chat_id, 'lang': lang})
-            return True
-        except Error as err:
-            DB_LOGGER.error(f"DB Error while setting locale ({lang}) for a chat ({chat_id}):\n{err}")
+            locale: Optional[I18n] = self.session.query(I18n).filter(I18n.id == chat_id).first()
+            if locale:
+                locale.lang = lang
+            else:
+                locale = I18n(id=chat_id, lang=lang)
+            self.session.add(locale)
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while setting locale ({lang}) for a chat ({chat_id}):\n{err}")
+            self.session.rollback()
         finally:
-            self.conn.commit()
+            self.session.commit()
+            return True
 
     def get_codename(self, chat_id):
         """ Get preferred device of a chat """
-        check = self.cursor.execute("""SELECT device FROM devices WHERE id=:chat_id""",
-                                    {'chat_id': chat_id}).fetchone()
-        return check[0] if check else None
+        device: Optional[Device] = self.session.query(Device).filter(Device.id == chat_id).first()
+        return device.device if device else None
 
     def set_codename(self, chat_id, device):
         """ Set the preferred device of a chat """
         try:
-            self.cursor.execute(f"""INSERT OR REPLACE INTO devices (id, device)
-            VALUES(:chat_id, :device)""", {'chat_id': chat_id, 'device': device})
-            return True
-        except Error as err:
-            DB_LOGGER.error(f"DB Error while setting codename ({device}) for a chat ({chat_id}):\n{err}")
+            device_: Optional[Device] = self.session.query(Device).filter(Device.id == chat_id).first()
+            if device_:
+                device_.device = device
+            else:
+                device_ = Device(id=chat_id, device=device)
+            self.session.add(device_)
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while setting codename ({device}) for a chat ({chat_id}):\n{err}")
+            self.session.rollback()
         finally:
-            self.conn.commit()
+            self.session.commit()
+            return True
+
+    def get_stats(self):
+        """ Get stats of the bot """
+        groups = self.session.query(count(Chat.id).filter(Chat.type == "group")).first()
+        channels = self.session.query(count(Chat.id).filter(Chat.type == "channel")).first()
+        users = self.session.query(count(Chat.id).filter(Chat.type == "user")).first()
+
+        firmware = self.session.query(count(Subscription.id).filter(Subscription.sub_type == "firmware")).first()
+        miui = self.session.query(count(Subscription.id).filter(Subscription.sub_type == "miui")).first()
+        vendor = self.session.query(count(Subscription.id).filter(Subscription.sub_type == "vendor")).first()
+
+        preferred_devices = self.session.query(count(Device.id)).first()
+        preferred_languages = self.session.query(count(I18n.id)).first()
+
+        return {"usage": {"groups": groups[0] if groups else 0, "channels": channels[0] if channels else 0,
+                          "users": users[0] if users else 0},
+                "subscriptions": {"firmware": firmware[0] if firmware else 0, "miui": miui[0] if miui else 0,
+                                  "vendor": vendor[0] if vendor else 0},
+                "preferred_devices": preferred_devices[0] if preferred_devices else 0,
+                "preferred_languages": preferred_languages[0] if preferred_languages else 0}
 
     def __del__(self):
         """ close the connection """
-        self.conn.close()
+        self.session.close()

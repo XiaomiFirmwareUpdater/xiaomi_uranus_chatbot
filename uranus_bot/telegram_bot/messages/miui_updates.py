@@ -137,7 +137,7 @@ async def subscriptions_message(subscriptions, locale):
     message = f"**" + LOCALIZE.get_text(locale, "your_subscriptions") + ":**\n"
     if subscriptions:
         for subscription in subscriptions:
-            message += f"{subscription[1]} ({subscription[0]})\n"
+            message += f"{subscription.device} ({subscription.sub_type})\n"
     else:
         message = f"**{LOCALIZE.get_text(locale, 'no_subscriptions')}**"
     return message

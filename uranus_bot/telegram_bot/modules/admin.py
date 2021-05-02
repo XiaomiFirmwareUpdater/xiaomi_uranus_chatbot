@@ -30,11 +30,11 @@ async def broadcast_handler(event):
     chats = DATABASE.get_chats(chat_type)
     for chat in chats:
         try:
-            entity = await BOT.get_entity(chat[0])
+            entity = await BOT.get_entity(chat.id)
             await BOT.send_message(entity, message)
         except ValueError:
             if chat_type == 'channel':
-                entity = await BOT.get_entity(int('-100' + str(chat[0])))
+                entity = await BOT.get_entity(int('-100' + str(chat.id)))
                 await BOT.send_message(entity, message)
             else:
                 TG_LOGGER.warning("failed sending message to", chat)

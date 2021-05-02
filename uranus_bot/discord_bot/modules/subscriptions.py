@@ -60,7 +60,7 @@ async def subscription_handler(ctx):
     subscriptions = DATABASE.get_chat_subscriptions(ctx.message.channel.id)
     message = ""
     for subscription in subscriptions:
-        message += f"{subscription[1]} ({subscription[0]})"
+        message += f"{subscription.sub_type} ({subscription.device})"
     embed = Embed(title=f"**You're subscribed to:**", description=message)
     await ctx.send(None, embed=embed)
 
@@ -91,8 +91,8 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        chat = BOT.get_user(subscription[0]) \
-                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        chat = BOT.get_user(subscription.id) \
+                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
                         if not chat:
                             continue
                         await chat.send(
@@ -120,8 +120,8 @@ async def post_miui_updates():
                 for subscription in subscriptions:
                     for update in updates:
                         embed = await miui_update_message(update, PROVIDER.codenames_names)
-                        chat = BOT.get_user(subscription[0]) \
-                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        chat = BOT.get_user(subscription.id) \
+                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
                         if not chat:
                             continue
                         await chat.send(None, embed=embed)
@@ -144,8 +144,8 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        chat = BOT.get_user(subscription[0]) \
-                            if subscription[1] == "user" else BOT.get_channel(subscription[0])
+                        chat = BOT.get_user(subscription.id) \
+                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
                         await chat.send(None, embed=Embed(
                             title=
                             f"**New Vendor update available for {codename}**",

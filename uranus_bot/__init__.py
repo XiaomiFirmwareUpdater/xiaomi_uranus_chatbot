@@ -4,12 +4,11 @@ import sys
 from os.path import dirname
 
 import yaml
-import sentry_sdk
+from sentry_sdk import init
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from sentry_sdk.integrations.tornado import TornadoIntegration
 
-from uranus_bot.database.database import Database
 from uranus_bot.utils.sentry_logging import sentry_before_send
 
 WORK_DIR = dirname(__file__)
@@ -53,7 +52,7 @@ TG_CHANNEL = "https://t.me/yshalsager_projects"
 
 # Init sentry sdk for errors reporting
 SENTRY_KEY = CONFIG['sentry_sdk_key']
-sentry_sdk.init(SENTRY_KEY,
-                integrations=[AioHttpIntegration(), SqlalchemyIntegration(), TornadoIntegration()],
-                before_send=sentry_before_send)
+init(SENTRY_KEY,
+     integrations=[AioHttpIntegration(), SqlalchemyIntegration(), TornadoIntegration()],
+     before_send=sentry_before_send)
 GITHUB_ORG = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater"

@@ -90,7 +90,7 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        locale = DATABASE.get_locale(subscription[0])
+                        locale = DATABASE.get_locale(subscription.id)
                         message, buttons = await firmware_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
                         await sleep(2)
@@ -113,7 +113,7 @@ BOT.loop.create_task(post_firmware_updates())
 #             if subscriptions:
 #                 for subscription in subscriptions:
 #                     for update in updates:
-#                         locale = DATABASE.get_locale(subscription[0])
+#                         locale = DATABASE.get_locale(subscription.id)
 #                         message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
 #                         await post_update(subscription, message, buttons)
 #                         await sleep(2)
@@ -135,7 +135,7 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        locale = DATABASE.get_locale(subscription[0])
+                        locale = DATABASE.get_locale(subscription.id)
                         message, buttons = await vendor_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
                         await sleep(2)
@@ -148,15 +148,15 @@ BOT.loop.create_task(post_vendor_updates())
 @exception_handler
 async def post_update(subscription, message, buttons):
     """Send update to subscribed chat"""
-    if subscription[1] == 'channel':
-        entity = await BOT.get_entity(int('-100' + str(subscription[0])))
+    if subscription.chat_type == 'channel':
+        entity = await BOT.get_entity(int('-100' + str(subscription.id)))
         await BOT.send_message(entity, message, buttons=buttons)
     else:
         try:
-            await BOT.send_message(subscription[0], message, buttons=buttons)
+            await BOT.send_message(subscription.id, message, buttons=buttons)
         except ValueError:
             try:
-                entity = await BOT.get_entity(subscription[0])
+                entity = await BOT.get_entity(subscription.id)
                 await BOT.send_message(entity, message, buttons=buttons)
             except ValueError:
                 pass
