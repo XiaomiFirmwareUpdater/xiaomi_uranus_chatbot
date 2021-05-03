@@ -27,7 +27,7 @@ WITH_EXTRA = CONFIG['tg_bot_extra']
 DISCORD_TOKEN = CONFIG['discord_bot_token']
 DISCORD_DB = CONFIG['discord_bot_db']
 DISCORD_BOT_ADMINS = CONFIG['discord_bot_admins']
-
+DEBUG = CONFIG['debug']
 # set logging
 # logging.basicConfig(filename=f'{PARENT_DIR}/bot.log',
 #                     filemode='w', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -52,7 +52,8 @@ TG_CHANNEL = "https://t.me/yshalsager_projects"
 
 # Init sentry sdk for errors reporting
 SENTRY_KEY = CONFIG['sentry_sdk_key']
-init(SENTRY_KEY,
-     integrations=[AioHttpIntegration(), SqlalchemyIntegration(), TornadoIntegration()],
-     before_send=sentry_before_send)
+if not DEBUG:
+    init(SENTRY_KEY,
+         integrations=[AioHttpIntegration(), SqlalchemyIntegration(), TornadoIntegration()],
+         before_send=sentry_before_send)
 GITHUB_ORG = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater"

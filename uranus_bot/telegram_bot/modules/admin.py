@@ -8,7 +8,7 @@ from sys import executable
 
 from telethon import events
 
-from uranus_bot import TG_BOT_ADMINS, PARENT_DIR, TG_BOT_DB
+from uranus_bot import TG_BOT_ADMINS, PARENT_DIR, TG_BOT_DB, DEBUG
 from uranus_bot.messages.admin import stats_message
 from uranus_bot.telegram_bot import DATABASE, TG_LOGGER
 from uranus_bot.telegram_bot import __package__ as main_package
@@ -52,7 +52,8 @@ async def backup_database():
         await sleep(60 * 60 * 24)
 
 
-BOT.loop.create_task(backup_database())
+if not DEBUG:
+    BOT.loop.create_task(backup_database())
 
 
 @BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern='/update'))
