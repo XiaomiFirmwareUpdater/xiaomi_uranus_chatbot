@@ -32,12 +32,20 @@ async def load_roms_data():
         roms = yaml.load(await fetch(
             session, f'{GITHUB_ORG}/miui-updates-tracker/master/data/latest.yml'),
                          Loader=yaml.FullLoader)
-        return roms
+        latest = {}
+        for item in roms:
+            codename = item['codename'].split('_')[0]
+            try:
+                if latest[codename]:
+                    latest.update({codename: latest[codename] + [item]})
+            except KeyError:
+                latest.update({codename: [item]})
+        return latest
 
 
 async def get_miui(device, method, updates):
     """ Get miui from for a device """
-    device_updates = [i for u in updates for i in u if i['codename'].split('_')[0] == device and i['method'] == method]
+    device_updates = [i for i in updates.get(device) if i and i['method'] == method]
     grouped_by_name = [list(item) for _, item in
                        groupby(sorted(device_updates, key=lambda x: x['name']), lambda x: x['name'])]
     final_updates = []

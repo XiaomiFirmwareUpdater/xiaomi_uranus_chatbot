@@ -94,8 +94,8 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        chat = BOT.get_user(subscription.id) \
-                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
+                        chat = BOT.get_user(subscription.user_id) \
+                            if subscription.chat_type == "user" else BOT.get_channel(subscription.user_id)
                         if not chat:
                             continue
                         await chat.send(
@@ -136,8 +136,8 @@ async def post_miui_updates():
                                 DISCORD_LOGGER.error("Unable to update last update data.\n" + str(err))
                                 continue
                             embed = await miui_update_message(update, PROVIDER.codenames_names)
-                            chat = BOT.get_user(subscription.id) \
-                                if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
+                            chat = BOT.get_user(subscription.user_id) \
+                                if subscription.chat_type == "user" else BOT.get_channel(subscription.user_id)
                             if not chat:
                                 continue
                             await chat.send(None, embed=embed)
@@ -160,8 +160,8 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        chat = BOT.get_user(subscription.id) \
-                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
+                        chat = BOT.get_user(subscription.user_id) \
+                            if subscription.chat_type == "user" else BOT.get_channel(subscription.user_id)
                         await chat.send(None, embed=Embed(
                             title=
                             f"**New Vendor update available for {codename}**",

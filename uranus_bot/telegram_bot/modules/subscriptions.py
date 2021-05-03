@@ -94,7 +94,7 @@ async def post_firmware_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        locale = DATABASE.get_locale(subscription.id)
+                        locale = DATABASE.get_locale(subscription.user_id)
                         message, buttons = await firmware_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
                         await sleep(2)
@@ -110,12 +110,14 @@ async def post_miui_updates():
         if not PROVIDER.miui_updates:
             await sleep(60)
             continue
-        for codename_group in PROVIDER.miui_updates:
-            codename = codename_group[0]['codename']
+        if PROVIDER.bak_miui_updates and PROVIDER.bak_miui_updates == PROVIDER.miui_updates:
+            await sleep(65 * 60)
+            continue
+        for codename, data in PROVIDER.miui_updates.items():
             subscriptions = DATABASE.get_subscriptions('miui', codename)
             if subscriptions:
                 for subscription in subscriptions:
-                    for update in codename_group:
+                    for update in data:
                         branch = update['branch'].split(' ')[0].lower()
                         try:
                             last_update = json.loads(subscription.last_updates)['miui'][branch]
@@ -129,7 +131,7 @@ async def post_miui_updates():
                             except Exception as err:
                                 TG_LOGGER.error("Unable to update last update data.\n" + str(err))
                                 continue
-                            locale = DATABASE.get_locale(subscription.id)
+                            locale = DATABASE.get_locale(subscription.user_id)
                             message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
                             # print(subscription)
                             await post_update(subscription, message, buttons)
@@ -152,7 +154,7 @@ async def post_vendor_updates():
             if subscriptions:
                 for subscription in subscriptions:
                     for update in updates:
-                        locale = DATABASE.get_locale(subscription.id)
+                        locale = DATABASE.get_locale(subscription.user_id)
                         message, buttons = await vendor_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
                         await sleep(2)
@@ -166,14 +168,14 @@ async def post_vendor_updates():
 async def post_update(subscription, message, buttons):
     """Send update to subscribed chat"""
     if subscription.chat_type == 'channel':
-        entity = await BOT.get_entity(int('-100' + str(subscription.id)))
+        entity = await BOT.get_entity(int('-100' + str(subscription.user_id)))
         await BOT.send_message(entity, message, buttons=buttons)
     else:
         try:
-            await BOT.send_message(subscription.id, message, buttons=buttons)
+            await BOT.send_message(subscription.user_id, message, buttons=buttons)
         except ValueError:
             try:
-                entity = await BOT.get_entity(subscription.id)
+                entity = await BOT.get_entity(subscription.user_id)
                 await BOT.send_message(entity, message, buttons=buttons)
             except ValueError:
                 pass

@@ -34,7 +34,8 @@ class Provider:
         self.names_codenames = {}
         self.models_data = {}
         self.miui_codenames = []
-        self.miui_updates = []
+        self.miui_updates = {}
+        self.bak_miui_updates = {}
         self.eu_codenames = {}
         self.eu_data = []
         self.specs_data = []
@@ -143,9 +144,8 @@ class Provider:
         """
         while True:
             LOGGER.info("Refreshing miui data")
-            miui_updates = await load_roms_data()
-            self.miui_updates = [list(item) for _, item in
-                                 groupby(sorted(miui_updates, key=lambda x: x['codename']), lambda x: x['name'])]
+            self.bak_miui_updates = self.miui_updates
+            self.miui_updates = await load_roms_data()
             await asyncio.sleep(60 * 30)
 
     async def eu_codenames_loop(self):

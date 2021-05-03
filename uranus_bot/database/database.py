@@ -4,7 +4,7 @@ from sys import path
 from typing import Optional
 
 from sqlalchemy import create_engine
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.sql.functions import count
@@ -59,7 +59,7 @@ class Database:
         """ Check if user is already subscribed """
         return bool(
             self.session.query(
-                Subscription).filter(Subscription.id == sender_id).filter(
+                Subscription).filter(Subscription.user_id == sender_id).filter(
                 Subscription.sub_type == sub_type).filter(Subscription.device == device).first()
         )
 
@@ -68,7 +68,7 @@ class Database:
         if self.is_subscribed(sender_info["id"], sub_type, device):
             return False
         try:
-            subscription = Subscription(id=sender_info["id"],
+            subscription = Subscription(user_id=sender_info["id"],
                                         chat_type=sender_info["type"],
                                         sub_type=sub_type,
                                         device=device)
@@ -84,7 +84,7 @@ class Database:
         """ Remove user subscription """
         try:
             self.session.query(Subscription).filter(
-                Subscription.id == sender_info["id"]).filter(Subscription.sub_type == sub_type).filter(
+                Subscription.user_id == sender_info["id"]).filter(Subscription.sub_type == sub_type).filter(
                 Subscription.device == device).delete()
         except SQLAlchemyError as err:
             logger.error(f"DB Error while removing a subscription ({sub_type} - {device}):\n{err}\n{sender_info}")
@@ -96,7 +96,7 @@ class Database:
         """ Get all subscriptions of a chat """
         if str(chat_id).startswith('-100'):
             chat_id = int(str(chat_id).replace('-100', ''))
-        return self.session.query(Subscription).filter(Subscription.id == chat_id).all()
+        return self.session.query(Subscription).filter(Subscription.user_id == chat_id).all()
 
     def get_subscriptions(self, sub_type, device):
         """ Get subscriptions list of a user """
@@ -146,7 +146,7 @@ class Database:
             return True
 
     # def get_last_updates(self, user_id, sub_type, device):
-    #     query = self.session.query(Subscription).filter(Subscription.id == user_id).filter(
+    #     query = self.session.query(Subscription).filter(Subscription.user_id == user_id).filter(
     #         Subscription.sub_type == sub_type).filter(Subscription.device == device).first()
     #     if query:
     #         return json.loads(query.last_updates)
@@ -157,9 +157,9 @@ class Database:
         subscription.last_updates = json.dumps(current)
         try:
             self.session.commit()
-        except SQLAlchemyError as err:
+        except (SQLAlchemyError, IntegrityError) as err:
             logger.error(f"DB Error while updating last update ({subscription.sub_type} - {subscription.device})"
-                         f" for a chat ({subscription.id}):\n{err}")
+                         f" for a chat ({subscription.user_id}):\n{err}")
             self.session.rollback()
         finally:
             return True
