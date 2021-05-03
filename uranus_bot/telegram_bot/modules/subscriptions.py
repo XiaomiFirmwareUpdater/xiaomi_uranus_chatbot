@@ -1,9 +1,13 @@
 """ subscribe command handler """
+import json
 from asyncio import sleep
+from datetime import datetime
+
 from telethon import events
 
 from uranus_bot.providers.firmware.firmware import diff_updates
-from uranus_bot.telegram_bot import DATABASE
+from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import is_new_update
+from uranus_bot.telegram_bot import DATABASE, TG_LOGGER
 from uranus_bot.telegram_bot.messages.firmware import firmware_update_message
 from uranus_bot.telegram_bot.messages.miui_updates import miui_update_message, \
     wrong_codename_message, subscribed_message, already_subscribed_message, subscriptions_message, unsubscribed_message
@@ -66,16 +70,16 @@ async def subscription_handler(event):
 
 async def subscription_allowed(event) -> bool:
     """Check if the subscription is allowed"""
-    return bool(event.is_private \
-                or await is_group_admin(event) \
-                or event.is_channel and not event.is_private and not event.is_group)
+    return bool(event.is_private or await is_group_admin(
+        event) or event.is_channel and not event.is_private and not event.is_group)
 
 
 async def is_device(sub_type, device) -> bool:
     """Check if the given device codename is correct"""
-    return bool(sub_type == 'firmware' and device in PROVIDER.firmware_codenames \
-                or sub_type == 'miui' and device in PROVIDER.miui_codenames \
-                or sub_type == 'vendor' and device in PROVIDER.vendor_codenames)
+    return bool(
+        sub_type == 'firmware' and device in PROVIDER.firmware_codenames
+        or sub_type == 'miui' and device in PROVIDER.miui_codenames
+        or sub_type == 'vendor' and device in PROVIDER.vendor_codenames)
 
 
 async def post_firmware_updates():
@@ -100,27 +104,40 @@ async def post_firmware_updates():
 BOT.loop.create_task(post_firmware_updates())
 
 
-#
-# async def post_miui_updates():
-#     """ Send miui updates to subscribers every 65 minutes """
-#     while True:
-#         new_updates = await diff_miui_updates(PROVIDER.miui_updates, PROVIDER.bak_miui_updates)
-#         if not new_updates:
-#             await sleep(65 * 60)
-#             continue
-#         for codename, updates in new_updates.items():
-#             subscriptions = DATABASE.get_subscriptions('miui', codename)
-#             if subscriptions:
-#                 for subscription in subscriptions:
-#                     for update in updates:
-#                         locale = DATABASE.get_locale(subscription.id)
-#                         message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
-#                         await post_update(subscription, message, buttons)
-#                         await sleep(2)
-#         await sleep(65 * 60)
-#
-#
-# BOT.loop.create_task(post_miui_updates())
+async def post_miui_updates():
+    """ Send miui updates to subscribers every 65 minutes """
+    while True:
+        if not PROVIDER.miui_updates:
+            await sleep(60)
+            continue
+        for codename_group in PROVIDER.miui_updates:
+            codename = codename_group[0]['codename']
+            subscriptions = DATABASE.get_subscriptions('miui', codename)
+            if subscriptions:
+                for subscription in subscriptions:
+                    for update in codename_group:
+                        branch = update['branch'].split(' ')[0].lower()
+                        try:
+                            last_update = json.loads(subscription.last_updates)['miui'][branch]
+                        except TypeError:
+                            continue
+                        if is_new_update(update, last_update):
+                            try:
+                                last_update['version'] = update['version']
+                                last_update['date'] = datetime.strftime(update['date'], '%Y-%m-%d')
+                                DATABASE.set_last_updates(subscription, branch, last_update)
+                            except Exception as err:
+                                TG_LOGGER.error("Unable to update last update data.\n" + str(err))
+                                continue
+                            locale = DATABASE.get_locale(subscription.id)
+                            message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
+                            # print(subscription)
+                            await post_update(subscription, message, buttons)
+                            await sleep(3)
+        await sleep(65 * 60)
+
+
+BOT.loop.create_task(post_miui_updates())
 
 
 async def post_vendor_updates():
@@ -142,7 +159,7 @@ async def post_vendor_updates():
         await sleep(65 * 60)
 
 
-BOT.loop.create_task(post_vendor_updates())
+# BOT.loop.create_task(post_vendor_updates())
 
 
 @exception_handler

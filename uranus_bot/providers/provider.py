@@ -1,10 +1,11 @@
 """Data Provider class"""
 import asyncio
+from itertools import groupby
 
 from uranus_bot import LOGGER
 from uranus_bot.providers.custom_recovery.pitchblack.pitchblack import load_pitchblack_data
 from uranus_bot.providers.custom_recovery.twrp.twrp import load_twrp_data
-from uranus_bot.providers.devices_info.info import load_firmware_codenames,\
+from uranus_bot.providers.devices_info.info import load_firmware_codenames, \
     load_vendor_codenames, load_devices_names, load_miui_codenames, load_models
 from uranus_bot.providers.firmware.firmware import load_firmware_data
 # from uranus_bot.providers.misc.arb import get_arb_table
@@ -16,6 +17,7 @@ from uranus_bot.providers.xiaomi_eu.xiaomi_eu import load_eu_codenames, load_eu_
 
 class Provider:
     """Provides data that needs to be refreshed"""
+
     # pylint: disable=too-many-instance-attributes
     def __init__(self, _loop):
         self.loop = _loop
@@ -33,7 +35,6 @@ class Provider:
         self.models_data = {}
         self.miui_codenames = []
         self.miui_updates = []
-        self.bak_miui_updates = []
         self.eu_codenames = {}
         self.eu_data = []
         self.specs_data = []
@@ -142,8 +143,9 @@ class Provider:
         """
         while True:
             LOGGER.info("Refreshing miui data")
-            self.bak_miui_updates = self.miui_updates
-            self.miui_updates = await load_roms_data()
+            miui_updates = await load_roms_data()
+            self.miui_updates = [list(item) for _, item in
+                                 groupby(sorted(miui_updates, key=lambda x: x['codename']), lambda x: x['name'])]
             await asyncio.sleep(60 * 30)
 
     async def eu_codenames_loop(self):

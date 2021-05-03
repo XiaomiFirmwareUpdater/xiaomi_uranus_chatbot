@@ -1,13 +1,15 @@
 """ subscribe command handler """
+import json
 from asyncio import sleep
+from datetime import datetime
 
 from discord import Embed, DMChannel
 
 from uranus_bot import XFU_WEBSITE, DISCORD_BOT_ADMINS
 from uranus_bot.discord_bot.utils.chat import get_chat_info
 from uranus_bot.providers.firmware.firmware import diff_updates
-from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import diff_miui_updates
-from uranus_bot.discord_bot import DATABASE
+from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import is_new_update
+from uranus_bot.discord_bot import DATABASE, DISCORD_LOGGER
 from uranus_bot.discord_bot.messages.miui_updates import miui_update_message
 from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
 
@@ -74,9 +76,10 @@ async def subscription_allowed(message) -> bool:
 
 async def is_device(sub_type, device) -> bool:
     """Check if the given device codename is correct"""
-    return bool(sub_type == 'firmware' and device in PROVIDER.firmware_codenames \
-                or sub_type == 'miui' and device in PROVIDER.miui_codenames \
-                or sub_type == 'vendor' and device in PROVIDER.vendor_codenames)
+    return bool(
+        sub_type == 'firmware' and device in PROVIDER.firmware_codenames
+        or sub_type == 'miui' and device in PROVIDER.miui_codenames
+        or sub_type == 'vendor' and device in PROVIDER.vendor_codenames)
 
 
 async def post_firmware_updates():
@@ -110,22 +113,35 @@ BOT.loop.create_task(post_firmware_updates())
 async def post_miui_updates():
     """ Send miui updates to subscribers every 65 minutes """
     while True:
-        new_updates = await diff_miui_updates(PROVIDER.miui_updates, PROVIDER.bak_miui_updates)
-        if not new_updates:
-            await sleep(65 * 60)
+        if not PROVIDER.miui_updates:
+            await sleep(60)
             continue
-        for codename, updates in new_updates.items():
+        for updates_group in PROVIDER.miui_updates:
+            codename = updates_group[0]['codename']
             subscriptions = DATABASE.get_subscriptions('miui', codename)
             if subscriptions:
                 for subscription in subscriptions:
-                    for update in updates:
-                        embed = await miui_update_message(update, PROVIDER.codenames_names)
-                        chat = BOT.get_user(subscription.id) \
-                            if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
-                        if not chat:
+                    for update in updates_group:
+                        branch = update['branch'].split(' ')[0].lower()
+                        try:
+                            last_update = json.loads(subscription.last_updates)['miui'][branch]
+                        except TypeError:
                             continue
-                        await chat.send(None, embed=embed)
-                        await sleep(2)
+                        if is_new_update(update, last_update):
+                            try:
+                                last_update['version'] = update['version']
+                                last_update['date'] = datetime.strftime(update['date'], '%Y-%m-%d')
+                                DATABASE.set_last_updates(subscription, branch, last_update)
+                            except Exception as err:
+                                DISCORD_LOGGER.error("Unable to update last update data.\n" + str(err))
+                                continue
+                            embed = await miui_update_message(update, PROVIDER.codenames_names)
+                            chat = BOT.get_user(subscription.id) \
+                                if subscription.chat_type == "user" else BOT.get_channel(subscription.id)
+                            if not chat:
+                                continue
+                            await chat.send(None, embed=embed)
+                            await sleep(3)
         await sleep(65 * 60)
 
 

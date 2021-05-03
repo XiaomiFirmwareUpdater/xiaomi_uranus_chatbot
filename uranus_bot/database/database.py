@@ -1,3 +1,4 @@
+import json
 import logging
 from sys import path
 from typing import Optional
@@ -142,6 +143,25 @@ class Database:
             self.session.rollback()
         finally:
             self.session.commit()
+            return True
+
+    # def get_last_updates(self, user_id, sub_type, device):
+    #     query = self.session.query(Subscription).filter(Subscription.id == user_id).filter(
+    #         Subscription.sub_type == sub_type).filter(Subscription.device == device).first()
+    #     if query:
+    #         return json.loads(query.last_updates)
+
+    def set_last_updates(self, subscription: Subscription, branch, last_update):
+        current = json.loads(subscription.last_updates)
+        current[subscription.sub_type][branch] = last_update
+        subscription.last_updates = json.dumps(current)
+        try:
+            self.session.commit()
+        except SQLAlchemyError as err:
+            logger.error(f"DB Error while updating last update ({subscription.sub_type} - {subscription.device})"
+                         f" for a chat ({subscription.id}):\n{err}")
+            self.session.rollback()
+        finally:
             return True
 
     def get_stats(self):
