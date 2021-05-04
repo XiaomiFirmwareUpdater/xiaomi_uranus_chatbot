@@ -5,6 +5,7 @@ from datetime import datetime
 
 from telethon import events
 
+from uranus_bot import DEBUG
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import is_new_update
 from uranus_bot.telegram_bot import DATABASE, TG_LOGGER
@@ -101,7 +102,8 @@ async def post_firmware_updates():
         await sleep(65 * 60)
 
 
-BOT.loop.create_task(post_firmware_updates())
+if not DEBUG:
+    BOT.loop.create_task(post_firmware_updates())
 
 
 async def post_miui_updates():
@@ -171,8 +173,8 @@ async def post_miui_updates():
                             TG_LOGGER.error("Unable to update last update data.\n" + str(err))
         await sleep(65 * 60)
 
-
-BOT.loop.create_task(post_miui_updates())
+if not DEBUG:
+    BOT.loop.create_task(post_miui_updates())
 
 
 async def post_vendor_updates():
@@ -193,8 +195,8 @@ async def post_vendor_updates():
                         await sleep(3)
         await sleep(65 * 60)
 
-
-# BOT.loop.create_task(post_vendor_updates())
+# if not DEBUG:
+#     BOT.loop.create_task(post_vendor_updates())
 
 
 @exception_handler
