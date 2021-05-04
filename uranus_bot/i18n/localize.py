@@ -33,4 +33,7 @@ class Localize:
         try:
             return self.text[locale][text]
         except KeyError:
-            return self.text['en'][text]
+            try:
+                return self.text['en'][text]
+            except KeyError:
+                return text
