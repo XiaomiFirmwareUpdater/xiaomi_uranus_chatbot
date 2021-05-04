@@ -103,7 +103,7 @@ async def post_firmware_updates():
                                               f"**New Firmware update available for {codename}**",
                                               description=f"{update}",
                                               url=f"{XFU_WEBSITE}/firmware/{codename}/"))
-                        await sleep(2)
+                        await sleep(3)
         await sleep(65 * 60)
 
 
@@ -116,22 +116,31 @@ async def post_miui_updates():
         if not PROVIDER.miui_updates:
             await sleep(60)
             continue
-        for updates_group in PROVIDER.miui_updates:
-            codename = updates_group[0]['codename']
+        if PROVIDER.bak_miui_updates and PROVIDER.bak_miui_updates == PROVIDER.miui_updates:
+            await sleep(65 * 60)
+            continue
+        for codename, data in PROVIDER.miui_updates.items():
             subscriptions = DATABASE.get_subscriptions('miui', codename)
-            if subscriptions:
-                for subscription in subscriptions:
-                    for update in updates_group:
-                        branch = update['branch'].split(' ')[0].lower()
+            if not subscriptions:
+                continue
+            for subscription in subscriptions:
+                for update in data:
+                    if update['branch'] == "Weekly":
+                        continue
+                    first_add = False
+                    if subscription.last_updates:
                         try:
-                            last_update = json.loads(subscription.last_updates)['miui'][branch]
+                            last_update = json.loads(subscription.last_updates)
                         except TypeError:
                             continue
-                        if is_new_update(update, last_update):
+                        if last_update.get(update['codename'], {}).get(update['method']):
+                            if not is_new_update(update, last_update[update['codename']][update['method']]):
+                                continue
                             try:
-                                last_update['version'] = update['version']
-                                last_update['date'] = datetime.strftime(update['date'], '%Y-%m-%d')
-                                DATABASE.set_last_updates(subscription, branch, last_update)
+                                last_update[update['codename']][update['method']]['version'] = update['version']
+                                last_update[update['codename']][update['method']]['date'] = datetime.strftime(
+                                    update['date'], '%Y-%m-%d')
+                                DATABASE.set_last_updates(subscription, last_update)
                             except Exception as err:
                                 DISCORD_LOGGER.error("Unable to update last update data.\n" + str(err))
                                 continue
@@ -142,6 +151,32 @@ async def post_miui_updates():
                                 continue
                             await chat.send(None, embed=embed)
                             await sleep(3)
+                        else:
+                            first_add = True
+                    else:
+                        first_add = True
+                    if first_add:
+                        try:
+                            last_update = json.loads(subscription.last_updates) if subscription.last_updates else {}
+                        except TypeError:
+                            last_update = {}
+                        try:
+                            if last_update.get(update['codename']):
+                                current = last_update[update['codename']]
+                                current.update({update['method']: {
+                                    'version': update['version'],
+                                    'date': datetime.strftime(update['date'], '%Y-%m-%d')}})
+                                last_update.update({update['codename']: current})
+                            else:
+                                last_update.update({
+                                    update['codename']: {update['method']: {
+                                        'version': update['version'],
+                                        'date': datetime.strftime(update['date'], '%Y-%m-%d')}}})
+                            DATABASE.set_last_updates(
+                                subscription, last_update)
+                        except Exception as err:
+                            DISCORD_LOGGER.error("Unable to update last update data.\n" + str(err))
+
         await sleep(65 * 60)
 
 
@@ -167,8 +202,7 @@ async def post_vendor_updates():
                             f"**New Vendor update available for {codename}**",
                             description=f"{update}",
                             url=f"{XFU_WEBSITE}/vendor/{codename}/"))
-                        await sleep(2)
+                        await sleep(3)
         await sleep(65 * 60)
 
-
-BOT.loop.create_task(post_vendor_updates())
+# BOT.loop.create_task(post_vendor_updates())

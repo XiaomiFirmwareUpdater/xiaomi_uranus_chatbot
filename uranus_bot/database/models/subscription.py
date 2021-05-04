@@ -11,8 +11,7 @@ class Subscription(Base):
     chat_type = Column(String, nullable=False)
     sub_type = Column(String, nullable=False)
     device = Column(String, nullable=False)
-    last_updates = Column(String,
-                          default="""{"miui": {"stable": {"version": "", "date": ""}, "weekly": {"version": "", "date": ""}}}""")
+    last_updates = Column(String)
 
     def __repr__(self):
         return f"<Subscription(id={self.id}, chat_type={self.chat_type}, " \

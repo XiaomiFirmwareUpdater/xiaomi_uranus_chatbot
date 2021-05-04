@@ -151,10 +151,8 @@ class Database:
     #     if query:
     #         return json.loads(query.last_updates)
 
-    def set_last_updates(self, subscription: Subscription, branch, last_update):
-        current = json.loads(subscription.last_updates)
-        current[subscription.sub_type][branch] = last_update
-        subscription.last_updates = json.dumps(current)
+    def set_last_updates(self, subscription: Subscription, last_update: dict):
+        subscription.last_updates = json.dumps(last_update)
         try:
             self.session.commit()
         except (SQLAlchemyError, IntegrityError) as err:

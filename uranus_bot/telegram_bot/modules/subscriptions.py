@@ -97,7 +97,7 @@ async def post_firmware_updates():
                         locale = DATABASE.get_locale(subscription.user_id)
                         message, buttons = await firmware_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
-                        await sleep(2)
+                        await sleep(3)
         await sleep(65 * 60)
 
 
@@ -115,27 +115,60 @@ async def post_miui_updates():
             continue
         for codename, data in PROVIDER.miui_updates.items():
             subscriptions = DATABASE.get_subscriptions('miui', codename)
-            if subscriptions:
-                for subscription in subscriptions:
-                    for update in data:
-                        branch = update['branch'].split(' ')[0].lower()
+            if not subscriptions:
+                continue
+            for subscription in subscriptions:
+                for update in data:
+                    if update['branch'] == "Weekly":
+                        continue
+                    first_add = False
+                    if subscription.last_updates:
                         try:
-                            last_update = json.loads(subscription.last_updates)['miui'][branch]
+                            last_update = json.loads(subscription.last_updates)
                         except TypeError:
                             continue
-                        if is_new_update(update, last_update):
+                        if last_update.get(update['codename'], {}).get(update['method']):
+                            if not is_new_update(update, last_update[update['codename']][update['method']]):
+                                continue
                             try:
-                                last_update['version'] = update['version']
-                                last_update['date'] = datetime.strftime(update['date'], '%Y-%m-%d')
-                                DATABASE.set_last_updates(subscription, branch, last_update)
+                                last_update[update['codename']][update['method']]['version'] = update['version']
+                                last_update[update['codename']][update['method']]['date'] = datetime.strftime(
+                                    update['date'], '%Y-%m-%d')
+                                DATABASE.set_last_updates(subscription, last_update)
                             except Exception as err:
                                 TG_LOGGER.error("Unable to update last update data.\n" + str(err))
                                 continue
                             locale = DATABASE.get_locale(subscription.user_id)
-                            message, buttons = await miui_update_message(update, PROVIDER.codenames_names, locale)
+                            message, buttons = await miui_update_message(
+                                update, PROVIDER.codenames_names, locale)
                             # print(subscription)
                             await post_update(subscription, message, buttons)
                             await sleep(3)
+                        else:
+                            first_add = True
+                    else:
+                        first_add = True
+                    if first_add:
+                        try:
+                            last_update = json.loads(subscription.last_updates) if subscription.last_updates else {}
+                        except TypeError:
+                            last_update = {}
+                        try:
+                            if last_update.get(update['codename']):
+                                current = last_update[update['codename']]
+                                current.update({update['method']: {
+                                    'version': update['version'],
+                                    'date': datetime.strftime(update['date'], '%Y-%m-%d')}})
+                                last_update.update({update['codename']: current})
+                            else:
+                                last_update.update({
+                                    update['codename']: {update['method']: {
+                                        'version': update['version'],
+                                        'date': datetime.strftime(update['date'], '%Y-%m-%d')}}})
+                            DATABASE.set_last_updates(
+                                subscription, last_update)
+                        except Exception as err:
+                            TG_LOGGER.error("Unable to update last update data.\n" + str(err))
         await sleep(65 * 60)
 
 
@@ -157,7 +190,7 @@ async def post_vendor_updates():
                         locale = DATABASE.get_locale(subscription.user_id)
                         message, buttons = await vendor_update_message(codename, update, locale)
                         await post_update(subscription, message, buttons)
-                        await sleep(2)
+                        await sleep(3)
         await sleep(65 * 60)
 
 
