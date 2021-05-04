@@ -17,8 +17,8 @@ from uranus_bot.telegram_bot.utils.decorators import exception_handler
 @exception_handler
 async def start(event):
     """Send a message when the command /start is sent."""
-    # sender_info = await get_user_info(event)
-    # DATABASE.add_chat_to_db(sender_info)
+    sender_info = await get_user_info(event)
+    DATABASE.add_chat_to_db(sender_info)
     locale = DATABASE.get_locale(event.chat_id)
     if event.is_group and event.pattern_match.group(1):
         message, buttons = await welcome_in_pm_message(locale)
@@ -52,18 +52,18 @@ async def start(event):
 #     #                     buttons=Button.inline('Click me', b'clk1'))
 
 
-@BOT.on(events.NewMessage(incoming=True))
-async def on_new_message(event):
-    """Add user to the db on new message
-    This is temporary until active users are added to the database."""
-    # print(event.message.text)
-    if not DATABASE.is_known_chat(event.chat_id):
-        DATABASE.add_chat_to_db(await get_user_info(event))
+# @BOT.on(events.NewMessage(incoming=True))
+# async def on_new_message(event):
+#     """Add user to the db on new message
+#     This is temporary until active users are added to the database."""
+#     # print(event.message.text)
+#     if not DATABASE.is_known_chat(event.chat_id):
+#         DATABASE.add_chat_to_db(await get_user_info(event))
 
 # Add new chats to database
-# @BOT.on(events.chataction.ChatAction)
-# async def on_adding_to_chat(event):
-#     """Adds the chat that bot was added to into the database"""
-#     if event.user_added and BOT_ID in event.action_message.action.users:
-#         if not DATABASE.is_known_chat(event.chat_id):
-#             DATABASE.add_chat_to_db(await get_user_info(event))
+@BOT.on(events.chataction.ChatAction)
+async def on_adding_to_chat(event):
+    """Adds the chat that bot was added to into the database"""
+    if event.user_added and BOT_INFO['id'] in event.action_message.action.users:
+        if not DATABASE.is_known_chat(event.chat_id):
+            DATABASE.add_chat_to_db(await get_user_info(event))
