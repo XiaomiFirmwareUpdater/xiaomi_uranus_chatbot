@@ -36,6 +36,7 @@ async def miui(event):
 
 
 @BOT.on(events.NewMessage(pattern=r'/archive(?: )?(\w+)?'))
+@exception_handler
 async def firmware(event):
     """Send a message when the command /archive is sent."""
     try:
@@ -57,6 +58,7 @@ async def firmware(event):
 
 
 @BOT.on(events.NewMessage(pattern=r'/latest(?: )?(\w+)?'))
+@exception_handler
 async def latest(event):
     """Send a message when the command /latest is sent."""
     try:
