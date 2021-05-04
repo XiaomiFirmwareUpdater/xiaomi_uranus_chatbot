@@ -46,7 +46,8 @@ async def miui_update_message(data, codenames_names):
     """ Generate telegram message of miui update """
     rom_type = await get_type(str(data))
     device = data['codename']
-    region = await get_region(data['filename'], device, data['version'])
+    filename = data['link'].split('/')[-1]
+    region = await get_region(filename, device, data['version'])
     description = f"**Region:** {region} \n" \
                   f"**Size**: {data['size']}"
     embed = Embed(title=f"**New MIUI {rom_type} Update Available for {codenames_names[device]}** (`{device}`)!",
