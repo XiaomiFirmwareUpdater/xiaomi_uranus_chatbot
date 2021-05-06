@@ -14,6 +14,8 @@ from uranus_bot.telegram_bot.utils.decorators import exception_handler
 @exception_handler
 async def show_help(event):
     """Send a message when the command /help is sent."""
+    if event.message.text != "/help":
+        return
     locale = DATABASE.get_locale(event.chat_id)
     if not event.is_private:
         message, buttons = await open_in_pm_message(locale)
