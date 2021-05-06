@@ -3,6 +3,7 @@ from base64 import b64decode
 from binascii import Error
 
 from telethon import events
+from telethon.tl.types import ChannelParticipantsAdmins
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.welcome import welcome_message, welcome_in_pm_message
@@ -17,13 +18,18 @@ from uranus_bot.telegram_bot.utils.decorators import exception_handler
 @exception_handler
 async def start(event):
     """Send a message when the command /start is sent."""
-    sender_info = await get_user_info(event)
-    DATABASE.add_chat_to_db(sender_info)
+    if not DATABASE.is_known_chat(event.chat_id):
+        sender_info = await get_user_info(event)
+        DATABASE.add_chat_to_db(sender_info)
     locale = DATABASE.get_locale(event.chat_id)
-    if event.is_group and event.pattern_match.group(1):
-        message, buttons = await welcome_in_pm_message(locale)
-        await event.reply(message, buttons=buttons)
-        return
+    if event.is_group:
+        if event.pattern_match.group(1) or list(
+                filter(lambda x: x.id == BOT_INFO['id'] or event.message.sender_id == x.id,
+                       await event.client.get_participants(
+                           event.chat_id, filter=ChannelParticipantsAdmins))):
+            message, buttons = await welcome_in_pm_message(locale)
+            await event.reply(message, buttons=buttons)
+            return
     try:
         key = event.message.message.split('/start ')[1]
     except IndexError:
@@ -64,6 +70,6 @@ async def start(event):
 @BOT.on(events.chataction.ChatAction)
 async def on_adding_to_chat(event):
     """Adds the chat that bot was added to into the database"""
-    if event.user_added and BOT_INFO['id'] in event.action_message.action.users:
+    if event.user_added and BOT_INFO['id'] == event.user_id:
         if not DATABASE.is_known_chat(event.chat_id):
             DATABASE.add_chat_to_db(await get_user_info(event))
