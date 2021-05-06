@@ -5,9 +5,11 @@ from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.messages.info import models_message, whatis_message, codename_message
 from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(pattern='/models (.+)'))
+@exception_handler
 async def models(event):
     """Send a message when the command /models is sent."""
     device = event.pattern_match.group(1).lower()
@@ -21,6 +23,7 @@ async def models(event):
 
 
 @BOT.on(events.NewMessage(pattern='/whatis (.+)'))
+@exception_handler
 async def whatis(event):
     """Send a message when the command /whatis is sent."""
     device = event.pattern_match.group(1).lower()
@@ -34,6 +37,7 @@ async def whatis(event):
 
 
 @BOT.on(events.NewMessage(pattern='/codename (.+)'))
+@exception_handler
 async def codename(event):
     """Send a message when the command /codename is sent."""
     device = event.pattern_match.group(1)

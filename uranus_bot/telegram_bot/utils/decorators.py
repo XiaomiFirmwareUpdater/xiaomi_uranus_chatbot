@@ -26,9 +26,9 @@ def exception_handler(func):
             pass
         except SlowModeWaitError as error:
             await sleep(error.seconds)
-            return await func(*args, **kwargs)
+            return exception_handler(await func(*args, **kwargs))
         except FloodWaitError as error:
             await sleep(error.seconds)
-            return await func(*args, **kwargs)
+            return exception_handler(await func(*args, **kwargs))
 
     return wrapper
