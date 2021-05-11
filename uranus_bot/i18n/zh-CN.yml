@@ -10,7 +10,7 @@ latest_firmware: '最新 Firmware'
 archive_firmware: 'Firmware 存档'
 XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
 MIUIUpdatesTracker: MIUIUpdatesTracker
-firmware_inline: '搜索 {codenames_name[device]} ({device}) 的 Firmware 下载'
+firmware_inline: '搜索 {codenames_names[device]} ({device}) 的 Firmware 下载'
 open_in_pm: '在对话中打开此消息'
 click_here: '点击此处'
 device_models: '{model_data[device][''name'']} ({device} - {model_data[device][''internal_name'']}) 型号'
@@ -33,6 +33,9 @@ EEA: 欧盟
 Indonesia: 印度尼西亚
 India: 印度
 Russia: 俄罗斯
+Turkey: 土耳其
+Taiwan: 台灣
+Japan: 日本
 Global: 全球
 China: 中国
 Fastboot: Fastboot
@@ -45,7 +48,7 @@ miui_archive: '**{codenames_names[device]} 的 MIUI ROM 归档** (`{device}`)'
 archive_inline: '搜索 {codenames_names[device]} ({device}) 官方 ROM 存档'
 latest_message: '**{codenames_names[device]} 的最新 MIUI 版本** (`{device}`)'
 latest_inline: '搜索 {codenames_names[device]} ({device}) 的最新 MIUI 版本'
-miui_update: '**{codenames_name[device]}** (`{device}`) 现有新的 MIUI {rom_type} 更新！'
+miui_update: '**{codenames_names[device]}** (`{device}`) 现有新的 MIUI {rom_type} 更新！'
 wrong_codename: '错误的设备代号！'
 subscribed: '成功订阅了 {device} {sub_type} 的更新！'
 already_subscribed: '您已经订阅了 {device} {sub_type} 的更新！'
@@ -69,7 +72,7 @@ archive_vendor: 'Vendor 存档'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: '搜索 {codenames_name[device]} ({device}) 的 Vendor 下载'
 twrp_message: "**{data ['name']} 最新的 TWRP：**\n**更新日期：** {data['date']}"
-twrp_inline: '搜索 {codenames_name[device]} ({device}) 的 TWRP 下载'
+twrp_inline: '搜索 {codenames_names[device]} ({device}) 的 TWRP 下载'
 Status: 状态
 Network: 网络
 Weight: 重量
@@ -123,7 +126,7 @@ bot_lang: 'Bot 语言'
 available_languages: '可用语言'
 change_language: '更改语言'
 Back: 返回
-set_device_message: '此聊天的首选设备已成功设置为 {codenames_name[device]} (`{device}`) ！'
+set_device_message: '此聊天的首选设备已成功设置为 {codenames_names[device]} (`{device}`) ！'
 preferred_device: '首选设备'
 your_preferred_device: '您的首选设备是'
 preferred_device_help: '设置您首选的设备以作为需要设备代号的命令的默认值'

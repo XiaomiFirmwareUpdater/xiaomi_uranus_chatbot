@@ -7,10 +7,10 @@ add_to_group: 'Присоединится к группе'
 error_message: 'Не могу найти запрашиваемую информацию по {device}!'
 available_firmware: 'Доступны загрузки firmware для'
 latest_firmware: 'Последняя Firmware'
-archive_firmware: 'Архив Firmware'
+archive_firmware: 'Архив c Firmware'
 XiaomiFirmwareUpdater: XiaomiFirmwareUpdater
 MIUIUpdatesTracker: MIUIUpdatesTracker
-firmware_inline: 'Поиск {codenames_names[device]} ({device}) Загрузка firmware'
+firmware_inline: 'Поиск firmware для {codenames_names[device]} ({device})'
 open_in_pm: 'Открыть это сообщение в ЛС'
 click_here: 'Нажми здесь'
 device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Модели'
@@ -33,6 +33,9 @@ EEA: EEA
 Indonesia: Индонезия
 India: Индия
 Russia: Россия
+Turkey: Турция
+Taiwan: Тайвань
+Japan: Япония
 Global: Глобальная
 China: Китай
 Fastboot: Fastboot

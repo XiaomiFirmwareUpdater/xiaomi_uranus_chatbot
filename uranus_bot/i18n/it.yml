@@ -17,26 +17,29 @@ device_models: '{models_data[device][''name'']} ({device} - {models_data[device]
 models_inline: 'Cerca il modello del dispositivo {device}'
 whatis_message: '`{device}` è **{codenames_names[device]}**'
 whatis_inline: 'Cerca il nome del dispositivo {device}'
-too_much_codenames: '{device} è troppo generico! Sii più specifico.'
+too_much_codenames: '{device} è troppo generico! Sei pregato di essere più specifico.'
 codename_message: "**{name}** è `{codename}`\n"
 codename_inline: 'Cerca il codename del {device} dispositivo'
-unlock_bl: 'Guide e strumenti per sbloccare il bootloader'
+unlock_bl: 'Guida e strumenti di sbloccaggio del bootloader'
 unlock_bl_inline: 'Guida su come sbloccare il bootloader'
 tools: 'Strumenti per dispositivi Xiaomi'
 tools_inline: 'Strumenti utili per dispositivi Xiaomi'
 guides: 'Guide sui dispositivi Xiaomi'
-guides_inline: 'Varie guide sui dispositivi Xiaomi'
+guides_inline: 'Diverse guide per dispositivi Xiaomi'
 Stable: Stabile
 Weekly: Settimanale
 Region: Regione
-EEA: EEA
+EEA: SEE
 Indonesia: Indonesia
 India: India
 Russia: Russia
-Global: Global
+Turkey: Turchia
+Taiwan: Taiwan
+Japan: Giappone
+Global: Globale
 China: Cina
 Fastboot: Fastboot
-Recovery: Recovery
+Recovery: Recupero
 Size: Dimensione
 miui_message: 'L'' Ultima {codenames_names[device]}** (`{device}`) **MIUI Ufficiale {rom_type} ROMs'
 roms_archive: 'Archivio ROM'
