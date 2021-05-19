@@ -3,7 +3,6 @@ from base64 import b64decode
 from binascii import Error
 
 from telethon import events
-from telethon.tl.types import ChannelParticipantsAdmins
 
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.welcome import welcome_message, welcome_in_pm_message
@@ -22,14 +21,10 @@ async def start(event):
         sender_info = await get_user_info(event)
         DATABASE.add_chat_to_db(sender_info)
     locale = DATABASE.get_locale(event.chat_id)
-    if event.is_group:
-        if event.pattern_match.group(1) or list(
-                filter(lambda x: x.id == BOT_INFO['id'] or event.message.sender_id == x.id,
-                       await event.client.get_participants(
-                           event.chat_id, filter=ChannelParticipantsAdmins))):
-            message, buttons = await welcome_in_pm_message(locale)
-            await event.reply(message, buttons=buttons)
-            return
+    if event.is_group and event.pattern_match.group(1):
+        message, buttons = await welcome_in_pm_message(locale)
+        await event.reply(message, buttons=buttons)
+        return
     try:
         key = event.message.message.split('/start ')[1]
     except IndexError:
