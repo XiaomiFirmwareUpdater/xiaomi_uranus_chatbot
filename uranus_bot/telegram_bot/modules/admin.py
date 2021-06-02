@@ -7,12 +7,14 @@ from os import execl
 from sys import executable
 
 from telethon import events
+from telethon.errors import ChatWriteForbiddenError, ChannelPrivateError, UserIsBlockedError
 
 from uranus_bot import TG_BOT_ADMINS, PARENT_DIR, TG_BOT_DB, DEBUG
 from uranus_bot.messages.admin import stats_message
 from uranus_bot.telegram_bot import DATABASE, TG_LOGGER
 from uranus_bot.telegram_bot import __package__ as main_package
 from uranus_bot.telegram_bot.tg_bot import BOT
+from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
 @BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern='/stats'))
@@ -24,19 +26,31 @@ async def stats_handler(event):
 
 
 @BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern=r'/broadcast (group|channel|user) ([\s\S]*$)'))
+@exception_handler
 async def broadcast_handler(event):
     chat_type = event.pattern_match.group(1)
     message = event.pattern_match.group(2)
     chats = DATABASE.get_chats(chat_type)
     for chat in chats:
         try:
-            entity = await BOT.get_entity(chat.id)
-            await BOT.send_message(entity, message)
-        except ValueError:
-            if chat_type == 'channel':
-                entity = await BOT.get_entity(int('-100' + str(chat.id)))
-                await BOT.send_message(entity, message)
-            else:
+            await BOT.send_message(chat.id, message)
+            await sleep(2)
+            await BOT.send_message(TG_BOT_ADMINS[0], f"Message sent to {chat.name} ({chat.id}) successfully.")
+            await sleep(2)
+        except (ValueError, ChatWriteForbiddenError, ChannelPrivateError, ChatWriteForbiddenError,
+                UserIsBlockedError, Exception) as err:
+            try:
+                if chat_type == 'channel':
+                    await BOT.send_message(int('-100' + str(chat.id)), message)
+                    await sleep(2)
+                    await BOT.send_message(TG_BOT_ADMINS[0],
+                                           f"Message sent to {chat.name} ({chat.id}) successfully.")
+                else:
+                    BOT.send_message(TG_BOT_ADMINS[0], f"failed sending message to {chat} because of {err}.")
+                    TG_LOGGER.warning("failed sending message to", chat)
+            except (ValueError, ChatWriteForbiddenError, ChannelPrivateError, ChatWriteForbiddenError,
+                    UserIsBlockedError, Exception) as err:
+                BOT.send_message(TG_BOT_ADMINS[0], f"failed sending message to {chat} after retrying because of {err}.")
                 TG_LOGGER.warning("failed sending message to", chat)
         await sleep(2)
     raise events.StopPropagation
