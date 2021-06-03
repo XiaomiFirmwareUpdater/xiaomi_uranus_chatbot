@@ -13,7 +13,7 @@ MIUIUpdatesTracker: MIUIUpdatesTracker
 firmware_inline: ' {codenames_names[device]} ({device}) için yazılım indirmelerini ara'
 open_in_pm: 'Bu mesajı ÖM''de aç'
 click_here: 'Buraya Tıkla'
-device_models: '{models_data [device] [''ad'']} ({device} - {models_data [device] [''dahili_name'']}) Modeller'
+device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modeller'
 models_inline: '{device} için cihaz modelleri arayın'
 whatis_message: '`{device}`, **{codenames_names[device]}**'
 whatis_inline: '{device} için cihaz adını arayın'
