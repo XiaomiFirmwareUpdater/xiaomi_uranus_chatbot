@@ -11,8 +11,9 @@ async def get_orangefox(device):
     fetch latest orangefox links for a device
     """
     api = OrangeFoxAsyncAPI()
-    devices: Devices = await api.devices(oem_name='Xiaomi')
-    if device not in [i.codename for i in devices.data]:
+    xiaomi_devices: Devices = await api.devices(oem_name='Xiaomi')
+    poco_devices: Devices = await api.devices(oem_name='Poco')
+    if device not in [i.codename for i in xiaomi_devices.data + poco_devices.data]:
         return
     device: Optional[Device] = await api.device(codename=device)
     if not device:
