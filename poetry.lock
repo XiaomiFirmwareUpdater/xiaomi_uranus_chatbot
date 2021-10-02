@@ -381,7 +381,7 @@ pyasn1 = ">=0.1.3"
 
 [[package]]
 name = "sentry-sdk"
-version = "1.4.1"
+version = "1.4.3"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
@@ -507,7 +507,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "cc112ce54ce24c8b5b9a69108f31944e698307c4cb7a5ed1b1b4f8af1c42e468"
+content-hash = "f78908cfe7d914fb8b2ab4405e18d7a9a97971847f031f2424d23850ca980937"
 
 [metadata.files]
 aiocontextvars = [
@@ -1040,8 +1040,8 @@ rsa = [
     {file = "rsa-4.7.2.tar.gz", hash = "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-1.4.1.tar.gz", hash = "sha256:4297555ddc37c7136740e6b547b7d68f5bca0b4832f94ac097e5d531a4c77528"},
-    {file = "sentry_sdk-1.4.1-py2.py3-none-any.whl", hash = "sha256:ea04bc3be6eb082f34ff3f8f6380ea9c691766592298f3f975a435dafac6bf6a"},
+    {file = "sentry-sdk-1.4.3.tar.gz", hash = "sha256:b9844751e40710e84a457c5bc29b21c383ccb2b63d76eeaad72f7f1c808c8828"},
+    {file = "sentry_sdk-1.4.3-py2.py3-none-any.whl", hash = "sha256:c091cc7115ff25fe3a0e410dbecd7a996f81a3f6137d2272daef32d6c3cfa6dc"},
 ]
 soupsieve = [
     {file = "soupsieve-2.2.1-py3-none-any.whl", hash = "sha256:c2c1c2d44f158cdbddab7824a9af8c4f83c76b1e23e049479aa432feb6c4c23b"},
