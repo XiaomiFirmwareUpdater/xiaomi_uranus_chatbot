@@ -9,7 +9,7 @@ python = "^3.8"
 beautifulsoup4 = "^4.10.0"
 Telethon = "1.24.0"
 cryptg = "^0.2"
-Pillow = "^8.4.0"
+Pillow = "^9.0.0"
 PyYAML = "^6.0"
 aiohttp = { extras = ["speedups"], version = "^3.7.4" }
 sentry-sdk = "1.5.1"
