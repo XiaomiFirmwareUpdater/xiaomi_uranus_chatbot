@@ -1,13 +1,18 @@
 """ MIUI Updates utilities """
 
 
-async def get_branch(version):
+async def get_branch(version) -> str:
     """
     get MIUI branch based on MIUI version
     :param version: MIUI version, stable/weekly
     :return: branch
     """
-    return 'Stable' if version.startswith('V') else 'Weekly'
+    if version[0].isalpha() and not version.endswith("DEV"):
+        return "Stable"
+    elif version.endswith("DEV"):
+        return "Public Beta"
+    else:
+        return "Beta"
 
 
 async def get_region(filename, codename, version):

@@ -53,6 +53,7 @@ async def get_miui(device, method, updates):
         weekly = list(filter(lambda x: x['branch'] == "Weekly", group))
         stable = list(filter(lambda x: x['branch'] == "Stable", group))
         stable_beta = list(filter(lambda x: x['branch'] == "Stable Beta", group))
+        public_beta = list(filter(lambda x: x['branch'] == "Public Beta", group))
         if stable_beta and stable:
             if stable_beta[0]['date'] and stable[0]['date']:
                 if stable_beta[0]['date'] >= stable[0]['date']:
@@ -65,6 +66,8 @@ async def get_miui(device, method, updates):
                 final_updates.append(stable[0])
             if stable_beta:
                 final_updates.append(stable_beta[0])
+        if public_beta:
+            final_updates.append(public_beta[0])
         if weekly:
             final_updates.append(weekly[0])
     return final_updates
