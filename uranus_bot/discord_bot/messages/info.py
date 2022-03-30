@@ -23,7 +23,7 @@ async def whatis_message(device, codenames_names):
 async def codename_message(device, names_codenames):
     """ Generate discord message of codename command """
     info = await get_codename(device, names_codenames)
-    if len(info) > 8:
+    if len(info) > 10:
         message = f"{device} is too general! Please be more specific."
         return Embed(title=f"**Search result:**", description=message)
     message = ""
