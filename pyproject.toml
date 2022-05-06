@@ -8,7 +8,7 @@ authors = ["yshalsager <ysh-alsager@hotmail.com>"]
 python = "^3.8"
 beautifulsoup4 = "^4.11.1"
 Telethon = "1.24.0"
-cryptg = "^0.2"
+cryptg = "^0.3"
 Pillow = "^9.1.0"
 PyYAML = "^6.0"
 aiohttp = { extras = ["speedups"], version = "^3.7.4" }
