@@ -4,18 +4,24 @@ from telethon import events
 from uranus_bot.telegram_bot import DATABASE
 from uranus_bot.telegram_bot.messages.error import error_message
 from uranus_bot.telegram_bot.messages.twrp import twrp_message
-from uranus_bot.telegram_bot.tg_bot import BOT, PROVIDER
+from uranus_bot.telegram_bot.tg_bot import BOT, BOT_INFO, PROVIDER
 from uranus_bot.telegram_bot.utils.decorators import exception_handler
 
 
-@BOT.on(events.NewMessage(pattern=r'/twrp(?: )?(\w+)?'))
+@BOT.on(
+    events.NewMessage(
+        pattern=r"^^/twrp(?: (?P<codename>[^@]\w+)|@{} ?(?P<codename2>\w+)?)?".format(
+            BOT_INFO["username"]
+        )
+    )
+)
 @exception_handler
 async def twrp(event):
     """Send a message when the command /twrp is sent."""
     try:
-        device = event.pattern_match.group(1).lower()
-    except (IndexError, AttributeError):
-        if event.message.message.endswith('/twrp'):
+        device = event.pattern_match.groupdict()[event.pattern_match.lastgroup]
+    except (IndexError, AttributeError, KeyError):
+        if event.message.message.endswith("/twrp"):
             device = DATABASE.get_codename(event.chat_id)
         else:
             return
