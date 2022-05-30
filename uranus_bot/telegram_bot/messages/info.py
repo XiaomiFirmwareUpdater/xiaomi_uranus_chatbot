@@ -46,7 +46,7 @@ async def codename_message(device, names_codenames, locale):
     """ Generate telegram message of whatis command """
     message = ""
     info = await get_codename(device, names_codenames)
-    if len(info) > 10:
+    if len(info) > 15:
         message = LOCALIZE.get_text(locale, "too_much_codenames").replace("{device}", device)
         return message
     for name, codename in info.items():
