@@ -6,12 +6,12 @@ from datetime import datetime
 from discord import Embed, DMChannel
 
 from uranus_bot import XFU_WEBSITE, DISCORD_BOT_ADMINS
+from uranus_bot.discord_bot import DATABASE, DISCORD_LOGGER
+from uranus_bot.discord_bot.discord_bot import BOT
+from uranus_bot.discord_bot.messages.miui_updates import miui_update_message
 from uranus_bot.discord_bot.utils.chat import get_chat_info
 from uranus_bot.providers.firmware.firmware import diff_updates
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import is_new_update
-from uranus_bot.discord_bot import DATABASE, DISCORD_LOGGER
-from uranus_bot.discord_bot.messages.miui_updates import miui_update_message
-from uranus_bot.discord_bot.discord_bot import BOT, PROVIDER
 
 
 @BOT.command(name='subscribe')
@@ -54,7 +54,7 @@ async def unsubscribe(ctx, *args):
     await ctx.send(None, embed=Embed(title=message))
 
 
-@BOT.command(name='subscription')
+@BOT.hybrid_command(name='subscription', description='List your current subscriptions', with_app_command=True)
 async def subscription_handler(ctx):
     """List your current subscriptions"""
     if not await subscription_allowed(ctx.message):
@@ -77,15 +77,18 @@ async def subscription_allowed(message) -> bool:
 async def is_device(sub_type, device) -> bool:
     """Check if the given device codename is correct"""
     return bool(
-        sub_type == 'firmware' and device in PROVIDER.firmware_codenames
-        or sub_type == 'miui' and device in PROVIDER.miui_codenames
-        or sub_type == 'vendor' and device in PROVIDER.vendor_codenames)
+        sub_type == 'firmware' and device in BOT.provider.firmware_codenames
+        or sub_type == 'miui' and device in BOT.provider.miui_codenames
+        or sub_type == 'vendor' and device in BOT.provider.vendor_codenames)
 
 
 async def post_firmware_updates():
     """ Send firmware updates to subscribers every 65 minutes """
     while True:
-        new_updates = await diff_updates(PROVIDER.firmware_data, PROVIDER.bak_firmware_data)
+        if not hasattr(BOT.provider, 'firmware_data'):
+            await sleep(60)
+            continue
+        new_updates = await diff_updates(BOT.provider.firmware_data, BOT.provider.bak_firmware_data)
         if not new_updates:
             await sleep(65 * 60)
             continue
@@ -107,19 +110,19 @@ async def post_firmware_updates():
         await sleep(65 * 60)
 
 
-BOT.loop.create_task(post_firmware_updates())
+# BOT.loop.create_task(post_firmware_updates())
 
 
 async def post_miui_updates():
     """ Send miui updates to subscribers every 65 minutes """
     while True:
-        if not PROVIDER.miui_updates:
+        if not hasattr(BOT.provider, 'miui_updates'):
             await sleep(60)
             continue
-        if PROVIDER.bak_miui_updates and PROVIDER.bak_miui_updates == PROVIDER.miui_updates:
+        if BOT.provider.bak_miui_updates and BOT.provider.bak_miui_updates == BOT.provider.miui_updates:
             await sleep(65 * 60)
             continue
-        for codename, data in PROVIDER.miui_updates.items():
+        for codename, data in BOT.provider.miui_updates.items():
             subscriptions = DATABASE.get_subscriptions('miui', codename)
             if not subscriptions:
                 continue
@@ -144,7 +147,7 @@ async def post_miui_updates():
                             except Exception as err:
                                 DISCORD_LOGGER.error("Unable to update last update data.\n" + str(err))
                                 continue
-                            embed = await miui_update_message(update, PROVIDER.codenames_names)
+                            embed = await miui_update_message(update, BOT.provider.codenames_names)
                             chat = BOT.get_user(subscription.user_id) \
                                 if subscription.chat_type == "user" else BOT.get_channel(subscription.user_id)
                             if not chat:
@@ -180,13 +183,16 @@ async def post_miui_updates():
         await sleep(65 * 60)
 
 
-BOT.loop.create_task(post_miui_updates())
+# BOT.loop.create_task(post_miui_updates())
 
 
 async def post_vendor_updates():
     """ Send vendor updates to subscribers every 65 minutes """
     while True:
-        new_updates = await diff_updates(PROVIDER.vendor_data, PROVIDER.bak_vendor_data)
+        if not hasattr(BOT.provider, 'vendor_data'):
+            await sleep(60)
+            continue
+        new_updates = await diff_updates(BOT.provider.vendor_data, BOT.provider.bak_vendor_data)
         if not new_updates:
             await sleep(65 * 60)
             continue

@@ -5,7 +5,7 @@ from uranus_bot.discord_bot.messages.main import start_message
 from uranus_bot.discord_bot.utils.chat import get_chat_info
 
 
-@BOT.command(name='start')
+@BOT.hybrid_command(name='start', with_app_command=True)
 async def start(ctx):
     """Sends the welcome message"""
     await ctx.send(None, embed=await start_message())
