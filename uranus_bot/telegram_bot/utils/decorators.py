@@ -11,7 +11,8 @@ from telethon.errors import (
     MessageIdInvalidError,
     SlowModeWaitError,
     FloodWaitError,
-    PeerIdInvalidError
+    PeerIdInvalidError,
+    AuthKeyError
 )
 
 
@@ -31,5 +32,9 @@ def exception_handler(func):
         except FloodWaitError as error:
             await sleep(error.seconds)
             return exception_handler(await func(*args, **kwargs))
-
+        except AuthKeyError as error:
+            if error.code == 406 and error.message == "TOPIC_DELETED":
+                pass
+            else:
+                raise error
     return wrapper
