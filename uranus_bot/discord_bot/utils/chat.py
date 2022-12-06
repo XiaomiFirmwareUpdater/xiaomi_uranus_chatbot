@@ -6,7 +6,7 @@ async def get_chat_info(message) -> dict:
     """Returns a dictionary of user information"""
     if isinstance(message.channel, DMChannel):
         chat_type = "user"
-        name = message.channel.recipient.name
+        name = message.author.name
         guild_id = None
         guild_name = None
     else:
