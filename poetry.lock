@@ -513,14 +513,14 @@ files = [
 
 [[package]]
 name = "discord-py"
-version = "2.1.1"
+version = "2.2.2"
 description = "A Python wrapper for the Discord API"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "discord.py-2.1.1-py3-none-any.whl", hash = "sha256:b99fbf4ad74f007c680f33f5174738858146c99a2bc4f6d0e08ddbf93bc12c4d"},
-    {file = "discord.py-2.1.1.tar.gz", hash = "sha256:8258b7af641c532e9e33e186c7b867d9ff5575fe63a460b17ed55bd4fe082200"},
+    {file = "discord.py-2.2.2-py3-none-any.whl", hash = "sha256:38fc52a784727b8e5e5749267089400035b187a009028eddfabeb182abcc6d52"},
+    {file = "discord.py-2.2.2.tar.gz", hash = "sha256:b9944056bcb5711b2d04088848fd004466cf117c15c84fa798bf55470f28275f"},
 ]
 
 [package.dependencies]
@@ -1504,4 +1504,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "07726e4241c7f7303c103d398068091459d29c825fa88622bbda9a69a5a6ce4b"
+content-hash = "6d7e4888a1698bfb3078b30227657784d28dd676dd354577732766a357dfd2af"
