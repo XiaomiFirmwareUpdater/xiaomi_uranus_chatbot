@@ -31,6 +31,8 @@ async def get_region(filename, codename, version):
         region = 'Taiwan'
     elif 'jp_global' in filename or 'jp_global' in codename or 'JP' in version:
         region = 'Japan'
+    elif 'kr_global' in filename or 'kr_global' in codename or 'KR' in version:
+        region = 'South Korea'
     elif 'global' in filename or 'global' in codename or 'MI' in version:
         region = 'Global'
     else:
