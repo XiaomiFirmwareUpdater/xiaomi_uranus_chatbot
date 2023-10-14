@@ -533,6 +533,12 @@ files = [
     {file = "cryptg-0.4.0-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:16d33f8213f480e895eab0bad6faaedd8d54da51b066373ccd5840a7a951dd37"},
     {file = "cryptg-0.4.0-cp311-cp311-win32.whl", hash = "sha256:72875d7129cdb7f9a4be68854c77cb569857d736f0cbc7753cadc577f13360bd"},
     {file = "cryptg-0.4.0-cp311-cp311-win_amd64.whl", hash = "sha256:47a249a242497ba0fffe87067e0d5ef99b21c4081fe490a08c596b6184dda2dd"},
+    {file = "cryptg-0.4.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:2da433484653470cba6b3e8c4c874ea9ba142c66d0214968c58ec8bed1fb5981"},
+    {file = "cryptg-0.4.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:951ebab677abfa661356eff578988eb3e9d5e6e6b46c876731051a01616cfb18"},
+    {file = "cryptg-0.4.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:eb564dbc370476e299c56d35a33aa8b8ec3df00184d5c78a0f73eebc2a3f057c"},
+    {file = "cryptg-0.4.0-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d1e547e5ca4665d413397a43453ad867a78b0959362a056460ee3f4936da6728"},
+    {file = "cryptg-0.4.0-cp312-cp312-win32.whl", hash = "sha256:975e53f1d713ef5733bf160ef1dce473519c93e5d27ec19013766f1f81224b0f"},
+    {file = "cryptg-0.4.0-cp312-cp312-win_amd64.whl", hash = "sha256:6a914b1b7199b9bb0bb20a11572f160bdc23b50575895112ca37395f2ad598db"},
     {file = "cryptg-0.4.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:70c93ffc05f3b9e47aa30d6606e527da07532c0b6f78b6d23482fecd44881f57"},
     {file = "cryptg-0.4.0-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:64f42587a71a9142f1abfe412ce677035abd9604e0333e5d1d188443349e327d"},
     {file = "cryptg-0.4.0-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:719810a1cf0b8f8ba159943e95010ac66f9777cc3b72b49098817e260aa0753b"},
@@ -1380,12 +1386,12 @@ sqlcipher = ["sqlcipher3-binary"]
 
 [[package]]
 name = "telethon"
-version = "1.30.3"
+version = "1.31.0"
 description = "Full-featured Telegram client library for Python 3"
 optional = false
 python-versions = ">=3.5"
 files = [
-    {file = "Telethon-1.30.3.tar.gz", hash = "sha256:313e40fa06667b19ced13b379d9988167a8319bc0eb90bf39347cff46919a351"},
+    {file = "Telethon-1.31.0.tar.gz", hash = "sha256:8c2a2e0398e329323bd6d2a6c1d3964f85e882d557144b77edb8ff969916ff5b"},
 ]
 
 [package.dependencies]
@@ -1524,4 +1530,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "375a31c56c56e3e63423d73c985192d65b2ec3aff330e1e1fb9317ca1794b41e"
+content-hash = "42b1651088e1d45086169c2912ef5728f397367ad5aa3f6a038f88845e05a0e8"
