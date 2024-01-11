@@ -46,9 +46,9 @@ roms_archive: 'ROMs Archive'
 miui_inline: 'Search {codenames_names[device]} ({device}) Official ROMs Downloads'
 miui_archive: '**MIUI ROMs archive for {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Search {codenames_names[device]} ({device}) Official ROMs archive'
-latest_message: '**Latest MIUI Versions for {codenames_names[device]}** (`{device}`)'
-latest_inline: 'Search {codenames_names[device]} ({device}) latest MIUI versions'
-miui_update: '**New MIUI {rom_type} Update Available for {codenames_names[device]}** (`{device}`)!'
+latest_message: '**Latest OS Versions for {codenames_names[device]}** (`{device}`)'
+latest_inline: 'Search {codenames_names[device]} ({device}) latest OS versions'
+miui_update: '**New OS {rom_type} Update Available for {codenames_names[device]}** (`{device}`)!'
 wrong_codename: 'Wrong Codename!'
 subscribed: 'Subscribed to {device} {sub_type} updates successfully!'
 already_subscribed: 'You are already subscribed to {device} {sub_type} updates!'
@@ -89,7 +89,7 @@ Charging: Charging
 specs_inline: 'Search {device} Specifications'
 help_message: "**How to use {BOT_INFO['name']}**\n\n@{BOT_INFO['username']} is an all-in-one bot for Xiaomi users!\nIt can get you latest Official ROMs, Firmware updates links, and many more things!\nThe full usage guide is available [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nHere are all commands available:\n/start: Check if the bot is running\n/help: Show this help message"
 Subscriptions: Subscriptions
-miui_updates: 'MIUI Updates'
+miui_updates: 'OS Updates'
 Firmware: Firmware
 Vendor: Vendor
 xiaomi_eu: Xiaomi.eu
@@ -100,8 +100,8 @@ Miscellaneous: Miscellaneous
 Example: Example
 recovery_help: 'Gets latest recovery ROMs info and links'
 fastboot_help: 'Gets latest fastboot ROMs info and links'
-latest_help: 'Gets latest MIUI versions info'
-archive_help: 'Send all official available MIUI ROMs archive links for device'
+latest_help: 'Gets latest OS versions info'
+archive_help: 'Send all official available ROMs archive links for device'
 firmware_help: 'Gets available firmware for a device'
 vendor_help: 'Gets available firmware+vendor for a device'
 eu_help: 'Gets latest Xiaomi.eu ROMs downloads for device'

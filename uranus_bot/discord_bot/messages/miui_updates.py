@@ -37,7 +37,7 @@ async def latest_miui_message(device, updates, codenames_names):
     for i in data:
         version = i['version']
         description += f"{i['name']} {i['branch']}: `{version}`\n"
-    embed = Embed(title=f"**Latest MIUI Versions for {codenames_names[device]}** (`{device}`)",
+    embed = Embed(title=f"**Latest OS Versions for {codenames_names[device]}** (`{device}`)",
                   description=description)
     return embed
 
