@@ -19,7 +19,7 @@ async def miui_message(device, method, updates, codenames_names, locale):
     for i in data:
         version = i['version']
         android = i['android']
-        download = i['link']
+        download = f"https://cdn-ota.azureedge.net/{'/'.join(i['link'].split('/')[3:])}"
         buttons.append([Button.url(f"{i['name']} {version} | {android}", url=download)])
     buttons.append([Button.url(LOCALIZE.get_text(locale, "roms_archive"),
                                url=f"{XFU_WEBSITE}/archive/miui/{device}/"),

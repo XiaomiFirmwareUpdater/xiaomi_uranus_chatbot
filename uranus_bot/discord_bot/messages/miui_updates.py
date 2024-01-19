@@ -15,7 +15,7 @@ async def miui_message(device, method, updates, codenames_names):
     for i in data:
         version = i['version']
         android = i['android']
-        download = i['link']
+        download = f"https://cdn-ota.azureedge.net/{'/'.join(i['link'].split('/')[3:])}"
         embed.add_field(name=f"{i['name']} {version} | {android}",
                         value=f'[Download]({download})', inline=True)
     embed.add_field(name='ROMs Archive', value=f'[Here]({XFU_WEBSITE}/archive/miui/{device}/)')
