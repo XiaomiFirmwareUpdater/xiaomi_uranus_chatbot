@@ -15,11 +15,15 @@ async def load_eu_data():
     """
     eu_url = "https://sourceforge.net/projects/xiaomi-eu-multilang-miui-roms/rss?path=/xiaomi.eu"
     async with ClientSession() as session:
-        stable = eT.fromstring(await fetch(session, f'{eu_url}/MIUI-STABLE-RELEASES'))
-        weekly = eT.fromstring(await fetch(session, f'{eu_url}/MIUI-WEEKLY-RELEASES'))
-        stable_links = [i.find('link').text for i in stable[0].findall('item')]
-        weekly_links = [i.find('link').text for i in weekly[0].findall('item')]
-        return [*stable_links, *weekly_links]
+        miui_stable = eT.fromstring(await fetch(session, f'{eu_url}/MIUI-STABLE-RELEASES'))
+        hyper_os_stable = eT.fromstring(await fetch(session, f'{eu_url}/HyperOS-STABLE-RELEASES'))
+        miui_weekly = eT.fromstring(await fetch(session, f'{eu_url}/MIUI-WEEKLY-RELEASES'))
+        hyper_os_weekly = eT.fromstring(await fetch(session, f'{eu_url}/HyperOS-WEEKLY-RELEASES'))
+        miui_stable_links = [i.find('link').text for i in miui_stable[0].findall('item')]
+        hyper_os_stable_links = [i.find('link').text for i in hyper_os_stable[0].findall('item')]
+        miui_weekly_links = [i.find('link').text for i in miui_weekly[0].findall('item')]
+        hyper_os_weekly_links = [i.find('link').text for i in hyper_os_weekly[0].findall('item')]
+        return [*hyper_os_stable_links, *hyper_os_weekly_links, *miui_stable_links, *miui_weekly_links]
 
 
 async def load_eu_codenames():
@@ -41,12 +45,12 @@ async def get_eu(codename, eu_data, devices):
     device = devices[codename][1]
     try:
         stable_link = [i for i in eu_data if re.search(f"{device}_", i)
-                       and re.search(f'{device}_V', i)][0]
+                       and re.search(f'{device}_(?:V|OS)', i)][0]
     except IndexError:
         pass
     try:
         weekly_link = [i for i in eu_data if re.search(f"{device}_", i)
-                       and re.search(f'{device}_V.*.DEV', i)][0]
+                       and re.search(f'{device}_(?:V|OS).*.DEV', i)][0]
     except IndexError:
         pass
     links = [stable_link, weekly_link]
