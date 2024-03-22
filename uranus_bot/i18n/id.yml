@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Pemulihan
 Size: Ukuran
 miui_message: '{codenames_names[device]}** (`{device}`) **ROM MIUI Resmi {rom_type} terbaru'
-roms_archive: 'Arsip ROM'
+miui_roms_archive: 'Arsip ROM'
 miui_inline: 'Cari {codenames_names[device]} ({device}) unduhan ROM Resmi'
 miui_archive: '**Arsip ROM MIUI untuk {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Cari {codenames_names[device]} ({device}) arsip ROM Resmi'

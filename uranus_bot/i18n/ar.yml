@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: ريكفري
 Size: الحجم
 miui_message: 'آخر تحديثات روم MIUI نسخة {rom_type} الرسمية لجهاز ** {codenames_names[device]}** (`{device}`)'
-roms_archive: 'أرشيف الرومات'
+miui_roms_archive: 'أرشيف الرومات'
 miui_inline: 'البحث عن تحميلات الروم الرسمي لهاتف {codenames_names[device]} ({device})'
 miui_archive: '**أرشيف ملفات MIUI لجهاز {codenames_names[device]}** (`{device}`)'
 archive_inline: 'البحث في أرشيف الروم الرسمي لهاتف {codenames_names[device]} ({device})'

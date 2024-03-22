@@ -42,7 +42,7 @@ Fastboot: Бързо включване
 Recovery: Режим на Възстановяване
 Size: Размер
 miui_message: 'Последните {codenames_names[device]}** (`{device}`) **MIUI Official {rom_type} ROMs'
-roms_archive: 'ROM архив'
+miui_roms_archive: 'ROM архив'
 miui_inline: 'Потърсете {codenames_names[device]} ({device}) Официални Изтегляния за ROM'
 miui_archive: '**MIUI ROMs Архив за {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Потърсете {codenames_names[device]} ({device}) Официални архиви за ROM'

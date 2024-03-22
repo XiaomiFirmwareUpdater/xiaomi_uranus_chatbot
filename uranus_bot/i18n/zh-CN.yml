@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: 大小
 miui_message: '最新的 {codenames_names[device]}** (`{device}`) **MIUI 官方 {rom_type} ROM'
-roms_archive: 'ROM 存档'
+miui_roms_archive: 'ROM 存档'
 miui_inline: '搜索 {codenames_names[device]} ({device}) 的官方 ROM 下载'
 miui_archive: '**{codenames_names[device]} 的 MIUI ROM 归档** (`{device}`)'
 archive_inline: '搜索 {codenames_names[device]} ({device}) 官方 ROM 存档'

@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Размер
 miui_message: 'Последние {codenames_names[device]}** (`{device}`) **Официальные MIUI {rom_type} прошивки'
-roms_archive: 'Архив прошивок'
+miui_roms_archive: 'Архив прошивок'
 miui_inline: 'Поиск {codenames_names[device]} ({device}) Загрузка официальной прошивки'
 miui_archive: '**Архив прошивок MIUI для {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Поиск {codenames_names[device]} ({device}) Архив официальных прошивок'

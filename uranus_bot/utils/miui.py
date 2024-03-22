@@ -41,5 +41,10 @@ async def get_region(filename, codename, version):
 
 
 async def get_type(update):
-    """ Get the type of an update """
+    """ Get the ROM type of update """
     return 'Fastboot' if '.tgz' in update else 'Recovery'
+
+
+def get_os_type(updates):
+    """ Get the OS type of update """
+    return "hyperos" if sum(1 for i in updates if i['version'].startswith("OS.")) > len(updates) / 2 else "miui"

@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Tamaño
 miui_message: 'Las últimas ROMs oficiales de MIUI {rom_type} para {codenames_names[device]}** (`{device}`)** '
-roms_archive: 'Repositorio de ROMs'
+miui_roms_archive: 'Repositorio de ROMs'
 miui_inline: 'ROMs oficiales para {codenames_names[device]} ({device})'
 miui_archive: '**Repositorio de ROMs MIUI para {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Repositorio de ROMs para {codenames_names[device]} ({device})'

@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Herstellen
 Size: Grootte
 miui_message: 'Laatste {codenames_names[device]}** (`{device}`) **MIUI Officiële {rom_type} ROMs'
-roms_archive: 'ROM''s archief'
+miui_roms_archive: 'ROM''s archief'
 miui_inline: 'Zoek {codenames_names[device]} ({device}) Officiële ROMs Downloads'
 miui_archive: '**MIUI ROMs archief voor {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Zoek {codenames_names[device]} ({device}) Officiële ROMs archief'

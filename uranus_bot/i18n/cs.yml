@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Velikost
 miui_message: 'Nejnovější oficiální MIUI ROMky pro {codenames_names[device]}** (`{device}`) **, typ {rom_type}'
-roms_archive: 'Archiv ROMek'
+miui_roms_archive: 'Archiv ROMek'
 miui_inline: 'Hledej oficiální ROMku pro {codenames_names[device]} ({device})'
 miui_archive: '**Archiv ROMek MIUI pro {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Hledej oficiální ROMku pro {codenames_names[device]} ({device}) v archivu'

@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Памер
 miui_message: 'Апошнія {codenames_names[device]}** (`{device}`) **Афіцыйныя MIUI {rom_type} прашыўкі'
-roms_archive: 'Архіў прашывак'
+miui_roms_archive: 'Архіў прашывак'
 miui_inline: 'Пошук {codenames_names[device]} ({device}) Спампоўка афіцыйнай прашыўкі'
 miui_archive: '**Архіў прашывак MIUI для {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Пошук {codenames_names[device]} ({device}) Архіў афіцыйных прашывак'

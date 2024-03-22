@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recupero
 Size: Dimensione
 miui_message: 'L'' Ultima {codenames_names[device]}** (`{device}`) **MIUI Ufficiale {rom_type} ROMs'
-roms_archive: 'Archivio ROM'
+miui_roms_archive: 'Archivio ROM'
 miui_inline: 'Cerca {codenames_names[device]} ({device}) il Download della ROM Ufficiale'
 miui_archive: '**Archivio ROM MIUI per {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Cerca {codenames_names[device]} ({device}) nel archivio ROM ufficiale'

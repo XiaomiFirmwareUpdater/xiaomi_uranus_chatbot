@@ -2,7 +2,7 @@
 from discord import Embed
 
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import get_miui
-from uranus_bot.utils.miui import get_region, get_type
+from uranus_bot.utils.miui import get_os_type, get_region, get_type
 from uranus_bot import XFU_WEBSITE
 
 
@@ -15,16 +15,18 @@ async def miui_message(device, method, updates, codenames_names):
     for i in data:
         version = i['version']
         android = i['android']
-        download = f"https://cdn-ota.azureedge.net/{'/'.join(i['link'].split('/')[3:])}"
+        download = f"https://cdnorg.d.miui.com/{'/'.join(i['link'].split('/')[3:])}"
         embed.add_field(name=f"{i['name']} {version} | {android}",
                         value=f'[Download]({download})', inline=True)
-    embed.add_field(name='ROMs Archive', value=f'[Here]({XFU_WEBSITE}/archive/miui/{device}/)')
+    embed.add_field(name='ROMs Archive', value=f'[Here]({XFU_WEBSITE}/archive/{get_os_type(data)}/{device}/)')
     return embed
 
 
 async def archive_message(device, codenames_names):
     """ Generate discord message of archive command """
-    embed = Embed(title=f'**MIUI ROMs archive for {codenames_names[device]}** (`{device}`)')
+    embed = Embed(title=f'**ROMs archive for {codenames_names[device]}** (`{device}`)')
+    embed.add_field(name='HyperOS Archive',
+                    value=f'[Download]({XFU_WEBSITE}/archive/hyperos/{device}/)')
     embed.add_field(name='MIUI Archive',
                     value=f'[Download]({XFU_WEBSITE}/archive/miui/{device}/)')
     return embed

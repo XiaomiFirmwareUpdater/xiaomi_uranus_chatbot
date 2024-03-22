@@ -2,7 +2,7 @@
 from telethon import Button
 
 from uranus_bot.providers.miui_updates_tracker.miui_updates_tracker import get_miui
-from uranus_bot.utils.miui import get_region, get_type
+from uranus_bot.utils.miui import get_region, get_type, get_os_type
 from uranus_bot.telegram_bot.tg_bot import LOCALIZE
 from uranus_bot import XFU_WEBSITE
 
@@ -19,10 +19,10 @@ async def miui_message(device, method, updates, codenames_names, locale):
     for i in data:
         version = i['version']
         android = i['android']
-        download = f"https://cdn-ota.azureedge.net/{'/'.join(i['link'].split('/')[3:])}"
+        download = f"https://cdnorg.d.miui.com/{'/'.join(i['link'].split('/')[3:])}"
         buttons.append([Button.url(f"{i['name']} {version} | {android}", url=download)])
-    buttons.append([Button.url(LOCALIZE.get_text(locale, "roms_archive"),
-                               url=f"{XFU_WEBSITE}/archive/miui/{device}/"),
+    buttons.append([Button.url(LOCALIZE.get_text(locale, "miui_roms_archive"),
+                               url=f"{XFU_WEBSITE}/archive/{get_os_type(data)}/{device}/"),
                     Button.url(LOCALIZE.get_text(locale, "MIUIUpdatesTracker"),
                                url="https://t.me/MIUIUpdatesTracker")])
     return message, buttons
@@ -47,7 +47,9 @@ async def archive_message(device, codenames_names, locale):
     message = LOCALIZE.get_text(locale, "miui_archive").replace(
         "{codenames_names[device]}", codenames_names[device]).replace("{device}", device)
     buttons = [
-        [Button.url(LOCALIZE.get_text(locale, "roms_archive"),
+        [Button.url(LOCALIZE.get_text(locale, "hyperos_roms_archive"),
+                    url=f"{XFU_WEBSITE}/archive/hyperos/{device}/"),
+         Button.url(LOCALIZE.get_text(locale, "miui_roms_archive"),
                     url=f"{XFU_WEBSITE}/archive/miui/{device}/"),
          Button.url(LOCALIZE.get_text(locale, "MIUIUpdatesTracker"),
                     url="https://t.me/MIUIUpdatesTracker")]
@@ -134,7 +136,7 @@ async def unsubscribed_message(sub_type, device, locale):
 
 async def subscriptions_message(subscriptions, locale):
     """ Generate subscriptions message"""
-    message = f"**" + LOCALIZE.get_text(locale, "your_subscriptions") + ":**\n"
+    message = "**" + LOCALIZE.get_text(locale, "your_subscriptions") + ":**\n"
     if subscriptions:
         for subscription in subscriptions:
             message += f"{subscription.device} ({subscription.sub_type})\n"

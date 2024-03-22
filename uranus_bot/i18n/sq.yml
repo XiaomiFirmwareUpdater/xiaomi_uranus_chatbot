@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Madhësia
 miui_message: '**ROM-et MIUI Zyrtare {rom_type} te fundit per {codenames_names[device]}** (`{device}`)'
-roms_archive: 'Arkivi i ROMeve'
+miui_roms_archive: 'Arkivi i ROMeve'
 miui_inline: 'Kerko {codenames_names[device]} ({device}) shkarkime ROMe Zyrtare'
 miui_archive: '**Arkivi i ROMeve MIUI per {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Kerko {codenames_names[device]} ({device}) arkivi ROMeve Zyrtare'

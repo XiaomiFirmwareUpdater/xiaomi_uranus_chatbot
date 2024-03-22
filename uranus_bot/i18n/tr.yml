@@ -42,7 +42,7 @@ Fastboot: Fastboot
 Recovery: Kurtarma Modu
 Size: Boyut
 miui_message: '**{codenames_names[device]}** (`{device}`) **için güncel MIUI resmi {rom_type} ROM''ları'
-roms_archive: 'ROM Arşivi'
+miui_roms_archive: 'ROM Arşivi'
 miui_inline: '{codenames_names[device]} ({device}) Resmi ROM''larını Ara'
 miui_archive: '**{codenames_names[device]}}** (`{device}`) **için MIUI ROM arşivi**'
 archive_inline: '{codenames_names[device]} ({device}) cihazını Resmi ROM arşivinde ara'

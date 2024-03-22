@@ -42,7 +42,8 @@ Fastboot: Fastboot
 Recovery: Recovery
 Size: Size
 miui_message: 'Latest {codenames_names[device]}** (`{device}`) **MIUI Official {rom_type} ROMs'
-roms_archive: 'ROMs Archive'
+miui_roms_archive: 'MIUI ROMs Archive'
+hyperos_roms_archive: 'HyperOS ROMs Archive'
 miui_inline: 'Search {codenames_names[device]} ({device}) Official ROMs Downloads'
 miui_archive: '**MIUI ROMs archive for {codenames_names[device]}** (`{device}`)'
 archive_inline: 'Search {codenames_names[device]} ({device}) Official ROMs archive'
