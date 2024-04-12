@@ -527,6 +527,7 @@ files = [
     {file = "cryptg-0.4.0-cp311-cp311-win_amd64.whl", hash = "sha256:47a249a242497ba0fffe87067e0d5ef99b21c4081fe490a08c596b6184dda2dd"},
     {file = "cryptg-0.4.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:2da433484653470cba6b3e8c4c874ea9ba142c66d0214968c58ec8bed1fb5981"},
     {file = "cryptg-0.4.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:951ebab677abfa661356eff578988eb3e9d5e6e6b46c876731051a01616cfb18"},
+    {file = "cryptg-0.4.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c720ebec7c5fe65d6843a24495a4012b02fbca98f93a687f143864fa1333949a"},
     {file = "cryptg-0.4.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:eb564dbc370476e299c56d35a33aa8b8ec3df00184d5c78a0f73eebc2a3f057c"},
     {file = "cryptg-0.4.0-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d1e547e5ca4665d413397a43453ad867a78b0959362a056460ee3f4936da6728"},
     {file = "cryptg-0.4.0-cp312-cp312-win32.whl", hash = "sha256:975e53f1d713ef5733bf160ef1dce473519c93e5d27ec19013766f1f81224b0f"},
@@ -551,6 +552,11 @@ files = [
     {file = "cryptg-0.4.0-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:932e131a73bc1bd01457c8eaecb04b91f714051d0ba549f5301e4545d294628a"},
     {file = "cryptg-0.4.0-cp39-cp39-win32.whl", hash = "sha256:717c65ca5c753d89b111938329379df59ffd43b80678c07e4338ff46be554a72"},
     {file = "cryptg-0.4.0-cp39-cp39-win_amd64.whl", hash = "sha256:64f205d02fbadfe5415e3050388727c9de65eaea20948d8fd444b73a391f54fa"},
+    {file = "cryptg-0.4.0-pp310-pypy310_pp73-macosx_10_9_x86_64.whl", hash = "sha256:b29dc778f811db9a1ca40cae9f187e9413c0592c8ea404f63356583a54f81fcd"},
+    {file = "cryptg-0.4.0-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5658eb76f46315e2539e831a9f53117cd908ccc95faa053df77fadf7e7a35e16"},
+    {file = "cryptg-0.4.0-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7459b9d4a79bccba6e31d3e955245659ee813466ab048881958757bb799602e7"},
+    {file = "cryptg-0.4.0-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:a03b9a11ddb133dabbd642386a8d6f66af8e691faf5a18a99a39c4658df7aa9e"},
+    {file = "cryptg-0.4.0-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:551c8452fce4601b01d5a6490738683bc46e67a9201626267309369672d0e3f3"},
     {file = "cryptg-0.4.0-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:39e89cca35430569d79db118da9112efc7d4834b5bb5db1d1674afaca6d78e8f"},
     {file = "cryptg-0.4.0-pp37-pypy37_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:edb0e7dd994d6547e24fdec41facd373fbe31f9551edc3258da17a82838a6442"},
     {file = "cryptg-0.4.0-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8c7a5052c81e27cb13e4d4354caf3619d27bea8cf2da2dcad2a1e225119054a7"},
@@ -750,13 +756,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "idna"
-version = "3.4"
+version = "3.7"
 description = "Internationalized Domain Names in Applications (IDNA)"
 optional = false
 python-versions = ">=3.5"
 files = [
-    {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
-    {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
+    {file = "idna-3.7-py3-none-any.whl", hash = "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"},
+    {file = "idna-3.7.tar.gz", hash = "sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"},
 ]
 
 [[package]]
