@@ -9,21 +9,21 @@ async def specs_message(device, specs_data, locale):
     datas = await get_specs(device, specs_data)
     specs = []
     for data in datas:
-        spec = f"[{data['name']}]({data['url']}) - **{device}**\n" \
-                f"**{LOCALIZE.get_text(locale, 'Status')}**: {data['status']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Network')}:** {data['network']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Weight')}**: {data['weight']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Display')}**:\n{data['display']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Chipset')}**:\n{data['chipset']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Memory')}**: {data['memory']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'rear_camera')}**: {data['rear_camera']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'front_camera')}**: {data['front_camera']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'headphone_jack')}**: {data['jack']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'USB')}**: {data['usb']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Sensors')}**: {data['sensors']}\n" \
-                f"**{LOCALIZE.get_text(locale, 'Battery')}**: {data['battery']}"
+        spec = f"<a href=\"{data['url']}\">{data['name']}</a> - <b>{device}</b>\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Status')}</b>: {data['status']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Network')}:</b> {data['network']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Weight')}</b>: {data['weight']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Display')}</b>:\n{data['display']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Chipset')}</b>:\n{data['chipset']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Memory')}</b>: {data['memory']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'rear_camera')}</b>: {data['rear_camera']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'front_camera')}</b>: {data['front_camera']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'headphone_jack')}</b>: {data['jack']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'USB')}</b>: {data['usb']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Sensors')}</b>: {data['sensors']}\n" \
+                f"<b>{LOCALIZE.get_text(locale, 'Battery')}</b>: {data['battery']}"
         try:
-            spec += f"\n**{LOCALIZE.get_text(locale, 'Charging')}**: {data['charging']}"
+            spec += f"\n<b>{LOCALIZE.get_text(locale, 'Charging')}</b>: {data['charging']}"
         except KeyError:
             pass
         specs.append(spec)
@@ -42,6 +42,7 @@ async def specs_inline(event, device, specs_data, locale):
     result = builder.article(
         LOCALIZE.get_text(locale, "specs_inline").replace("{device}", device),
         text=message,
-        link_preview=True
+        link_preview=True,
+        parse_mode="htm"
     )
     return result

@@ -16,7 +16,7 @@ async def specs(event):
     locale = DATABASE.get_locale(event.chat_id)
     message = await specs_message(device, PROVIDER.specs_data, locale)
     if message:
-        await event.reply(message, link_preview=False)
+        await event.reply(message, link_preview=False, parse_mode="htm")
     else:
         await event.reply(await error_message(device, locale))
     raise events.StopPropagation
