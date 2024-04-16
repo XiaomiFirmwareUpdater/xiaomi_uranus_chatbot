@@ -1,5 +1,5 @@
 ---
-welcome: "Hey! Ben Uranüs, Xiaomi kullanıcıları için hepsi bir arada botum!\n Size güncel Resmi ROM'ları, Yazılım güncelleme bağlantılarını ve daha birçok şeyi verebilirim!\n\n Aşağıdaki yardım düğmesini tıklayarak beni nasıl kullanacağınızı öğrenin.\n Bot hakkındaki tüm güncellemeleri ve duyuruları almak için [kanalıma](https://t.me/yshalsager_projects) katılın!"
+welcome: "Hey! Ben Uranüs, Xiaomi kullanıcıları için hepsi bir arada botum!\nSize güncel Resmi ROM'ları, Yazılım güncelleme bağlantılarını ve daha birçok şeyi verebilirim!\n\nAşağıdaki yardım düğmesini tıklayarak beni nasıl kullanacağınızı öğrenin.\nBot hakkındaki tüm güncellemeleri ve duyuruları almak için [kanalıma](https://t.me/yshalsager_projects) katılın!"
 join_channel: 'Kanalıma katıl'
 join_group: 'Destek grubuna katıl'
 read_help: 'Yardım''ı Oku'
@@ -10,7 +10,7 @@ latest_firmware: 'Güncel Yazılım'
 archive_firmware: 'Yazılım Arşivi'
 XiaomiFirmwareUpdater: Xiaomi Yazılım Güncelleyici
 MIUIUpdatesTracker: MIUIUpdatesTracker
-firmware_inline: ' {codenames_names[device]} ({device}) için yazılım indirmelerini ara'
+firmware_inline: '{codenames_names[device]} ({device}) için yazılım indirmelerini ara'
 open_in_pm: 'Bu mesajı ÖM''de aç'
 click_here: 'Buraya Tıkla'
 device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modeller'
@@ -18,7 +18,7 @@ models_inline: '{device} için cihaz modelleri arayın'
 whatis_message: '`{device}`, **{codenames_names[device]}**'
 whatis_inline: '{device} için cihaz adını arayın'
 too_much_codenames: '{device} için birçok cihaz var! Lütfen daha ayrıntı verin.'
-codename_message: "** {name} ** \"{codename}\"\n"
+codename_message: "**{name}** \"`{codename}`\"\n"
 codename_inline: '{device} cihazı için kod adını arayın'
 unlock_bl: 'Bootloader kilidi açma rehberi ve araçları'
 unlock_bl_inline: 'Bootloader kilidi nasıl açılır rehberi'
@@ -41,12 +41,12 @@ China: Çin
 Fastboot: Fastboot
 Recovery: Kurtarma Modu
 Size: Boyut
-miui_message: '**{codenames_names[device]}** (`{device}`) **için güncel MIUI resmi {rom_type} ROM''ları'
+miui_message: '{codenames_names[device]}** (`{device}`) **için güncel MIUI resmi {rom_type} ROM''ları'
 miui_roms_archive: 'ROM Arşivi'
 miui_inline: '{codenames_names[device]} ({device}) Resmi ROM''larını Ara'
 miui_archive: '**{codenames_names[device]}}** (`{device}`) **için MIUI ROM arşivi**'
 archive_inline: '{codenames_names[device]} ({device}) cihazını Resmi ROM arşivinde ara'
-latest_message: '**{codenames_names[device]}** (`{device}`) **için güncel MIUI Sürümleri **'
+latest_message: '**{codenames_names[device]}** (`{device}`) **için güncel MIUI Sürümleri**'
 latest_inline: '{codenames_names[device]} ({device}) için güncel MIUI sürümlerini arayın'
 miui_update: '**Yeni {rom_type} MIUI Güncellemesi {codenames_names[device]}** (`{device}`) **için mevcut**!'
 wrong_codename: 'Yanlış Kod Adı!'
@@ -55,9 +55,9 @@ already_subscribed: '{device} {sub_type} güncellemelerine zaten abone oldunuz!'
 unsubscribed: '{device} {sub_type} güncellemelerinin aboneliği başarıyla iptal edildi!'
 your_subscriptions: 'Abone olduğunuz cihazlar'
 no_subscriptions: 'Henüz yok'
-firmware_update: '** {codename} için ** @XiaomiFirmwareUpdater **tarafından yeni yazılım güncellemesi mevcut**'
-vendor_update: '** {codename} için ** @MIUIVendorUpdater **tarafından yeni Vendor güncellemesi mevcut**'
-orangefox_message: "** En son {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home):\n __Anatainer:__ {data['maintainer']}"
+firmware_update: '**{codename} için **@XiaomiFirmwareUpdater **tarafından yeni yazılım güncellemesi mevcut**'
+vendor_update: '**{codename} için **@MIUIVendorUpdater **tarafından yeni Vendor güncellemesi mevcut**'
+orangefox_message: "**En son {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home):\n__Anatainer:__ {data['maintainer']}"
 orangefox_inline: '{device} için OrangeFox kurtarma modu indirmelerini arayın'
 pitchblack_message: '`{device}` **için güncel [PitchBlack](https://pbrp.ml) derlemesi**'
 pitchblack_inline: '{device} için PitchBlack indirmelerini ara'
@@ -71,7 +71,7 @@ latest_vendor: 'Güncel Vendor'
 archive_vendor: 'Vendor Arşivi'
 MIUIVendorUpdater: MIUIVendorUpdater
 vendor_inline: '{codenames_names[device]} ({device}) için Vendor indirmelerini ara'
-twrp_message: "** {data['name']} için en son TWRP: **\n ** Güncelleme tarihi: ** {data['date']}"
+twrp_message: "**{data['name']} için en son TWRP:**\n**Güncelleme tarihi:** {data['date']}"
 twrp_inline: '{codenames_names[device]} ({device}) için TWRP indirmelerini ara'
 Status: Durum
 Network: Ağ
@@ -87,7 +87,7 @@ Sensors: Sensörler
 Battery: Batarya
 Charging: Şarj
 specs_inline: '{device} Özelliklerini Ara'
-help_message: "** {BOT_INFO['name']} nasıl kullanılır **\n\n @{BOT_INFO['username']}, Xiaomi kullanıcıları için hepsi bir arada bir bot!\n Size en son Resmi ROM'lar, Bellenim güncellemeleri bağlantıları ve daha birçok şey alabilirsiniz!\n Kullanım kılavuzunun tamamı [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\n Mevcut tüm komutlar:\n /start: Botun çalışıp çalışmadığını kontrol edin\n /help: Bu yardım iletisini göster"
+help_message: "**{BOT_INFO['name']} nasıl kullanılır**\n\n@{BOT_INFO['username']}, Xiaomi kullanıcıları için hepsi bir arada bir bot!\nSize en son Resmi ROM'lar, Bellenim güncellemeleri bağlantıları ve daha birçok şey alabilirsiniz!\nKullanım kılavuzunun tamamı [Here]({XFU_WEBSITE}/projects/uranus-chatbot/#usage)\n\nMevcut tüm komutlar:\n/start: Botun çalışıp çalışmadığını kontrol edin\n/help: Bu yardım iletisini göster"
 Subscriptions: Abonelikler
 miui_updates: 'MIUI Güncellemeleri'
 Firmware: Yazılım
@@ -120,7 +120,7 @@ subscribe_help: 'Bu cihazın yazılım/miui/vendor güncellemelerine abone ol'
 unsubscribe_help: 'Bu aygıtın ürün yazılımı/miui/satıcı güncellemelerinden çıkın'
 subscription_help: 'Mevcut aboneliklerinizi listeleyin'
 set_locale_message: 'Bot dili başarıyla {lang} olarak değiştirildi!'
-wrong_locale_message: "Maalesef {lang} dil desteği henüz mevcut değil :(\n İyi haber, bot'a katkıda bulunabilmeniz ve ekleyebilmenizdir!\n [Buraya Bakın](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
+wrong_locale_message: "Maalesef {lang} dil desteği henüz mevcut değil :(\nİyi haber, bot'a katkıda bulunabilmeniz ve ekleyebilmenizdir!\n[Buraya Bakın](https://crowdin.com/project/xiaomi-geeks-chatbot/)"
 settings_message: 'Bot Ayarları'
 bot_lang: 'Bot Dili'
 available_languages: 'Mevcut Diller'

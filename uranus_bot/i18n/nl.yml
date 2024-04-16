@@ -87,7 +87,7 @@ Sensors: Sensoren
 Battery: Batterij
 Charging: Opladen
 specs_inline: 'Zoek {device} specificaties'
-help_message: "** Hoe {BOT_INFO ['name']} ** te gebruiken\n\n @ {BOT_INFO ['gebruikersnaam']} is een alles-in-één-bot voor Xiaomi-gebruikers!\nHet kan u de nieuwste officiële ROM's, links naar firmware-updates krijgen en nog veel meer!\n De volledige gebruikershandleiding is [hier] beschikbaar ({XFU_WEBSITE} / projects / uranus-chatbot / # use)\n\n Hier zijn alle beschikbare commando's:\n / start: controleer of de bot draait\n / help: toon dit helpbericht"
+help_message: "**Hoe {BOT_INFO['name']} **te gebruiken\n\n@{BOT_INFO['username']} is een alles-in-één-bot voor Xiaomi-gebruikers!\nHet kan u de nieuwste officiële ROM's, links naar firmware-updates krijgen en nog veel meer!\nDe volledige gebruikershandleiding is [hier]({XFU_WEBSITE}/projects/uranus-chatbot/#usage) beschikbaar\n\nHier zijn alle beschikbare commando's:\n/start: controleer of de bot draait\n/help: toon dit helpbericht"
 Subscriptions: Abonnementen
 miui_updates: 'MIUI updates'
 Firmware: Firmware

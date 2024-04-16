@@ -57,7 +57,7 @@ your_subscriptions: 'Anda telah berlangganan'
 no_subscriptions: 'Belum ada apa-apa untuk saat ini'
 firmware_update: '**Pembaruan Firmware baru tersedia untuk {codename} oleh** @XiaomiFirmwareUpdater'
 vendor_update: '**Pembaruan Vendor baru tersedia untuk {codename} oleh** @XiaomiVendorUpdater'
-orangefox_message: "**[OrangeFox] build terbaru untuk {data['name']} **(`{device}`)(https://wiki.orangefox.tech/en/home):\n__Pemelihara:__ {data['pemelihara']}"
+orangefox_message: "**[OrangeFox](https://wiki.orangefox.tech/en/home) build terbaru untuk {data['name']} **(`{device}`):\n__Pemelihara:__ {data['maintainer']}"
 orangefox_inline: 'Cari unduhan pemulihan OrangeFox untuk {device}'
 pitchblack_message: '**Build terbaru [PitchBlack](https://pbrp.ml) untuk **`{device}`'
 pitchblack_inline: 'Cari unduhan PitchBlack untuk {device}'

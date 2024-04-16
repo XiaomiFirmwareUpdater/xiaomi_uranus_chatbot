@@ -1,5 +1,5 @@
 ---
-welcome: "Hola! soy Urano, un bot todo en uno para usuarios de Xiaomi!\nPuedo tener las últimas ROMs oficiales, actualizaciones de firmware y muchas cosas más!\n\nAprende a cómo usarme pulsando en el botón de abajo.\nÚnete a mi canal: (https://t.me/yshalsager_projects)\nPara tener las últimas actualizaciones y novedades del bot!"
+welcome: "Hola! soy Urano, un bot todo en uno para usuarios de Xiaomi!\nPuedo tener las últimas ROMs oficiales, actualizaciones de firmware y muchas cosas más!\n\nAprende a cómo usarme pulsando en el botón de abajo.\nÚnete a [mi canal](https://t.me/yshalsager_projects) para tener las últimas actualizaciones y novedades del bot!"
 join_channel: 'Únete a mi canal'
 join_group: 'Únete al grupo de apoyo'
 read_help: 'Leer para ayudar'
@@ -13,9 +13,9 @@ MIUIUpdatesTracker: Rastreador de actualizaciones de MIUI
 firmware_inline: 'Buscar {codenames_names[device]} ({device}) firmware descargables'
 open_in_pm: 'Abra este mensaje en PM'
 click_here: 'Pulse aquí'
-device_models: "{models_data[device]['name']} ({device} - \n{models_data[device]['internal_name']}) Modelos"
+device_models: "{models_data[device]['name']} ({device} - {models_data[device]['internal_name']}) Modelos"
 models_inline: 'Buscar modelos de dispositivos {device}'
-whatis_message: '{device} es **{codenames_names[device]}**'
+whatis_message: '`{device}` es **{codenames_names[device]}**'
 whatis_inline: 'Buscar nombre del dispositivo {device}'
 too_much_codenames: '{device} Es demasiado general! Por favor se más específico.'
 codename_message: "**{name}** Es `{codename}`\n"
@@ -41,7 +41,7 @@ China: China
 Fastboot: Fastboot
 Recovery: Recovery
 Size: Tamaño
-miui_message: 'Últimas ROMs MIUI {rom_type} oficiales para {codenames_names[device]}** (`{device}`)'
+miui_message: 'Últimas ROMs MIUI {rom_type} oficiales para {codenames_names[device]}** (`{device}`) **'
 miui_roms_archive: 'Repositorio de ROMs'
 miui_inline: 'Buscar descargas de ROMs oficiales para {codenames_names[device]} ({device})'
 miui_archive: '**Repositorio de ROMs MIUI para {codenames_names[device]}** (`{device}`)'
@@ -56,10 +56,10 @@ unsubscribed: '¡Suscripción a las actualizaciones de {device} {sub_type} cance
 your_subscriptions: 'Estás suscrito a'
 no_subscriptions: 'Nada aún'
 firmware_update: '**Nueva actualización de firmware disponible para {codename} por** @XiaomiFirmwareUpdater'
-vendor_update: '**nueva actualización del vendor disponible para {codename} por @MIUIVendorUpdater'
-orangefox_message: "Última versión {data['name']} **(`{device}`) [OrangeFox] (https://wiki.orangefox.tech/en/home) construcciones: _Mantenedor:_{data['manteiner']}"
+vendor_update: '**nueva actualización del vendor disponible para {codename} por** @MIUIVendorUpdater'
+orangefox_message: "**Última versión {data['name']} **(`{device}`) [OrangeFox](https://wiki.orangefox.tech/en/home) construcciones:\n__Mantenedor:__ {data['maintainer']}"
 orangefox_inline: 'Buscar {device} OrangeFox recovery descargas'
-pitchblack_message: '**última [PitchBlack] (https://pbrp.ml) construido por **`{device}`'
+pitchblack_message: '**última [PitchBlack](https://pbrp.ml) construido por **`{device}`'
 pitchblack_inline: 'Buscar {device} PitchBlack descargas'
 Devices: Dispositivos
 Tag: Etiqueta

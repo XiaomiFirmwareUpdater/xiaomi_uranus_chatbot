@@ -64,7 +64,7 @@ pitchblack_inline: 'Cerco {device} download della PitchBlack'
 Devices: Dispositivi
 Tag: Tag
 oss_inline: 'Cerca kernel OSS per {device}'
-eu_message: '**{name} (**`{device}`) ultima Rom Xiaomi.eu: **'
+eu_message: '**{name} (**`{device}`**) ultima Rom Xiaomi.eu: **'
 eu_inline: 'Cerca il download Xiaomi.eu di {name} ({device})'
 vendor_message: '**Vendor disponibile al download per {codenames_names[device]}** (`{device}`)'
 latest_vendor: 'L'' ultimo Vendor'

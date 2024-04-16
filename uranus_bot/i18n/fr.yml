@@ -1,5 +1,5 @@
 ---
-welcome: "Bonjour, je suis Uranus, un robot tout-en-un pour tous les utilisateurs de smartphones Xiaomi !\nAvec moi, vous pouvez obtenir les dernières ROM officielles, les liens de mise à jour du micrologiciel, et bien d'autres choses encore.\nVoyez comment l'utiliser en cliquant sur le bouton d'aide ci-dessous.\nRejoignez [mon canal]\n(https://t.me/yshalsager_projects) pour suivre les mises à jour et informations sur le bot!"
+welcome: "Bonjour, je suis Uranus, un robot tout-en-un pour tous les utilisateurs de smartphones Xiaomi !\nAvec moi, vous pouvez obtenir les dernières ROM officielles, les liens de mise à jour du micrologiciel, et bien d'autres choses encore.\n\nVoyez comment l'utiliser en cliquant sur le bouton d'aide ci-dessous.\nRejoignez [mon canal](https://t.me/yshalsager_projects) pour suivre les mises à jour et informations sur le bot !"
 join_channel: 'Rejoindre mon canal'
 join_group: 'Joindre le support'
 read_help: 'Lire l''aide'
@@ -10,7 +10,7 @@ latest_firmware: 'Dernier micrologiciel'
 archive_firmware: 'Micrologiciels archivés'
 XiaomiFirmwareUpdater: Mise à jour du micrologiciel Xiaomi
 MIUIUpdatesTracker: Traqueur de mises à jour MIUI
-firmware_inline: "Recherche {codenames_names[device]}\n({device}) téléchargement du micrologiciel"
+firmware_inline: "Recherche {codenames_names[device]} ({device}) téléchargement du micrologiciel"
 open_in_pm: 'Ouvrir ce message en MP'
 click_here: 'Cliquez ici'
 device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) Modèles'
@@ -18,7 +18,7 @@ models_inline: 'Rechercher {device} nom de code de l''appareil'
 whatis_message: '`{device}` est **{codenames_names[device]}**'
 whatis_inline: 'Rechercher {device} nom de l''appareil'
 too_much_codenames: '{device} est trop générique ! Affinez votre recherche.'
-codename_message: "**{name}** correspond à {codename}\n"
+codename_message: "**{name}** correspond à `{codename}`\n"
 codename_inline: 'Rechercher {device} nom de code de l''appareil'
 unlock_bl: 'Guide de déverouillage du bootloader et outils'
 unlock_bl_inline: 'Comment deverouiller le bootloader ? Tutoriel'
@@ -41,7 +41,7 @@ China: Chine
 Fastboot: Fastboot
 Recovery: Récupération
 Size: Taille
-miui_message: "Dernière {codenames_names[device]}**('{device}')\n**MIUI officielle {rom_type} ROMs"
+miui_message: "Dernière {codenames_names[device]}** (`{device}`) **MIUI officielle {rom_type} ROMs"
 miui_roms_archive: 'Archive ROMs'
 miui_inline: 'Recherche {codenames_names[device]} ({device}) Téléchargement ROMs officielles'
 miui_archive: '**Archive des ROMs MIUI{codenames_names[device]}** (`{device}`)'
@@ -49,8 +49,8 @@ archive_inline: 'Rechercher {codenames_names[device]} ({device}) Archives des RO
 latest_message: '**Dernières versions MIUI pour {codenames_names[device]}** (`{device}`)'
 latest_inline: 'Rechercher {codenames_names[device]} ({device}) dernières versions MIUI'
 miui_update: '**Nouvelles MIUI {rom_type} mises à jour disponibles pour {codenames_names[device]}** (`{device}`)!'
-wrong_codename: 'Faux nom de code!'
-subscribed: 'Souscription aux Mises à jour de {device} {sub_type} réalisé avec succès!'
+wrong_codename: 'Faux nom de code !'
+subscribed: 'Souscription aux Mises à jour de {device} {sub_type} réalisé avec succès !'
 already_subscribed: 'Vous êtes déjà abonné aux Mises à jour de {device} {sub_type} !'
 unsubscribed: 'Désabonné des mises à jour de {device} {sub_type} avec succès !'
 your_subscriptions: 'Vous êtes abonné à'
@@ -119,14 +119,14 @@ arb_help: 'Informations sur la protection anti-annulation'
 subscribe_help: 'S''abonner aux mises à jour du firmware de cet appareil/miui/fournisseur'
 unsubscribe_help: 'Se désabonner des mises à jour du firmware de cet appareil/miui/fournisseur'
 subscription_help: 'Liste des abonnements actuels'
-set_locale_message: 'La langue du bot a été changée en {lang} avec succès!'
+set_locale_message: 'La langue du bot a été changée en {lang} avec succès !'
 wrong_locale_message: "Malheureusement, le support de la langue {lang} n'est pas encore disponible :(\nLa bonne nouvelle est que vous pouvez contribuer au bot et l'ajouter !\n[Consulter ici](https://crowdin. om/project/xiaomi-geeks-chatbot/)"
 settings_message: 'Paramètres du bot'
 bot_lang: 'Langue du bot'
 available_languages: 'Langues disponibles'
 change_language: 'Modifier la langue'
 Back: Retour
-set_device_message: 'Preferred device for this chat has been set to {codenames_names[device]} (`{device}`) successfully!'
+set_device_message: 'Preferred device for this chat has been set to {codenames_names[device]} (`{device}`) successfull !'
 preferred_device: 'Preferred device'
 your_preferred_device: 'Your preferred device is'
 preferred_device_help: 'Sets your preferred device in order to be used as default for commands that needs the codename of the device'
