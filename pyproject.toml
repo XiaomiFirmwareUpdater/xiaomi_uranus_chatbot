@@ -12,7 +12,7 @@ cryptg = "^0.4"
 Pillow = "^10.3.0"
 PyYAML = "^6.0"
 aiohttp = { extras = ["speedups"], version = "^3.9.2" }
-sentry-sdk = "2.0.1"
+sentry-sdk = "2.1.1"
 aiocontextvars = "^0.2.2"
 "discord.py" = "^2.2.2"
 orangefoxapi = { git = "https://gitlab.com/yshalsager/python-api-lib.git", rev = "poetry" }
