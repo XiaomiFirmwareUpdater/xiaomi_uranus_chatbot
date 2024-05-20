@@ -46,8 +46,8 @@ LOGGER.addHandler(ERR)
 LOGGER.setLevel(logging.INFO)
 
 # other global variables
-HELP_URL = "https://xiaomifirmwareupdater.com/projects/uranus-chatbot/#usage"
-XFU_WEBSITE = "https://www.xiaomifirmwareupdater.com"
+HELP_URL = "https://xmfirmwareupdater.com/projects/uranus-chatbot/#usage"
+XFU_WEBSITE = "https://www.xmfirmwareupdater.com"
 TG_CHANNEL = "https://t.me/yshalsager_projects"
 
 # Init sentry sdk for errors reporting
