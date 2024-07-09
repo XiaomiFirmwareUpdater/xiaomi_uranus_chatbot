@@ -13,7 +13,7 @@ MIUIUpdatesTracker: MIUIUpdatesTracker
 firmware_inline: '搜索 {codenames_names[device]} ({device}) 的 Firmware 下载'
 open_in_pm: '在对话中打开此消息'
 click_here: '点击此处'
-device_models: '{model_data[device]["name"]} ({device} - {model_data[device]["internal_name"]}) 型号'
+device_models: '{models_data[device][''name'']} ({device} - {models_data[device][''internal_name'']}) 型号'
 models_inline: '搜索 {device} 设备型号'
 whatis_message: '`{device}` 是 **{codenames_names[device]}**'
 whatis_inline: '搜索 {device} 设备名称'
