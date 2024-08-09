@@ -11,7 +11,7 @@ Telethon = "1.36.0"
 cryptg = "^0.4"
 Pillow = "^10.3.0"
 PyYAML = "^6.0"
-aiohttp = { extras = ["speedups"], version = "^3.9.2" }
+aiohttp = { extras = ["speedups"], version = "^3.10.2" }
 sentry-sdk = "2.12.0"
 aiocontextvars = "^0.2.2"
 "discord.py" = "^2.2.2"
