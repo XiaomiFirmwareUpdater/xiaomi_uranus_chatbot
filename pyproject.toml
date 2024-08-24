@@ -15,7 +15,7 @@ aiohttp = { extras = ["speedups"], version = "^3.10.2" }
 sentry-sdk = "2.13.0"
 aiocontextvars = "^0.2.2"
 "discord.py" = "^2.2.2"
-orangefoxapi = { git = "https://gitlab.com/yshalsager/python-api-lib.git", rev = "poetry" }
+orangefoxapi = { git = "https://gitlab.com/yshalsager/python-api-lib.git", rev = "a1a2247f1efbdad4a426d1feb3a32f2d0d64db31" }
 SQLAlchemy = "^2.0.15"
 
 [tool.poetry.dev-dependencies]
