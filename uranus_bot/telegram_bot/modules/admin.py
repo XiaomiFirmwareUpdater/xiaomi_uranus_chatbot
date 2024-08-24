@@ -25,11 +25,12 @@ async def stats_handler(event):
     raise events.StopPropagation
 
 
-@BOT.on(events.NewMessage(from_users=TG_BOT_ADMINS, pattern=r'/broadcast (group|channel|user) ([\s\S]*$)'))
+@BOT.on(
+    events.NewMessage(from_users=TG_BOT_ADMINS, pattern=r'/broadcast (group|channel|user)', func=lambda e: e.is_reply))
 @exception_handler
 async def broadcast_handler(event):
     chat_type = event.pattern_match.group(1)
-    message = event.pattern_match.group(2)
+    message = (await event.message.get_reply_message())
     chats = DATABASE.get_chats(chat_type)
     for chat in chats:
         try:
@@ -92,6 +93,6 @@ async def restart_handler(event):
 
 async def restart(restart_message):
     chat_info = {'chat': restart_message.chat_id, 'message': restart_message.id}
-    with open(f"restart.pickle", "wb") as out:
+    with open("restart.pickle", "wb") as out:
         pickle.dump(chat_info, out)
     execl(executable, executable, "-m", main_package)
