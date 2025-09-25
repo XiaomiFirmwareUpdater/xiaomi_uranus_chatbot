@@ -5,8 +5,12 @@ config.*
 *_admin*
 *_private*
 .idea/
+.vscode/settings.json
 venv/
+.venv/
 *.session*
 *.db
+*.csv
 *.stf
 sync_*
+.mise.local.toml
