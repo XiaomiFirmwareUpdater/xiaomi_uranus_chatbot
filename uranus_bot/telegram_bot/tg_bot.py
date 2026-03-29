@@ -5,7 +5,7 @@ import pickle
 
 from os import path, remove
 
-from telethon.sync import TelegramClient
+from telethon import TelegramClient
 
 from uranus_bot import API_KEY, API_HASH, BOT_TOKEN, WITH_EXTRA
 from uranus_bot.i18n.localize import Localize
@@ -14,21 +14,23 @@ from uranus_bot.telegram_bot import TG_LOGGER
 from uranus_bot.telegram_bot.modules import ALL_MODULES
 from uranus_bot.utils.loader import load_modules
 
-BOT = TelegramClient('xfu_bot', API_KEY, API_HASH).start(bot_token=BOT_TOKEN)
+BOT = TelegramClient('xfu_bot', API_KEY, API_HASH)
 BOT.parse_mode = 'markdown'
 BOT_INFO = {}
-PROVIDER = Provider(BOT.loop)
+PROVIDER = None
 LOCALIZE = Localize()
 
 
 def main():
     """Main"""
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(run())
+    asyncio.run(run())
 
 
 async def run():
     """Run the bot."""
+    global PROVIDER
+    await BOT.start(bot_token=BOT_TOKEN)
+    PROVIDER = Provider(asyncio.get_running_loop())
     bot_info = await BOT.get_me()
     BOT_INFO.update({'name': bot_info.first_name,
                      'username': bot_info.username, 'id': bot_info.id})
@@ -44,5 +46,4 @@ async def run():
             restart_message = pickle.load(status)
         await BOT.edit_message(restart_message['chat'], restart_message['message'], 'Restarted Successfully!')
         remove('restart.pickle')
-    async with BOT:
-        await BOT.run_until_disconnected()
+    await BOT.run_until_disconnected()
