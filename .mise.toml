@@ -1,3 +1,12 @@
 [tools]
-python = "3.14.3"
+python = "3.14"
 uv = "latest"
+
+[tasks.'dev:telegram']
+alias = "default"
+dir = "uranus_bot"
+run = "uv run -m telegram_bot"
+
+[tasks.'dev:discord']
+dir = "uranus_bot"
+run = "uv run -m discord_bot"
