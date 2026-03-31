@@ -48,14 +48,14 @@ This chat bot aims to provide easy access for all the stuff that Xiaomi users ne
 - Make sure you have python3.8+ installed.
 
 - Install the required libs.
-  
-  * Using poetry:
- 
+
+  * Using uv:
+
   ```
-  poetry install
+  uv sync
   ```
-  
-  * using pip:
+
+  * Using pip:
 
   ```
   pip3 install .
