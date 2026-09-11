@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.7
 """ Xiaomi Geeks discord Bot"""
-from asyncio import run, create_task
+from asyncio import create_task, run
 
-from discord import ActivityType, Activity, Intents
+from discord import Activity, ActivityType, Intents
 from discord.ext.commands import Bot
 
 from uranus_bot import DISCORD_TOKEN
@@ -14,19 +14,19 @@ from uranus_bot.utils.loader import load_modules
 
 class MyBot(Bot):
     def __init__(self):
-        intents = Intents.default()
-        intents.message_content = True
-        intents.presences = True
-        super().__init__(intents=intents, command_prefix='!')
+        super().__init__(intents=Intents.default(), command_prefix='!', help_command=None)
         self.provider = None
 
     async def setup_hook(self):
-        from uranus_bot.discord_bot.modules.subscriptions import post_miui_updates, post_firmware_updates
+        from uranus_bot.discord_bot.modules.subscriptions import (
+            post_firmware_updates,
+            post_miui_updates,
+        )
 
         self.provider = Provider(self.loop)
         # Load all modules in modules list
         load_modules(ALL_MODULES, __package__)
-        # await self.tree.sync(guild=Object(id=484361541815107607))
+        await self.tree.sync()
         create_task(post_miui_updates())
         create_task(post_firmware_updates())
 

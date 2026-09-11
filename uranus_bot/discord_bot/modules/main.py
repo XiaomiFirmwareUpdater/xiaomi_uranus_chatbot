@@ -1,64 +1,53 @@
-""" Xiaomi Geeks Discord Bot main module"""
-from discord import HTTPException
-from discord.ext.commands import CommandNotFound, DisabledCommand, NoPrivateMessage, NotOwner, \
-    MissingRequiredArgument
+"""Xiaomi Geeks Discord Bot main module."""
 
-from uranus_bot.discord_bot import DATABASE, DISCORD_LOGGER
+from discord import Embed
+
+from uranus_bot.discord_bot import DATABASE
 from uranus_bot.discord_bot.discord_bot import BOT
 from uranus_bot.discord_bot.messages.main import start_message
 from uranus_bot.discord_bot.utils.chat import get_chat_info
 
 
-@BOT.hybrid_command(name='start', with_app_command=True)
+@BOT.before_invoke
+async def register_chat(ctx):
+    """Register chats that invoke the bot through an interaction."""
+    if not DATABASE.is_known_chat(ctx.channel.id):
+        DATABASE.add_chat_to_db(await get_chat_info(ctx))
+
+
+@BOT.hybrid_command(name='start', description='Show the welcome message', with_app_command=True)
 async def start(ctx):
-    """Sends the welcome message"""
+    """Send the welcome message."""
     await ctx.send(None, embed=await start_message())
 
 
-@BOT.event
-async def on_message(message):
-    """Deal with incoming messages"""
-    # Add new chats to the database
-    if not DATABASE.is_known_chat(message.channel.id):
-        DATABASE.add_chat_to_db(await get_chat_info(message))
-    # Greet first time users
-    if not message.guild and message.author != BOT.user and not message.channel.history(limit=1):
-        await message.channel.send(None, embed=await start_message())
-    else:
-        await BOT.process_commands(message)
-
-    # elif not message.guild and message.author != BOT.user:
-    #     await message.channel.send("I didn't get that! Please read usage using `!help` command.")
+def command_usage(app_command):
+    """Format an application command and its parameters."""
+    parameters = ' '.join(
+        f'<{parameter.name}>' if parameter.required else f'[{parameter.name}]'
+        for parameter in app_command.parameters
+    )
+    return f'/{app_command.name} {parameters}'.rstrip()
 
 
-@BOT.event
-async def on_command_error(ctx, error):
-    """The event triggered when an error is raised while invoking a command.
-    Parameters
-    ------------
-    ctx: commands.Context
-        The context used for command invocation.
-    error: commands.CommandError
-        The Exception raised.
-    """
-    if hasattr(ctx.command, 'on_error'):
+@BOT.hybrid_command(name='help', description='Show bot usage information', with_app_command=True)
+async def help_command(ctx, command: str = None):
+    """Send bot usage information."""
+    if command:
+        app_command = BOT.tree.get_command(command)
+        if not app_command:
+            await ctx.send(f'Unknown command: `{command}`')
+            return
+        await ctx.send(
+            embed=Embed(
+                title=command_usage(app_command),
+                description=app_command.description,
+            )
+        )
         return
 
-    ignored = (CommandNotFound, NotOwner)
-    error = getattr(error, 'original', error)
-
-    if isinstance(error, ignored):
-        return
-
-    if isinstance(error, DisabledCommand):
-        await ctx.send(f'{ctx.command} has been disabled.')
-    elif isinstance(error, MissingRequiredArgument):
-        await ctx.author.send(f"Please fill in the missing required argument, "
-                              f"read `!help {ctx.command}` for more information about using this command.")
-    elif isinstance(error, NoPrivateMessage):
-        try:
-            await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
-        except HTTPException:
-            pass
-    else:
-        DISCORD_LOGGER.warning(f'Ignoring exception in command {ctx.command}:\n{error}')
+    commands = [
+        f'`{command_usage(app_command)}` — {app_command.description}'
+        for app_command in sorted(BOT.tree.get_commands(), key=lambda item: item.name)
+    ]
+    await ctx.send(embed=Embed(title='Commands', description='\n'.join(commands)))

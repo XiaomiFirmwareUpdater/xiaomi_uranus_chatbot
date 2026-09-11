@@ -1,7 +1,7 @@
 """ Info commands handler """
 
 from uranus_bot.discord_bot.discord_bot import BOT
-from uranus_bot.discord_bot.messages.info import models_message, whatis_message, codename_message
+from uranus_bot.discord_bot.messages.info import codename_message, models_message, whatis_message
 from uranus_bot.messages.error_message import error_message
 
 
@@ -23,10 +23,11 @@ async def whatis(ctx, device):
     await ctx.send(None, embed=await whatis_message(device, BOT.provider.codenames_names))
 
 
-@BOT.command(name='codename', description='')
-async def codename(ctx, *args):
-    """Send device codename of a given device Example: !codename mi 6"""
-    device = ' '.join(args)
+@BOT.hybrid_command(
+    name='codename', description='Get device codename from its name', with_app_command=True
+)
+async def codename(ctx, device: str):
+    """Send device codename of a given device Example: /codename device:Mi 6"""
     embed = await codename_message(device, BOT.provider.names_codenames)
     if embed:
         await ctx.send(None, embed=embed)
