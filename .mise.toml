@@ -1,5 +1,5 @@
 [tools]
-python = "3.15.0"
+python = "3.15.1"
 uv = "latest"
 
 [tasks.'dev:telegram']
